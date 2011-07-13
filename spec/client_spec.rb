@@ -1,7 +1,6 @@
 require 'spec_helper'
 require 'uri'
 require 'cgi'
-require 'grapi'
 
 describe Grapi::Client do
   before :each do
