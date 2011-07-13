@@ -14,11 +14,13 @@ module Grapi
     end
 
     def authorize_url(options)
+      raise ArgumentError, ':redirect_uri required' unless options[:redirect_uri]
       params = {:client_id => @app_id, :response_type => 'code'}
       @oauth_client.authorize_url(params.merge(options))
     end
 
     def fetch_access_token(auth_code, options)
+      raise ArgumentError, ':redirect_uri required' unless options[:redirect_uri]
       @access_token = @oauth_client.auth_code.get_token(auth_code, options)
     end
 
@@ -41,7 +43,9 @@ module Grapi
     end
 
     def merchant
-      merchant_id = @access_token.params[:scope].split(':')[1]
+      scope = @access_token.params[:scope].split
+      perm = scope.select {|p| p.start_with?('manage_merchant:') }.first
+      merchant_id = perm.split(':')[1]
       Merchant.from_hash(api_get("/merchants/#{merchant_id}").parsed)
     end
   end
