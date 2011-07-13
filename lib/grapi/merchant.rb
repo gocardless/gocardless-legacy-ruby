@@ -1,14 +1,7 @@
 require 'date'
 
 module Grapi
-  class Merchant
-
-    def self.from_hash(h)
-      merchant = Merchant.new
-      h.each { |k,v| merchant.send("#{k}=", v) }
-      merchant
-    end
-
+  class Merchant < Resource
     attr_accessor :name, :uri, :id, :description, :email, :first_name,
                   :last_name
     attr_reader :created_at
