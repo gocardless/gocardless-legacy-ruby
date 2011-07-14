@@ -15,8 +15,7 @@ describe Grapi::Merchant do
     @redirect_uri = 'http://test.com/cb'
   end
 
-  index_methods = [:subscriptions, :pre_authorizations, :ad_hoc_authorizations,
-                   :users, :payments, :bills]
+  index_methods = [:subscriptions, :pre_authorizations, :users, :payments, :bills]
 
   index_methods.each do |method|
     it "##{method} works correctly" do

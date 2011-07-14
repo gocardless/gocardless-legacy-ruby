@@ -1,3 +1,4 @@
+require 'date'
 
 module Grapi
   class Resource
@@ -9,6 +10,12 @@ module Grapi
       obj = self.new(client)
       hash.each { |key,val| obj.send("#{key}=", val) }
       obj
+    end
+
+    def self.find(client, id)
+      path = self::ENDPOINT.gsub(':id', id.to_s)
+      data = client.api_get(path)
+      self.from_hash(client, data)
     end
 
     def self.date_writer(*args)
