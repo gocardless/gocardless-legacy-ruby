@@ -1,5 +1,7 @@
 module Grapi
   class Merchant < Resource
+    ENDPOINT = '/merchants/:id'
+
     attr_accessor :name, :description, :email, :first_name, :last_name
     date_accessor :created_at
 
