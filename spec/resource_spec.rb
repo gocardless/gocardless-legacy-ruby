@@ -57,5 +57,18 @@ describe Grapi::Resource do
       resource.created_at.should == date
     end
   end
+
+  describe "#find" do
+    it "instantiates the correct object" do
+      class TestResource < Grapi::Resource
+        ENDPOINT = '/test/:id'
+      end
+      mock_client = mock
+      mock_client.expects(:api_get).returns({:id => 123})
+      resource = TestResource.find(mock_client, 123)
+      resource.should be_a TestResource
+      resource.id.should == 123
+    end
+  end
 end
 
