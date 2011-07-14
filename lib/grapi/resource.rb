@@ -1,7 +1,6 @@
 
 module Grapi
   class Resource
-
     def initialize(client)
       @client = client
     end
@@ -25,5 +24,7 @@ module Grapi
       attr_reader *args
       date_writer *args
     end
+
+    attr_accessor :id, :uri
   end
 end
