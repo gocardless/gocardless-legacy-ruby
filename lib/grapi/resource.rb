@@ -77,5 +77,11 @@ module Grapi
     end
 
     attr_accessor :id, :uri
+
+    def inspect
+      attrs = instance_variables.map { |v| v.sub(/^@/, '') }
+      attrs = attrs.select { |v| respond_to? v }
+      "#<#{self.class} #{attrs.map { |v| "#{v}=#{send(v).inspect}" }.join(', ')}>"
+    end
   end
 end
