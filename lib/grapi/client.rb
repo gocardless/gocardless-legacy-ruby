@@ -56,6 +56,18 @@ module Grapi
     def pre_authorization(id)
       PreAuthorization.find(self, id)
     end
+
+    def user(id)
+      User.find(self, id)
+    end
+
+    def bill(id)
+      Bill.find(self, id)
+    end
+
+    def payment(id)
+      Payment.find(self, id)
+    end
   end
 end
 

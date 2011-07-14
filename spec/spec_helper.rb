@@ -13,3 +13,9 @@ def stub_get(client, data)
   token.stubs(:get).returns response
 end
 
+class String
+  def camelize
+    self.split('_').map {|w| w.capitalize}.join
+  end
+end
+

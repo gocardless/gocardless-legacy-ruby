@@ -1,11 +1,5 @@
 require 'spec_helper'
 
-class String
-  def camelize
-    self.split('_').map {|w| w.capitalize}.join
-  end
-end
-
 describe Grapi::Merchant do
   before :each do
     @app_id = 'abc'

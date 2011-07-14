@@ -125,4 +125,15 @@ describe Grapi::Client do
       merchant.name.should == 'test'
     end
   end
+
+  %w{subscription pre_authorization user bill payment}.each do |resource|
+    describe "##{resource}" do
+      it "returns the correct #{resource.camelize} object" do
+        stub_get(@client, {:id => 123})
+        obj = @client.send(resource, 123)
+        obj.should be_a Grapi.const_get(resource.camelize)
+        obj.id.should == 123
+      end
+    end
+  end
 end
