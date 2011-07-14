@@ -8,5 +8,11 @@ module Grapi
         Grapi::Subscription.from_hash(@client, attrs)
       end
     end
+
+    def pre_authorizations
+      @client.api_get("/merchants/#{self.id}/pre_authorizations").map do |attrs|
+        Grapi::PreAuthorization.from_hash(@client, attrs)
+      end
+    end
   end
 end
