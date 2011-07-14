@@ -48,6 +48,14 @@ module Grapi
       merchant_id = perm.split(':')[1]
       Merchant.from_hash(self, api_get("/merchants/#{merchant_id}"))
     end
+
+    def subscription(id)
+      Subscription.find(self, id)
+    end
+
+    def pre_authorization(id)
+      PreAuthorization.find(self, id)
+    end
   end
 end
 
