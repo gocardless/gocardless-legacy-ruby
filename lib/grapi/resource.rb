@@ -1,10 +1,16 @@
 
 module Grapi
   class Resource
-    def self.from_hash(h)
-      obj = self.new
-      h.each { |k,v| obj.send("#{k}=", v) }
+
+    def initialize(client)
+      @client = client
+    end
+
+    def self.from_hash(client, hash)
+      obj = self.new(client)
+      hash.each { |key,val| obj.send("#{key}=", val) }
       obj
     end
+
   end
 end

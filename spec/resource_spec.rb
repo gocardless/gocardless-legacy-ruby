@@ -6,7 +6,7 @@ describe Grapi::Resource do
       attr_accessor :id, :name, :uri
     end
     props = {:id => 1, :name => 'test', :uri => 'http://test'}
-    resource = Grapi::Resource.from_hash(props)
+    resource = Grapi::Resource.from_hash(nil, props)
     props.each { |k,v| resource.send(k).should == v }
   end
 end
