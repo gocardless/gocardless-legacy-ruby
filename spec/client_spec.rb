@@ -89,7 +89,9 @@ describe Grapi::Client do
     it "uses the correct path prefix" do
       @client.access_token = 'TOKEN123 a:1 b:2'
       token = @client.instance_variable_get(:@access_token)
-      token.expects(:get).with { |path,opts| path =~ %r|/api/v1/test| }
+      r = mock
+      r.stubs(:parsed)
+      token.expects(:get).with { |p,o| p =~ %r|/api/v1/test| }.returns(r)
       @client.api_get('/test')
     end
   end
