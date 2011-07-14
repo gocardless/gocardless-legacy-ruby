@@ -15,7 +15,7 @@ describe Grapi::Merchant do
     @redirect_uri = 'http://test.com/cb'
   end
 
-  [:subscriptions, :pre_authorizations].each do |limit|
+  [:subscriptions, :pre_authorizations, :ad_hoc_authorizations].each do |limit|
     it "##{limit} works correctly" do
       merchant = Grapi::Merchant.new(@client)
 
