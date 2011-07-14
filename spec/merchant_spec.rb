@@ -15,17 +15,20 @@ describe Grapi::Merchant do
     @redirect_uri = 'http://test.com/cb'
   end
 
-  [:subscriptions, :pre_authorizations, :ad_hoc_authorizations].each do |limit|
-    it "##{limit} works correctly" do
+  index_methods = [:subscriptions, :pre_authorizations, :ad_hoc_authorizations,
+                   :users]
+
+  index_methods.each do |method|
+    it "##{method} works correctly" do
       merchant = Grapi::Merchant.new(@client)
 
       data = [{:id => 1}, {:id => 2}]
       stub_get(@client, data)
 
-      merchant.send(limit).should be_a Array
-      merchant.send(limit).length.should == 2
-      merchant.send(limit).zip(data).each do |obj,attrs|
-        obj.class.to_s.should == "Grapi::#{limit.to_s.camelize.sub(/s$/, '')}"
+      merchant.send(method).should be_a Array
+      merchant.send(method).length.should == 2
+      merchant.send(method).zip(data).each do |obj,attrs|
+        obj.class.to_s.should == "Grapi::#{method.to_s.camelize.sub(/s$/, '')}"
         attrs.each { |k,v| obj.send(k).should == v }
       end
     end

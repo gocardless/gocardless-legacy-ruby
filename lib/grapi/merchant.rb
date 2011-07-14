@@ -20,5 +20,11 @@ module Grapi
         Grapi::AdHocAuthorization.from_hash(@client, attrs)
       end
     end
+
+    def users
+      @client.api_get("/merchants/#{self.id}/users").map do |attrs|
+        Grapi::User.from_hash(@client, attrs)
+      end
+    end
   end
 end
