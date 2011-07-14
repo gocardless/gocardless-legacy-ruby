@@ -26,5 +26,17 @@ module Grapi
         Grapi::User.from_hash(@client, attrs)
       end
     end
+
+    def bills
+      @client.api_get("/merchants/#{self.id}/bills").map do |attrs|
+        Grapi::Bill.from_hash(@client, attrs)
+      end
+    end
+
+    def payments
+      @client.api_get("/merchants/#{self.id}/payments").map do |attrs|
+        Grapi::Payment.from_hash(@client, attrs)
+      end
+    end
   end
 end
