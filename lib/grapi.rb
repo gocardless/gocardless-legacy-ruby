@@ -1,4 +1,5 @@
 module Grapi
+  require 'grapi/utils'
   require 'grapi/resource'
   require 'grapi/subscription'
   require 'grapi/pre_authorization'

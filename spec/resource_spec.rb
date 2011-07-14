@@ -70,5 +70,103 @@ describe Grapi::Resource do
       resource.id.should == 123
     end
   end
+
+  describe "#reference_writer" do
+    it "creates reference writers properly" do
+      class TestResource < Grapi::Resource
+        reference_writer :merchant_id, :user_id
+      end
+
+      TestResource.instance_methods.should include 'merchant='
+      TestResource.instance_methods.should include 'merchant_id='
+      TestResource.instance_methods.should include 'user='
+      TestResource.instance_methods.should include 'user_id='
+    end
+
+    it "direct assignment methods work properly" do
+      class TestResource < Grapi::Resource
+        reference_writer :user_id
+      end
+
+      resource = TestResource.new(nil)
+      resource.user = Grapi::User.from_hash(nil, :id => 123)
+      resource.instance_variable_get(:@user_id).should == 123
+    end
+
+    it "requires args to end with _id" do
+      expect do
+        class TestResource < Grapi::Resource
+          reference_writer :user
+        end
+      end.to raise_exception ArgumentError
+    end
+
+    it "fails with the wrong object type" do
+      class TestResource < Grapi::Resource
+        reference_writer :user_id
+      end
+      expect do
+        TestResource.new(nil).user = 'asdf'
+      end.to raise_exception ArgumentError
+    end
+  end
+
+  describe "#reference_reader" do
+    before :each do
+      @app_id = 'abc'
+      @app_secret = 'xyz'
+      @client = Grapi::Client.new(@app_id, @app_secret)
+      @redirect_uri = 'http://test.com/cb'
+    end
+
+    it "creates reference writers properly" do
+      class TestResource < Grapi::Resource
+        reference_reader :merchant_id, :user_id
+      end
+
+      TestResource.instance_methods.should include 'merchant'
+      TestResource.instance_methods.should include 'merchant_id'
+      TestResource.instance_methods.should include 'user'
+      TestResource.instance_methods.should include 'user_id'
+    end
+
+    it "lookup methods work properly" do
+      class TestResource < Grapi::Resource
+        reference_writer :user_id
+      end
+
+      resource = TestResource.new(@client)
+      resource.instance_variable_set(:@user_id, 123)
+      stub_get(@client, {:id => 123})
+      user = resource.user
+      user.should be_a Grapi::User
+      user.id.should == 123
+    end
+
+    it "requires args to end with _id" do
+      expect do
+        class TestResource < Grapi::Resource
+          reference_reader :user
+        end
+      end.to raise_exception ArgumentError
+    end
+  end
+
+  describe "#reference_accessor" do
+    it "creates reference readers and writers" do
+      class TestResource < Grapi::Resource
+        reference_accessor :merchant_id, :user_id
+      end
+
+      TestResource.instance_methods.should include 'merchant'
+      TestResource.instance_methods.should include 'merchant_id'
+      TestResource.instance_methods.should include 'user'
+      TestResource.instance_methods.should include 'user_id'
+      TestResource.instance_methods.should include 'merchant='
+      TestResource.instance_methods.should include 'merchant_id='
+      TestResource.instance_methods.should include 'user='
+      TestResource.instance_methods.should include 'user_id='
+    end
+  end
 end
 
