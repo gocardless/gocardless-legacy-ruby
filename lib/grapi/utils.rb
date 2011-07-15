@@ -1,7 +1,7 @@
 
 class String
   def camelize
-    self.split('_').map {|w| w.capitalize}.join
+    self.split('_').map(&:capitalize).join
   end
 end
 
