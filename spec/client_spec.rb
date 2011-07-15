@@ -96,6 +96,17 @@ describe Grapi::Client do
     end
   end
 
+  describe "#api_post" do
+    it "encodes data to json" do
+      @client.access_token = 'TOKEN123 a:1 b:2'
+      token = @client.instance_variable_get(:@access_token)
+      r = mock
+      r.stubs(:parsed)
+      token.expects(:post).with { |p,opts| opts[:body] == '{"a":1}' }.returns(r)
+      @client.api_post('/test', {:a => 1})
+    end
+  end
+
   describe "#merchant" do
     it "looks up the correct merchant" do
       @client.access_token = 'TOKEN a manage_merchant:123 b'

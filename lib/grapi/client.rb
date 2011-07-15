@@ -1,4 +1,5 @@
 require 'rubygems'
+require 'multi_json'
 require 'oauth2'
 
 module Grapi
@@ -40,6 +41,20 @@ module Grapi
 
     def api_get(path)
       get("/api/v1#{path}").parsed
+    end
+
+    def post(path, data)
+      @access_token.post(path, {
+        :headers => {
+          'Accept' => 'application/json',
+          'Content-Type' => 'application/json',
+        },
+        :body => MultiJson.encode(data),
+      })
+    end
+
+    def api_post(path, data)
+      post("/api/v1#{path}", data).parsed
     end
 
     def merchant
