@@ -168,5 +168,27 @@ describe Grapi::Resource do
       TestResource.instance_methods.should include 'user_id='
     end
   end
+
+  it "#persisted? works" do
+    TestResource.new(nil).persisted?.should be_false
+    TestResource.from_hash(nil, :id => 1).persisted?.should be_true
+  end
+
+  describe "#save" do
+    pending "POSTs when not persisted"
+    pending "PUTs when already persisted"
+    pending "fails when not persisted and create not allowed"
+    pending "fails when persisted and update not allowed"
+  end
+
+  it "#to_hash pulls out the correct attributes" do
+    class TestResource < Grapi::Resource
+      attr_accessor :x
+    end
+
+    attrs = {:id => 1, :uri => 'http:', :x => 'y'}
+    resource = TestResource.from_hash('CLIENT', attrs)
+    resource.to_hash.should == attrs
+  end
 end
 

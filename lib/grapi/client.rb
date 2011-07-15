@@ -83,6 +83,10 @@ module Grapi
     def payment(id)
       Payment.find(self, id)
     end
+
+    def create_bill(attrs)
+      Bill.from_hash(self, attrs).save
+    end
   end
 end
 

@@ -78,10 +78,21 @@ module Grapi
 
     attr_accessor :id, :uri
 
-    def inspect
+    def to_hash
       attrs = instance_variables.map { |v| v.sub(/^@/, '') }
-      attrs = attrs.select { |v| respond_to? v }
+      Hash[attrs.select { |v| respond_to? v }.map { |v| [v.to_sym, send(v)] }]
+    end
+
+    def inspect
       "#<#{self.class} #{attrs.map { |v| "#{v}=#{send(v).inspect}" }.join(', ')}>"
+    end
+
+    def persisted?
+      !id.nil?
+    end
+
+    def save
+
     end
   end
 end
