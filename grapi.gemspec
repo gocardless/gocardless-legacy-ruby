@@ -2,6 +2,7 @@ require File.expand_path('../lib/grapi/version', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'oauth', '~> 0.5.0.rc1'
+  gem.add_runtime_dependency 'json', '~> 1.5.3'
 
   gem.add_development_dependency 'rspec', '~> 2.6'
   gem.add_development_dependency 'mocha', '~> 0.9.12'
