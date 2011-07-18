@@ -84,7 +84,7 @@ module Grapi
     end
 
     def inspect
-      "#<#{self.class} #{attrs.map { |v| "#{v}=#{send(v).inspect}" }.join(', ')}>"
+      "#<#{self.class} #{to_hash.map { |k,v| "#{k}=#{v.inspect}" }.join(', ')}>"
     end
 
     def persisted?
