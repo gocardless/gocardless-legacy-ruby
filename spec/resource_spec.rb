@@ -177,12 +177,34 @@ describe Grapi::Resource do
   describe "#save" do
     before :each do
       class TestResource < Grapi::Resource
+        attr_accessor :x, :y
       end
     end
-    pending "sends the correct parameters"
-    pending "POSTs when not persisted" do
+
+    it "sends the correct parameters" do
+      client = mock
+      data = {:x => 1, :y => 2}
+      resource = TestResource.from_hash(client, data)
+      client.expects(:api_post).with do |path, params|
+        params.should == data
+      end
+      resource.save
     end
-    pending "PUTs when already persisted"
+
+    it "POSTs when not persisted" do
+      client = mock
+      resource = TestResource.new(client)
+      client.expects(:api_post)
+      resource.save
+    end
+
+    it "PUTs when already persisted" do
+      client = mock
+      resource = TestResource.from_hash(client, :id => 1)
+      client.expects(:api_put)
+      resource.save
+    end
+
     pending "fails when not persisted and create not allowed"
     pending "fails when persisted and update not allowed"
   end

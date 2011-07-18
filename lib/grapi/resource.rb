@@ -97,7 +97,8 @@ module Grapi
 
     def save
       method = self.persisted? ? 'put' : 'post'
-      @client.send("api_#{method}", to_hash)
+      path = self.class::ENDPOINT.gsub(':id', id.to_s)
+      @client.send("api_#{method}", path, self.to_hash)
     end
   end
 end
