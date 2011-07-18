@@ -14,7 +14,7 @@ module Grapi
       end
 
       def find(client, id)
-        path = self::ENDPOINT.gsub(':id', id.to_s)
+        path = const_get('ENDPOINT').gsub(':id', id.to_s)
         data = client.api_get(path)
         self.from_hash(client, data)
       end
@@ -74,6 +74,22 @@ module Grapi
         reference_reader *args
         reference_writer *args
       end
+
+      def creatable(val = true)
+        @creatable = val
+      end
+
+      def updatable(val = true)
+        @updatable = val
+      end
+
+      def creatable?
+        !!@creatable
+      end
+
+      def updatable?
+        !!@updatable
+      end
     end
 
     attr_accessor :id, :uri
@@ -96,8 +112,14 @@ module Grapi
     end
 
     def save
-      method = self.persisted? ? 'put' : 'post'
-      path = self.class::ENDPOINT.gsub(':id', id.to_s)
+      method = if self.persisted?
+        raise "#{self.class} cannot be updated" unless self.class.updatable?
+        'put'
+      else
+        raise "#{self.class} cannot be created" unless self.class.creatable?
+        'post'
+      end
+      path = self.class.const_get('ENDPOINT').gsub(':id', id.to_s)
       @client.send("api_#{method}", path, self.to_hash)
     end
   end
