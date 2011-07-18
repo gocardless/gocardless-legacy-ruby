@@ -175,7 +175,13 @@ describe Grapi::Resource do
   end
 
   describe "#save" do
-    pending "POSTs when not persisted"
+    before :each do
+      class TestResource < Grapi::Resource
+      end
+    end
+    pending "sends the correct parameters"
+    pending "POSTs when not persisted" do
+    end
     pending "PUTs when already persisted"
     pending "fails when not persisted and create not allowed"
     pending "fails when persisted and update not allowed"
@@ -189,6 +195,25 @@ describe Grapi::Resource do
     attrs = {:id => 1, :uri => 'http:', :x => 'y'}
     resource = TestResource.from_hash('CLIENT', attrs)
     resource.to_hash.should == attrs
+  end
+
+  it "#to_json converts to the correct JSON format" do
+    class TestBill < Grapi::Resource
+      attr_accessor :amount
+      date_accessor :when
+      reference_accessor :person_id
+    end
+
+    bill = TestBill.from_hash(nil, {
+      :amount => 10,
+      :when => DateTime.now,
+      :person_id => 15
+    })
+
+    result = JSON.parse(bill.to_json)
+    result['amount'].should == bill.amount
+    result['when'].should == bill.when.to_s
+    result['person_id'].should == 15
   end
 end
 

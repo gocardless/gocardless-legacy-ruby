@@ -1,5 +1,5 @@
 require 'rubygems'
-require 'multi_json'
+require 'json'
 require 'oauth2'
 
 module Grapi
@@ -49,7 +49,7 @@ module Grapi
           'Accept' => 'application/json',
           'Content-Type' => 'application/json',
         },
-        :body => MultiJson.encode(data),
+        :body => JSON.generate(data),
       })
     end
 

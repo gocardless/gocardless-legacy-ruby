@@ -83,6 +83,10 @@ module Grapi
       Hash[attrs.select { |v| respond_to? v }.map { |v| [v.to_sym, send(v)] }]
     end
 
+    def to_json
+      to_hash.to_json
+    end
+
     def inspect
       "#<#{self.class} #{to_hash.map { |k,v| "#{k}=#{v.inspect}" }.join(', ')}>"
     end
@@ -92,7 +96,8 @@ module Grapi
     end
 
     def save
-
+      method = self.persisted? ? 'put' : 'post'
+      @client.send("api_#{method}", to_hash)
     end
   end
 end

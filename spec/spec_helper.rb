@@ -1,4 +1,5 @@
 require 'mocha'
+require 'json'
 require 'grapi'
 
 RSpec.configure do |config|
