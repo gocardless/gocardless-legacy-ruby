@@ -2,7 +2,11 @@ module Grapi
   class Merchant < Resource
     ENDPOINT = '/merchants/:id'
 
-    attr_accessor :name, :description, :email, :first_name, :last_name
+    attr_accessor :name
+    attr_accessor :description
+    attr_accessor :email
+    attr_accessor :first_name
+    attr_accessor :last_name
     date_accessor :created_at
 
     def subscriptions

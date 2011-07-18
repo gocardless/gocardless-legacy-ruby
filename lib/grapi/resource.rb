@@ -92,7 +92,11 @@ module Grapi
       end
     end
 
-    attr_accessor :id, :uri
+
+    # @macro [attach] resource.property
+    # @return [String] the $1 property of the object
+    attr_accessor :id
+    attr_accessor :uri
 
     def to_hash
       attrs = instance_variables.map { |v| v.sub(/^@/, '') }
