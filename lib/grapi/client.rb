@@ -35,26 +35,23 @@ module Grapi
       @access_token.params[:scope] = scope
     end
 
-    def get(path)
-      @access_token.get(path, :headers => { :Accept => 'application/json' })
+    def request(method, path, data = nil)
+      headers = { 'Accept' => 'application/json' }
+      headers['Content-Type'] = 'application/json' unless method == :get
+      body = JSON.generate(data) if !data.nil?
+      @access_token.send(method, path, :headers => headers, :body => body)
     end
 
     def api_get(path)
-      get("/api/v1#{path}").parsed
+      request(:get, "/api/v1#{path}").parsed
     end
 
-    def post(path, data)
-      @access_token.post(path, {
-        :headers => {
-          'Accept' => 'application/json',
-          'Content-Type' => 'application/json',
-        },
-        :body => JSON.generate(data),
-      })
+    def api_post(path, data = {})
+      request(:post, "/api/v1#{path}", data).parsed
     end
 
-    def api_post(path, data)
-      post("/api/v1#{path}", data).parsed
+    def api_put(path, data = {})
+      request(:put, "/api/v1#{path}", data).parsed
     end
 
     def merchant
