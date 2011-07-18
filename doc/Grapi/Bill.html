@@ -146,7 +146,7 @@ Returns the value of attribute amount.
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#source_id-instance_method" title="#source_id (instance method)">- (Object) <strong>source_id</strong> </a>
+      <a href="#source_id-instance_method" title="#source_id (instance method)">- (Integer) <strong>source_id</strong> </a>
     
 
     
@@ -163,7 +163,7 @@ Returns the value of attribute amount.
 
   
     <span class="summary_desc"><div class='inline'><p>
-Returns the value of attribute source_id.
+The ID of the bill&#8217;s source (eg subscription, pre_authorization).
 </p>
 </div></span>
   
@@ -332,33 +332,52 @@ Returns the value of attribute amount
       <div class="method_details ">
   <p class="signature " id="source_id-instance_method">
   
-    - (<tt>Object</tt>) <strong>source_id</strong> 
+    - (<tt>Integer</tt>) <strong>source_id</strong> 
   
 
   
 </p><div class="docstring">
   <div class="discussion">
     <p>
-Returns the value of attribute source_id
+The ID of the bill&#8217;s source (eg subscription, pre_authorization)
 </p>
 
 
   </div>
 </div>
 <div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
   
+    <li>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the ID of the bill&#8217;s source (eg subscription, pre_authorization)
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
 </div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-5
-6
-7</pre>
+10
+11
+12</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/bill.rb', line 5</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/bill.rb', line 10</span>
 
 <span class='def def kw'>def</span> <span class='source_id identifier id'>source_id</span>
   <span class='@source_id ivar id'>@source_id</span>
@@ -396,12 +415,12 @@ Returns the value of attribute source_type
       <pre class="lines">
 
 
-5
 6
-7</pre>
+7
+8</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/bill.rb', line 5</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/bill.rb', line 6</span>
 
 <span class='def def kw'>def</span> <span class='source_type identifier id'>source_type</span>
   <span class='@source_type ivar id'>@source_type</span>
@@ -432,13 +451,13 @@ Returns the value of attribute source_type
       <pre class="lines">
 
 
-9
-10
-11
-12</pre>
+15
+16
+17
+18</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/bill.rb', line 9</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/bill.rb', line 15</span>
 
 <span class='def def kw'>def</span> <span class='source identifier id'>source</span>
   <span class='klass identifier id'>klass</span> <span class='assign token'>=</span> <span class='Grapi constant id'>Grapi</span><span class='dot token'>.</span><span class='const_get identifier id'>const_get</span><span class='lparen token'>(</span><span class='source_type identifier id'>source_type</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='camelize identifier id'>camelize</span><span class='rparen token'>)</span>
@@ -463,17 +482,17 @@ Returns the value of attribute source_type
       <pre class="lines">
 
 
-14
-15
-16
-17
-18
-19
 20
-21</pre>
+21
+22
+23
+24
+25
+26
+27</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/bill.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/bill.rb', line 20</span>
 
 <span class='def def kw'>def</span> <span class='source= identifier id'>source=</span><span class='lparen token'>(</span><span class='obj identifier id'>obj</span><span class='rparen token'>)</span>
   <span class='klass identifier id'>klass</span> <span class='assign token'>=</span> <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>':'</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='last identifier id'>last</span>
@@ -494,7 +513,7 @@ Returns the value of attribute source_type
 </div>
     
     <div id="footer">
-  Generated on Mon Jul 18 12:47:26 2011 by 
+  Generated on Mon Jul 18 14:14:38 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.8.7).
 </div>

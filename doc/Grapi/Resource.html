@@ -104,7 +104,7 @@
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#id-instance_method" title="#id (instance method)">- (Object) <strong>id</strong> </a>
+      <a href="#id-instance_method" title="#id (instance method)">- (String) <strong>id</strong> </a>
     
 
     
@@ -121,7 +121,7 @@
 
   
     <span class="summary_desc"><div class='inline'><p>
-Returns the value of attribute id.
+The id property of the object.
 </p>
 </div></span>
   
@@ -131,7 +131,7 @@ Returns the value of attribute id.
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#uri-instance_method" title="#uri (instance method)">- (Object) <strong>uri</strong> </a>
+      <a href="#uri-instance_method" title="#uri (instance method)">- (String) <strong>uri</strong> </a>
     
 
     
@@ -148,7 +148,7 @@ Returns the value of attribute id.
 
   
     <span class="summary_desc"><div class='inline'><p>
-Returns the value of attribute uri.
+The uri property of the object.
 </p>
 </div></span>
   
@@ -512,33 +512,52 @@ A new instance of Resource
       <div class="method_details first">
   <p class="signature first" id="id-instance_method">
   
-    - (<tt>Object</tt>) <strong>id</strong> 
+    - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>id</strong> 
   
 
   
 </p><div class="docstring">
   <div class="discussion">
     <p>
-Returns the value of attribute id
+The id property of the object
 </p>
 
 
   </div>
 </div>
 <div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
   
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the id property of the object
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
 </div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-79
-80
-81</pre>
+82
+83
+84</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 79</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 82</span>
 
 <span class='def def kw'>def</span> <span class='id identifier id'>id</span>
   <span class='@id ivar id'>@id</span>
@@ -555,33 +574,52 @@ Returns the value of attribute id
       <div class="method_details ">
   <p class="signature " id="uri-instance_method">
   
-    - (<tt>Object</tt>) <strong>uri</strong> 
+    - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>uri</strong> 
   
 
   
 </p><div class="docstring">
   <div class="discussion">
     <p>
-Returns the value of attribute uri
+The uri property of the object
 </p>
 
 
   </div>
 </div>
 <div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
   
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the uri property of the object
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
 </div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-79
-80
-81</pre>
+83
+84
+85</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 79</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 83</span>
 
 <span class='def def kw'>def</span> <span class='uri identifier id'>uri</span>
   <span class='@uri ivar id'>@uri</span>
@@ -901,12 +939,12 @@ Returns the value of attribute uri
       <pre class="lines">
 
 
-90
-91
-92</pre>
+94
+95
+96</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 94</span>
 
 <span class='def def kw'>def</span> <span class='inspect identifier id'>inspect</span>
   <span class='dstring node'>&quot;#&lt;#{self.class} #{to_hash.map { |k,v| &quot;#{k}=#{v.inspect}&quot; }.join(', ')}&gt;&quot;</span>
@@ -951,12 +989,12 @@ Returns the value of attribute uri
       <pre class="lines">
 
 
-94
-95
-96</pre>
+98
+99
+100</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 94</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 98</span>
 
 <span class='def def kw'>def</span> <span class='persisted? fid id'>persisted?</span>
   <span class='notop op'>!</span><span class='id identifier id'>id</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
@@ -980,17 +1018,19 @@ Returns the value of attribute uri
       <pre class="lines">
 
 
-98
-99
-100
-101</pre>
+102
+103
+104
+105
+106</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 98</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 102</span>
 
 <span class='def def kw'>def</span> <span class='save identifier id'>save</span>
   <span class='method identifier id'>method</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='persisted? fid id'>persisted?</span> <span class='integer val'>? </span><span class='string val'>'put'</span> <span class='colon op'>:</span> <span class='string val'>'post'</span>
-  <span class='@client ivar id'>@client</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='dstring node'>&quot;api_#{method}&quot;</span><span class='comma token'>,</span> <span class='to_hash identifier id'>to_hash</span><span class='rparen token'>)</span>
+  <span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='colon2 op'>::</span><span class='ENDPOINT constant id'>ENDPOINT</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='string val'>':id'</span><span class='comma token'>,</span> <span class='id identifier id'>id</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+  <span class='@client ivar id'>@client</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='dstring node'>&quot;api_#{method}&quot;</span><span class='comma token'>,</span> <span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='to_hash identifier id'>to_hash</span><span class='rparen token'>)</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -1011,13 +1051,13 @@ Returns the value of attribute uri
       <pre class="lines">
 
 
-81
-82
-83
-84</pre>
+85
+86
+87
+88</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 81</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 85</span>
 
 <span class='def def kw'>def</span> <span class='to_hash identifier id'>to_hash</span>
   <span class='attrs identifier id'>attrs</span> <span class='assign token'>=</span> <span class='instance_variables identifier id'>instance_variables</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='v identifier id'>v</span><span class='bitor op'>|</span> <span class='v identifier id'>v</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/^@/</span><span class='comma token'>,</span> <span class='string val'>''</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
@@ -1042,12 +1082,12 @@ Returns the value of attribute uri
       <pre class="lines">
 
 
-86
-87
-88</pre>
+90
+91
+92</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 86</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 90</span>
 
 <span class='def def kw'>def</span> <span class='to_json identifier id'>to_json</span>
   <span class='to_hash identifier id'>to_hash</span><span class='dot token'>.</span><span class='to_json identifier id'>to_json</span>
@@ -1063,7 +1103,7 @@ Returns the value of attribute uri
 </div>
     
     <div id="footer">
-  Generated on Mon Jul 18 12:47:25 2011 by 
+  Generated on Mon Jul 18 14:14:37 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.8.7).
 </div>
