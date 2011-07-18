@@ -1,4 +1,4 @@
-lib/grapi/client.rb e638faf20dc14909463283691204108c7d355e2f
+lib/grapi/client.rb 6efcc56aa2315cb5b789363b5dc92e4754982e49
 lib/grapi/utils.rb e5337864ec220abcbba15b5e91d4518c55cf2041
 lib/grapi/payment.rb d9f4d83348fe1ec176bd132e89ac04388af51dab
 lib/grapi/bill.rb 461dfbe1fba668834bb52196f25db7636c5ef340

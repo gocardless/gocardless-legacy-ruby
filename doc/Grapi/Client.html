@@ -103,6 +103,12 @@
         <dd><pre class="code"><span class='string val'>'http://localhost:3000'</span>
 </pre></dd>
       
+        <dt id="API_PATH-constant" class="">API_PATH =
+          
+        </dt>
+        <dd><pre class="code"><span class='string val'>'/api/v1'</span>
+</pre></dd>
+      
     </dl>
   
 
@@ -163,7 +169,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#api_get-instance_method" title="#api_get (instance method)">- (Object) <strong>api_get</strong>(path) </a>
+      <a href="#api_get-instance_method" title="#api_get (instance method)">- (Hash) <strong>api_get</strong>(path) </a>
     
 
     
@@ -176,7 +182,10 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'><p>
+Hash of data at the request path.
+</p>
+</div></span>
   
 </li>
 
@@ -247,7 +256,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#bill-instance_method" title="#bill (instance method)">- (Object) <strong>bill</strong>(id) </a>
+      <a href="#bill-instance_method" title="#bill (instance method)">- (Bill) <strong>bill</strong>(id) </a>
     
 
     
@@ -260,7 +269,10 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'><p>
+The Bill matching the id requested.
+</p>
+</div></span>
   
 </li>
 
@@ -289,7 +301,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#fetch_access_token-instance_method" title="#fetch_access_token (instance method)">- (Object) <strong>fetch_access_token</strong>(auth_code, options) </a>
+      <a href="#fetch_access_token-instance_method" title="#fetch_access_token (instance method)">- (String) <strong>fetch_access_token</strong>(auth_code, options) </a>
     
 
     
@@ -302,7 +314,10 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'><p>
+The access_token required to make API calls to resources.
+</p>
+</div></span>
   
 </li>
 
@@ -336,7 +351,7 @@ A new instance of Client.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#merchant-instance_method" title="#merchant (instance method)">- (Object) <strong>merchant</strong> </a>
+      <a href="#merchant-instance_method" title="#merchant (instance method)">- (Merchant) <strong>merchant</strong> </a>
     
 
     
@@ -349,7 +364,10 @@ A new instance of Client.
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'><p>
+The merchant associated with the client&#8217;s access token.
+</p>
+</div></span>
   
 </li>
 
@@ -357,7 +375,7 @@ A new instance of Client.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#payment-instance_method" title="#payment (instance method)">- (Object) <strong>payment</strong>(id) </a>
+      <a href="#payment-instance_method" title="#payment (instance method)">- (Payment) <strong>payment</strong>(id) </a>
     
 
     
@@ -370,7 +388,10 @@ A new instance of Client.
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'><p>
+The payment matching the id requested.
+</p>
+</div></span>
   
 </li>
 
@@ -378,7 +399,7 @@ A new instance of Client.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#pre_authorization-instance_method" title="#pre_authorization (instance method)">- (Object) <strong>pre_authorization</strong>(id) </a>
+      <a href="#pre_authorization-instance_method" title="#pre_authorization (instance method)">- (PreAuthorization) <strong>pre_authorization</strong>(id) </a>
     
 
     
@@ -391,7 +412,10 @@ A new instance of Client.
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'><p>
+The pre_authorization matching the id requested.
+</p>
+</div></span>
   
 </li>
 
@@ -420,7 +444,7 @@ A new instance of Client.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#subscription-instance_method" title="#subscription (instance method)">- (Object) <strong>subscription</strong>(id) </a>
+      <a href="#subscription-instance_method" title="#subscription (instance method)">- (Subscription) <strong>subscription</strong>(id) </a>
     
 
     
@@ -433,7 +457,10 @@ A new instance of Client.
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'><p>
+The subscription matching the id requested.
+</p>
+</div></span>
   
 </li>
 
@@ -441,7 +468,7 @@ A new instance of Client.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#user-instance_method" title="#user (instance method)">- (Object) <strong>user</strong>(id) </a>
+      <a href="#user-instance_method" title="#user (instance method)">- (User) <strong>user</strong>(id) </a>
     
 
     
@@ -454,7 +481,10 @@ A new instance of Client.
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'><p>
+The User matching the id requested.
+</p>
+</div></span>
   
 </li>
 
@@ -489,16 +519,16 @@ A new instance of Client
       <pre class="lines">
 
 
-9
 10
 11
 12
 13
 14
-15</pre>
+15
+16</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 9</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 10</span>
 
 <span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='app_id identifier id'>app_id</span><span class='comma token'>,</span> <span class='app_secret identifier id'>app_secret</span><span class='comma token'>,</span> <span class='token identifier id'>token</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
   <span class='@app_id ivar id'>@app_id</span> <span class='assign token'>=</span> <span class='app_id identifier id'>app_id</span>
@@ -533,12 +563,12 @@ A new instance of Client
       <pre class="lines">
 
 
-28
-29
-30</pre>
+32
+33
+34</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 28</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 32</span>
 
 <span class='def def kw'>def</span> <span class='access_token identifier id'>access_token</span>
   <span class='@access_token ivar id'>@access_token</span> <span class='andop op'>&amp;&amp;</span> <span class='dstring node'>&quot;#{@access_token.token} #{@access_token.params[:scope]}&quot;</span>
@@ -562,14 +592,14 @@ A new instance of Client
       <pre class="lines">
 
 
-32
-33
-34
-35
-36</pre>
+36
+37
+38
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 36</span>
 
 <span class='def def kw'>def</span> <span class='access_token= identifier id'>access_token=</span><span class='lparen token'>(</span><span class='token identifier id'>token</span><span class='rparen token'>)</span>
   <span class='token identifier id'>token</span><span class='comma token'>,</span> <span class='scope identifier id'>scope</span> <span class='assign token'>=</span> <span class='token identifier id'>token</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>' '</span><span class='comma token'>,</span> <span class='integer val'>2</span><span class='rparen token'>)</span>
@@ -585,25 +615,76 @@ A new instance of Client
       <div class="method_details ">
   <p class="signature " id="api_get-instance_method">
   
-    - (<tt>Object</tt>) <strong>api_get</strong>(path) 
+    - (<tt>Hash</tt>) <strong>api_get</strong>(path) 
   
 
   
-</p><table class="source_code">
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Hash of data at the request path
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>TODO:</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+document me
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+hash of data at the request path
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-45
-46
-47</pre>
+52
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 45</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 52</span>
 
 <span class='def def kw'>def</span> <span class='api_get identifier id'>api_get</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
-  <span class='request identifier id'>request</span><span class='lparen token'>(</span><span class='symbol val'>:get</span><span class='comma token'>,</span> <span class='dstring node'>&quot;/api/v1#{path}&quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='parsed identifier id'>parsed</span>
+  <span class='request identifier id'>request</span><span class='lparen token'>(</span><span class='symbol val'>:get</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{API_PATH}#{path}&quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='parsed identifier id'>parsed</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -624,15 +705,15 @@ A new instance of Client
       <pre class="lines">
 
 
-49
-50
-51</pre>
+56
+57
+58</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 49</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 56</span>
 
 <span class='def def kw'>def</span> <span class='api_post identifier id'>api_post</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='data identifier id'>data</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='request identifier id'>request</span><span class='lparen token'>(</span><span class='symbol val'>:post</span><span class='comma token'>,</span> <span class='dstring node'>&quot;/api/v1#{path}&quot;</span><span class='comma token'>,</span> <span class='data identifier id'>data</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='parsed identifier id'>parsed</span>
+  <span class='request identifier id'>request</span><span class='lparen token'>(</span><span class='symbol val'>:post</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{API_PATH}#{path}&quot;</span><span class='comma token'>,</span> <span class='data identifier id'>data</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='parsed identifier id'>parsed</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -653,15 +734,15 @@ A new instance of Client
       <pre class="lines">
 
 
-53
-54
-55</pre>
+60
+61
+62</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 60</span>
 
 <span class='def def kw'>def</span> <span class='api_put identifier id'>api_put</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='data identifier id'>data</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
-  <span class='request identifier id'>request</span><span class='lparen token'>(</span><span class='symbol val'>:put</span><span class='comma token'>,</span> <span class='dstring node'>&quot;/api/v1#{path}&quot;</span><span class='comma token'>,</span> <span class='data identifier id'>data</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='parsed identifier id'>parsed</span>
+  <span class='request identifier id'>request</span><span class='lparen token'>(</span><span class='symbol val'>:put</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{API_PATH}#{path}&quot;</span><span class='comma token'>,</span> <span class='data identifier id'>data</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='parsed identifier id'>parsed</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -703,14 +784,14 @@ A new instance of Client
       <pre class="lines">
 
 
-17
 18
 19
 20
-21</pre>
+21
+22</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 18</span>
 
 <span class='def def kw'>def</span> <span class='authorize_url identifier id'>authorize_url</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span>
   <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='string val'>':redirect_uri required'</span> <span class='unless unless_mod kw'>unless</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:redirect_uri</span><span class='rbrack token'>]</span>
@@ -726,22 +807,73 @@ A new instance of Client
       <div class="method_details ">
   <p class="signature " id="bill-instance_method">
   
-    - (<tt>Object</tt>) <strong>bill</strong>(id) 
+    - (<tt><span class='object_link'><a href="Bill.html" title="Grapi::Bill (class)">Bill</a></span></tt>) <strong>bill</strong>(id) 
   
 
   
-</p><table class="source_code">
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+The Bill matching the id requested
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>id</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+of the bill
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Bill.html" title="Grapi::Bill (class)">Bill</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the Bill matching the id requested
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-76
-77
-78</pre>
+97
+98
+99</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 76</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 97</span>
 
 <span class='def def kw'>def</span> <span class='bill identifier id'>bill</span><span class='lparen token'>(</span><span class='id identifier id'>id</span><span class='rparen token'>)</span>
   <span class='Bill constant id'>Bill</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='id identifier id'>id</span><span class='rparen token'>)</span>
@@ -765,12 +897,12 @@ A new instance of Client
       <pre class="lines">
 
 
-84
-85
-86</pre>
+108
+109
+110</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 84</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 108</span>
 
 <span class='def def kw'>def</span> <span class='create_bill identifier id'>create_bill</span><span class='lparen token'>(</span><span class='attrs identifier id'>attrs</span><span class='rparen token'>)</span>
   <span class='Bill constant id'>Bill</span><span class='dot token'>.</span><span class='from_hash identifier id'>from_hash</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='attrs identifier id'>attrs</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='save identifier id'>save</span>
@@ -784,18 +916,61 @@ A new instance of Client
       <div class="method_details ">
   <p class="signature " id="fetch_access_token-instance_method">
   
-    - (<tt>Object</tt>) <strong>fetch_access_token</strong>(auth_code, options) 
+    - (<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>) <strong>fetch_access_token</strong>(auth_code, options) 
   
 
   
 </p><div class="docstring">
   <div class="discussion">
-    
+    <p>
+The access_token required to make API calls to resources
+</p>
+
 
   </div>
 </div>
 <div class="tags">
-  <h3>Raises:</h3>
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>auth_code</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+to exchange for the access_token
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the access_token required to make API calls to resources
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+<h3>Raises:</h3>
 <ul class="raise">
   
     <li>
@@ -815,13 +990,13 @@ A new instance of Client
       <pre class="lines">
 
 
-23
-24
-25
-26</pre>
+27
+28
+29
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 27</span>
 
 <span class='def def kw'>def</span> <span class='fetch_access_token identifier id'>fetch_access_token</span><span class='lparen token'>(</span><span class='auth_code identifier id'>auth_code</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
   <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='string val'>':redirect_uri required'</span> <span class='unless unless_mod kw'>unless</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:redirect_uri</span><span class='rbrack token'>]</span>
@@ -836,25 +1011,55 @@ A new instance of Client
       <div class="method_details ">
   <p class="signature " id="merchant-instance_method">
   
-    - (<tt>Object</tt>) <strong>merchant</strong> 
+    - (<tt><span class='object_link'><a href="Merchant.html" title="Grapi::Merchant (class)">Merchant</a></span></tt>) <strong>merchant</strong> 
   
 
   
-</p><table class="source_code">
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+The merchant associated with the client&#8217;s access token
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Merchant.html" title="Grapi::Merchant (class)">Merchant</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the merchant associated with the client&#8217;s access token
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-57
-58
-59
-60
-61
-62</pre>
+66
+67
+68
+69
+70
+71</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 66</span>
 
 <span class='def def kw'>def</span> <span class='merchant identifier id'>merchant</span>
   <span class='scope identifier id'>scope</span> <span class='assign token'>=</span> <span class='@access_token ivar id'>@access_token</span><span class='dot token'>.</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:scope</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='split identifier id'>split</span>
@@ -871,22 +1076,73 @@ A new instance of Client
       <div class="method_details ">
   <p class="signature " id="payment-instance_method">
   
-    - (<tt>Object</tt>) <strong>payment</strong>(id) 
+    - (<tt><span class='object_link'><a href="Payment.html" title="Grapi::Payment (class)">Payment</a></span></tt>) <strong>payment</strong>(id) 
   
 
   
-</p><table class="source_code">
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+The payment matching the id requested
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>id</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+of the payment
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Payment.html" title="Grapi::Payment (class)">Payment</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the payment matching the id requested
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-80
-81
-82</pre>
+104
+105
+106</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 80</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 104</span>
 
 <span class='def def kw'>def</span> <span class='payment identifier id'>payment</span><span class='lparen token'>(</span><span class='id identifier id'>id</span><span class='rparen token'>)</span>
   <span class='Payment constant id'>Payment</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='id identifier id'>id</span><span class='rparen token'>)</span>
@@ -900,22 +1156,73 @@ A new instance of Client
       <div class="method_details ">
   <p class="signature " id="pre_authorization-instance_method">
   
-    - (<tt>Object</tt>) <strong>pre_authorization</strong>(id) 
+    - (<tt><span class='object_link'><a href="PreAuthorization.html" title="Grapi::PreAuthorization (class)">PreAuthorization</a></span></tt>) <strong>pre_authorization</strong>(id) 
   
 
   
-</p><table class="source_code">
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+The pre_authorization matching the id requested
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>id</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+of the pre_authorization
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="PreAuthorization.html" title="Grapi::PreAuthorization (class)">PreAuthorization</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the pre_authorization matching the id requested
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-68
-69
-70</pre>
+83
+84
+85</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 68</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 83</span>
 
 <span class='def def kw'>def</span> <span class='pre_authorization identifier id'>pre_authorization</span><span class='lparen token'>(</span><span class='id identifier id'>id</span><span class='rparen token'>)</span>
   <span class='PreAuthorization constant id'>PreAuthorization</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='id identifier id'>id</span><span class='rparen token'>)</span>
@@ -939,15 +1246,15 @@ A new instance of Client
       <pre class="lines">
 
 
-38
-39
-40
-41
 42
-43</pre>
+43
+44
+45
+46
+47</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 42</span>
 
 <span class='def def kw'>def</span> <span class='request identifier id'>request</span><span class='lparen token'>(</span><span class='method identifier id'>method</span><span class='comma token'>,</span> <span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='data identifier id'>data</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
   <span class='headers identifier id'>headers</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span> <span class='string val'>'Accept'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'application/json'</span> <span class='rbrace token'>}</span>
@@ -964,22 +1271,73 @@ A new instance of Client
       <div class="method_details ">
   <p class="signature " id="subscription-instance_method">
   
-    - (<tt>Object</tt>) <strong>subscription</strong>(id) 
+    - (<tt><span class='object_link'><a href="Subscription.html" title="Grapi::Subscription (class)">Subscription</a></span></tt>) <strong>subscription</strong>(id) 
   
 
   
-</p><table class="source_code">
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+The subscription matching the id requested
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>id</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+of the subscription
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Subscription.html" title="Grapi::Subscription (class)">Subscription</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the subscription matching the id requested
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-64
-65
-66</pre>
+76
+77
+78</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 64</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 76</span>
 
 <span class='def def kw'>def</span> <span class='subscription identifier id'>subscription</span><span class='lparen token'>(</span><span class='id identifier id'>id</span><span class='rparen token'>)</span>
   <span class='Subscription constant id'>Subscription</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='id identifier id'>id</span><span class='rparen token'>)</span>
@@ -993,22 +1351,73 @@ A new instance of Client
       <div class="method_details ">
   <p class="signature " id="user-instance_method">
   
-    - (<tt>Object</tt>) <strong>user</strong>(id) 
+    - (<tt><span class='object_link'><a href="User.html" title="Grapi::User (class)">User</a></span></tt>) <strong>user</strong>(id) 
   
 
   
-</p><table class="source_code">
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+The User matching the id requested
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>id</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../String.html" title="String (class)">String</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+of the user
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="User.html" title="Grapi::User (class)">User</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the User matching the id requested
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-72
-73
-74</pre>
+90
+91
+92</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 72</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 90</span>
 
 <span class='def def kw'>def</span> <span class='user identifier id'>user</span><span class='lparen token'>(</span><span class='id identifier id'>id</span><span class='rparen token'>)</span>
   <span class='User constant id'>User</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='id identifier id'>id</span><span class='rparen token'>)</span>
@@ -1024,7 +1433,7 @@ A new instance of Client
 </div>
     
     <div id="footer">
-  Generated on Mon Jul 18 14:14:38 2011 by 
+  Generated on Mon Jul 18 15:02:27 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.8.7).
 </div>
