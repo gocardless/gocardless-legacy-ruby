@@ -1,0 +1,1039 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: Grapi::Client
+  
+    &mdash; Documentation by YARD 0.7.2
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '..';
+  if (relpath != '') relpath += '/';
+</script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (C)</a> &raquo; 
+    <span class='title'><span class='object_link'><a href="../Grapi.html" title="Grapi (module)">Grapi</a></span></span>
+     &raquo; 
+    <span class="title">Client</span>
+  
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a id="class_list_link" href="#">Class List</a>
+  
+    <a id="method_list_link" href="#">Method List</a>
+  
+    <a id="file_list_link" href="#">File List</a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+    
+    <iframe id="search_frame"></iframe>
+    
+    <div id="content"><h1>Class: Grapi::Client
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Grapi::Client</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/grapi/client.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="BASE_URL-constant" class="">BASE_URL =
+          
+        </dt>
+        <dd><pre class="code"><span class='string val'>'http://localhost:3000'</span>
+</pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#access_token-instance_method" title="#access_token (instance method)">- (Object) <strong>access_token</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#access_token%3D-instance_method" title="#access_token= (instance method)">- (Object) <strong>access_token=</strong>(token) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#api_get-instance_method" title="#api_get (instance method)">- (Object) <strong>api_get</strong>(path) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#api_post-instance_method" title="#api_post (instance method)">- (Object) <strong>api_post</strong>(path, data) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#authorize_url-instance_method" title="#authorize_url (instance method)">- (Object) <strong>authorize_url</strong>(options) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#bill-instance_method" title="#bill (instance method)">- (Object) <strong>bill</strong>(id) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#create_bill-instance_method" title="#create_bill (instance method)">- (Object) <strong>create_bill</strong>(attrs) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#fetch_access_token-instance_method" title="#fetch_access_token (instance method)">- (Object) <strong>fetch_access_token</strong>(auth_code, options) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#get-instance_method" title="#get (instance method)">- (Object) <strong>get</strong>(path) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Client) <strong>initialize</strong>(app_id, app_secret, token = nil) </a>
+    
+
+    
+  </span>
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+A new instance of Client.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#merchant-instance_method" title="#merchant (instance method)">- (Object) <strong>merchant</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#payment-instance_method" title="#payment (instance method)">- (Object) <strong>payment</strong>(id) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#post-instance_method" title="#post (instance method)">- (Object) <strong>post</strong>(path, data) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#pre_authorization-instance_method" title="#pre_authorization (instance method)">- (Object) <strong>pre_authorization</strong>(id) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#subscription-instance_method" title="#subscription (instance method)">- (Object) <strong>subscription</strong>(id) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#user-instance_method" title="#user (instance method)">- (Object) <strong>user</strong>(id) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <p class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="Grapi::Client (class)">Client</a></span></tt>) <strong>initialize</strong>(app_id, app_secret, token = nil) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+A new instance of Client
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+9
+10
+11
+12
+13
+14
+15</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 9</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='app_id identifier id'>app_id</span><span class='comma token'>,</span> <span class='app_secret identifier id'>app_secret</span><span class='comma token'>,</span> <span class='token identifier id'>token</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='@app_id ivar id'>@app_id</span> <span class='assign token'>=</span> <span class='app_id identifier id'>app_id</span>
+  <span class='@app_secret ivar id'>@app_secret</span> <span class='assign token'>=</span> <span class='app_secret identifier id'>app_secret</span>
+  <span class='@oauth_client ivar id'>@oauth_client</span> <span class='assign token'>=</span> <span class='OAuth2 constant id'>OAuth2</span><span class='colon2 op'>::</span><span class='Client constant id'>Client</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='app_id identifier id'>app_id</span><span class='comma token'>,</span> <span class='app_secret identifier id'>app_secret</span><span class='comma token'>,</span> <span class='symbol val'>:site</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='BASE_URL constant id'>BASE_URL</span><span class='comma token'>,</span>
+                                     <span class='symbol val'>:token_url</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'/oauth/access_token'</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='access_token identifier id'>access_token</span> <span class='assign token'>=</span> <span class='token identifier id'>token</span> <span class='if if_mod kw'>if</span> <span class='token identifier id'>token</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+    
+    
+      <div class="method_details first">
+  <p class="signature first" id="access_token-instance_method">
+  
+    - (<tt>Object</tt>) <strong>access_token</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+28
+29
+30</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 28</span>
+
+<span class='def def kw'>def</span> <span class='access_token identifier id'>access_token</span>
+  <span class='@access_token ivar id'>@access_token</span> <span class='andop op'>&amp;&amp;</span> <span class='dstring node'>&quot;#{@access_token.token} #{@access_token.params[:scope]}&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="access_token=-instance_method">
+  
+    - (<tt>Object</tt>) <strong>access_token=</strong>(token) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+32
+33
+34
+35
+36</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 32</span>
+
+<span class='def def kw'>def</span> <span class='access_token= identifier id'>access_token=</span><span class='lparen token'>(</span><span class='token identifier id'>token</span><span class='rparen token'>)</span>
+  <span class='token identifier id'>token</span><span class='comma token'>,</span> <span class='scope identifier id'>scope</span> <span class='assign token'>=</span> <span class='token identifier id'>token</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>' '</span><span class='comma token'>,</span> <span class='integer val'>2</span><span class='rparen token'>)</span>
+  <span class='@access_token ivar id'>@access_token</span> <span class='assign token'>=</span> <span class='OAuth2 constant id'>OAuth2</span><span class='colon2 op'>::</span><span class='AccessToken constant id'>AccessToken</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='@oauth_client ivar id'>@oauth_client</span><span class='comma token'>,</span> <span class='token identifier id'>token</span><span class='rparen token'>)</span>
+  <span class='@access_token ivar id'>@access_token</span><span class='dot token'>.</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:scope</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='scope identifier id'>scope</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="api_get-instance_method">
+  
+    - (<tt>Object</tt>) <strong>api_get</strong>(path) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+42
+43
+44</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 42</span>
+
+<span class='def def kw'>def</span> <span class='api_get identifier id'>api_get</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
+  <span class='get identifier id'>get</span><span class='lparen token'>(</span><span class='dstring node'>&quot;/api/v1#{path}&quot;</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='parsed identifier id'>parsed</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="api_post-instance_method">
+  
+    - (<tt>Object</tt>) <strong>api_post</strong>(path, data) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+56
+57
+58</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 56</span>
+
+<span class='def def kw'>def</span> <span class='api_post identifier id'>api_post</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='data identifier id'>data</span><span class='rparen token'>)</span>
+  <span class='post identifier id'>post</span><span class='lparen token'>(</span><span class='dstring node'>&quot;/api/v1#{path}&quot;</span><span class='comma token'>,</span> <span class='data identifier id'>data</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='parsed identifier id'>parsed</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="authorize_url-instance_method">
+  
+    - (<tt>Object</tt>) <strong>authorize_url</strong>(options) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Raises:</h3>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+17
+18
+19
+20
+21</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 17</span>
+
+<span class='def def kw'>def</span> <span class='authorize_url identifier id'>authorize_url</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='string val'>':redirect_uri required'</span> <span class='unless unless_mod kw'>unless</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:redirect_uri</span><span class='rbrack token'>]</span>
+  <span class='params identifier id'>params</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='symbol val'>:client_id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='@app_id ivar id'>@app_id</span><span class='comma token'>,</span> <span class='symbol val'>:response_type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'code'</span><span class='rbrace token'>}</span>
+  <span class='@oauth_client ivar id'>@oauth_client</span><span class='dot token'>.</span><span class='authorize_url identifier id'>authorize_url</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="bill-instance_method">
+  
+    - (<tt>Object</tt>) <strong>bill</strong>(id) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+79
+80
+81</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 79</span>
+
+<span class='def def kw'>def</span> <span class='bill identifier id'>bill</span><span class='lparen token'>(</span><span class='id identifier id'>id</span><span class='rparen token'>)</span>
+  <span class='Bill constant id'>Bill</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='id identifier id'>id</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="create_bill-instance_method">
+  
+    - (<tt>Object</tt>) <strong>create_bill</strong>(attrs) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+87
+88
+89</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 87</span>
+
+<span class='def def kw'>def</span> <span class='create_bill identifier id'>create_bill</span><span class='lparen token'>(</span><span class='attrs identifier id'>attrs</span><span class='rparen token'>)</span>
+  <span class='Bill constant id'>Bill</span><span class='dot token'>.</span><span class='from_hash identifier id'>from_hash</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='attrs identifier id'>attrs</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='save identifier id'>save</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="fetch_access_token-instance_method">
+  
+    - (<tt>Object</tt>) <strong>fetch_access_token</strong>(auth_code, options) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Raises:</h3>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ArgumentError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+23
+24
+25
+26</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 23</span>
+
+<span class='def def kw'>def</span> <span class='fetch_access_token identifier id'>fetch_access_token</span><span class='lparen token'>(</span><span class='auth_code identifier id'>auth_code</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='string val'>':redirect_uri required'</span> <span class='unless unless_mod kw'>unless</span> <span class='options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:redirect_uri</span><span class='rbrack token'>]</span>
+  <span class='@access_token ivar id'>@access_token</span> <span class='assign token'>=</span> <span class='@oauth_client ivar id'>@oauth_client</span><span class='dot token'>.</span><span class='auth_code identifier id'>auth_code</span><span class='dot token'>.</span><span class='get_token identifier id'>get_token</span><span class='lparen token'>(</span><span class='auth_code identifier id'>auth_code</span><span class='comma token'>,</span> <span class='options identifier id'>options</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="get-instance_method">
+  
+    - (<tt>Object</tt>) <strong>get</strong>(path) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+38
+39
+40</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 38</span>
+
+<span class='def def kw'>def</span> <span class='get identifier id'>get</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
+  <span class='@access_token ivar id'>@access_token</span><span class='dot token'>.</span><span class='get identifier id'>get</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='symbol val'>:headers</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span> <span class='symbol val'>:Accept</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'application/json'</span> <span class='rbrace token'>}</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="merchant-instance_method">
+  
+    - (<tt>Object</tt>) <strong>merchant</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+60
+61
+62
+63
+64
+65</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 60</span>
+
+<span class='def def kw'>def</span> <span class='merchant identifier id'>merchant</span>
+  <span class='scope identifier id'>scope</span> <span class='assign token'>=</span> <span class='@access_token ivar id'>@access_token</span><span class='dot token'>.</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:scope</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='split identifier id'>split</span>
+  <span class='perm identifier id'>perm</span> <span class='assign token'>=</span> <span class='scope identifier id'>scope</span><span class='dot token'>.</span><span class='select identifier id'>select</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='p identifier id'>p</span><span class='bitor op'>|</span> <span class='p identifier id'>p</span><span class='dot token'>.</span><span class='start_with? fid id'>start_with?</span><span class='lparen token'>(</span><span class='string val'>'manage_merchant:'</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='first identifier id'>first</span>
+  <span class='merchant_id identifier id'>merchant_id</span> <span class='assign token'>=</span> <span class='perm identifier id'>perm</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>':'</span><span class='rparen token'>)</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span>
+  <span class='Merchant constant id'>Merchant</span><span class='dot token'>.</span><span class='from_hash identifier id'>from_hash</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='api_get identifier id'>api_get</span><span class='lparen token'>(</span><span class='dstring node'>&quot;/merchants/#{merchant_id}&quot;</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="payment-instance_method">
+  
+    - (<tt>Object</tt>) <strong>payment</strong>(id) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+83
+84
+85</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 83</span>
+
+<span class='def def kw'>def</span> <span class='payment identifier id'>payment</span><span class='lparen token'>(</span><span class='id identifier id'>id</span><span class='rparen token'>)</span>
+  <span class='Payment constant id'>Payment</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='id identifier id'>id</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="post-instance_method">
+  
+    - (<tt>Object</tt>) <strong>post</strong>(path, data) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+46
+47
+48
+49
+50
+51
+52
+53
+54</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 46</span>
+
+<span class='def def kw'>def</span> <span class='post identifier id'>post</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='data identifier id'>data</span><span class='rparen token'>)</span>
+  <span class='@access_token ivar id'>@access_token</span><span class='dot token'>.</span><span class='post identifier id'>post</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='lbrace token'>{</span>
+    <span class='symbol val'>:headers</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span>
+      <span class='string val'>'Accept'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'application/json'</span><span class='comma token'>,</span>
+      <span class='string val'>'Content-Type'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'application/json'</span><span class='comma token'>,</span>
+    <span class='rbrace token'>}</span><span class='comma token'>,</span>
+    <span class='symbol val'>:body</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='JSON constant id'>JSON</span><span class='dot token'>.</span><span class='generate identifier id'>generate</span><span class='lparen token'>(</span><span class='data identifier id'>data</span><span class='rparen token'>)</span><span class='comma token'>,</span>
+  <span class='rbrace token'>}</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="pre_authorization-instance_method">
+  
+    - (<tt>Object</tt>) <strong>pre_authorization</strong>(id) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+71
+72
+73</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 71</span>
+
+<span class='def def kw'>def</span> <span class='pre_authorization identifier id'>pre_authorization</span><span class='lparen token'>(</span><span class='id identifier id'>id</span><span class='rparen token'>)</span>
+  <span class='PreAuthorization constant id'>PreAuthorization</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='id identifier id'>id</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="subscription-instance_method">
+  
+    - (<tt>Object</tt>) <strong>subscription</strong>(id) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+67
+68
+69</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 67</span>
+
+<span class='def def kw'>def</span> <span class='subscription identifier id'>subscription</span><span class='lparen token'>(</span><span class='id identifier id'>id</span><span class='rparen token'>)</span>
+  <span class='Subscription constant id'>Subscription</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='id identifier id'>id</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="user-instance_method">
+  
+    - (<tt>Object</tt>) <strong>user</strong>(id) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+75
+76
+77</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/client.rb', line 75</span>
+
+<span class='def def kw'>def</span> <span class='user identifier id'>user</span><span class='lparen token'>(</span><span class='id identifier id'>id</span><span class='rparen token'>)</span>
+  <span class='User constant id'>User</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='id identifier id'>id</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+    
+    <div id="footer">
+  Generated on Mon Jul 18 12:47:25 2011 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.7.2 (ruby-1.8.7).
+</div>
+
+  </body>
+</html>

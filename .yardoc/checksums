@@ -1,0 +1,12 @@
+lib/grapi/client.rb 2b7179b5fa416abb49a1cc12f1e72c0567744e6a
+lib/grapi/utils.rb e5337864ec220abcbba15b5e91d4518c55cf2041
+lib/grapi/payment.rb d9f4d83348fe1ec176bd132e89ac04388af51dab
+lib/grapi/bill.rb 749051326ca9b74bca7d4651ce1d1771cd8a1c96
+lib/grapi/merchant.rb fe72c394f564879e57382bc4ffeeb9a2e7b16a35
+lib/grapi/pre_authorization.rb c2b267c4703679848827336aec8f0e9413caf21d
+lib/grapi/subscription.rb c212b3ae80f8906004aad7c43a4f7d0dba75b2d4
+lib/grapi.rb 04bd8a2794e7f254f3b8c85b24ed7dc6c9a1c058
+lib/grapi/version.rb 3201a0904306474a626c5f496a9eca1e66f9788e
+lib/seed.rb d6cbe0861a6c80caee5f224d75792a8133a282fd
+lib/grapi/resource.rb b885e996c8e755a1bb703cd4dca95ac275732def
+lib/grapi/user.rb fafd8dbe3e36090c92a726c78cc9113e4dedcadb

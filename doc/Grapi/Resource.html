@@ -1,0 +1,1072 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: Grapi::Resource
+  
+    &mdash; Documentation by YARD 0.7.2
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '..';
+  if (relpath != '') relpath += '/';
+</script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (R)</a> &raquo; 
+    <span class='title'><span class='object_link'><a href="../Grapi.html" title="Grapi (module)">Grapi</a></span></span>
+     &raquo; 
+    <span class="title">Resource</span>
+  
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a id="class_list_link" href="#">Class List</a>
+  
+    <a id="method_list_link" href="#">Method List</a>
+  
+    <a id="file_list_link" href="#">File List</a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+    
+    <iframe id="search_frame"></iframe>
+    
+    <div id="content"><h1>Class: Grapi::Resource
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Grapi::Resource</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/grapi/resource.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<div id="subclasses">
+  <h2>Direct Known Subclasses</h2>
+  <p class="children"><span class='object_link'><a href="Bill.html" title="Grapi::Bill (class)">Bill</a></span>, <span class='object_link'><a href="Merchant.html" title="Grapi::Merchant (class)">Merchant</a></span>, <span class='object_link'><a href="Payment.html" title="Grapi::Payment (class)">Payment</a></span>, <span class='object_link'><a href="PreAuthorization.html" title="Grapi::PreAuthorization (class)">PreAuthorization</a></span>, <span class='object_link'><a href="Subscription.html" title="Grapi::Subscription (class)">Subscription</a></span>, <span class='object_link'><a href="User.html" title="Grapi::User (class)">User</a></span></p>
+</div>
+
+
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#id-instance_method" title="#id (instance method)">- (Object) <strong>id</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Returns the value of attribute id.
+</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#uri-instance_method" title="#uri (instance method)">- (Object) <strong>uri</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Returns the value of attribute uri.
+</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#date_accessor-class_method" title="date_accessor (class method)">+ (Object) <strong>date_accessor</strong>(*args) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#date_writer-class_method" title="date_writer (class method)">+ (Object) <strong>date_writer</strong>(*args) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#find-class_method" title="find (class method)">+ (Object) <strong>find</strong>(client, id) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#from_hash-class_method" title="from_hash (class method)">+ (Object) <strong>from_hash</strong>(client, hash) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#reference_accessor-class_method" title="reference_accessor (class method)">+ (Object) <strong>reference_accessor</strong>(*args) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#reference_reader-class_method" title="reference_reader (class method)">+ (Object) <strong>reference_reader</strong>(*args) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#reference_writer-class_method" title="reference_writer (class method)">+ (Object) <strong>reference_writer</strong>(*args) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Resource) <strong>initialize</strong>(client) </a>
+    
+
+    
+  </span>
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+A new instance of Resource.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#inspect-instance_method" title="#inspect (instance method)">- (Object) <strong>inspect</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#persisted%3F-instance_method" title="#persisted? (instance method)">- (Boolean) <strong>persisted?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#save-instance_method" title="#save (instance method)">- (Object) <strong>save</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_hash-instance_method" title="#to_hash (instance method)">- (Object) <strong>to_hash</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_json-instance_method" title="#to_json (instance method)">- (Object) <strong>to_json</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <p class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="Grapi::Resource (class)">Resource</a></span></tt>) <strong>initialize</strong>(client) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+A new instance of Resource
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+5
+6
+7</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 5</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='client identifier id'>client</span><span class='rparen token'>)</span>
+  <span class='@client ivar id'>@client</span> <span class='assign token'>=</span> <span class='client identifier id'>client</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="id=-instance_method"></span>
+      <span id="id-instance_method"></span>
+      <div class="method_details first">
+  <p class="signature first" id="id-instance_method">
+  
+    - (<tt>Object</tt>) <strong>id</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Returns the value of attribute id
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+79
+80
+81</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 79</span>
+
+<span class='def def kw'>def</span> <span class='id identifier id'>id</span>
+  <span class='@id ivar id'>@id</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="uri=-instance_method"></span>
+      <span id="uri-instance_method"></span>
+      <div class="method_details ">
+  <p class="signature " id="uri-instance_method">
+  
+    - (<tt>Object</tt>) <strong>uri</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Returns the value of attribute uri
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+79
+80
+81</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 79</span>
+
+<span class='def def kw'>def</span> <span class='uri identifier id'>uri</span>
+  <span class='@uri ivar id'>@uri</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+    
+    
+      <div class="method_details first">
+  <p class="signature first" id="date_accessor-class_method">
+  
+    + (<tt>Object</tt>) <strong>date_accessor</strong>(*args) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+31
+32
+33
+34</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 31</span>
+
+<span class='def def kw'>def</span> <span class='date_accessor identifier id'>date_accessor</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='attr_reader identifier id'>attr_reader</span> <span class='mult op'>*</span><span class='args identifier id'>args</span>
+  <span class='date_writer identifier id'>date_writer</span> <span class='mult op'>*</span><span class='args identifier id'>args</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="date_writer-class_method">
+  
+    + (<tt>Object</tt>) <strong>date_writer</strong>(*args) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+22
+23
+24
+25
+26
+27
+28
+29</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 22</span>
+
+<span class='def def kw'>def</span> <span class='date_writer identifier id'>date_writer</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='attr identifier id'>attr</span><span class='bitor op'>|</span>
+    <span class='define_method identifier id'>define_method</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{attr.to_s}=&quot;</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='date identifier id'>date</span><span class='bitor op'>|</span>
+      <span class='date identifier id'>date</span> <span class='assign token'>=</span> <span class='date identifier id'>date</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='String constant id'>String</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='DateTime constant id'>DateTime</span><span class='dot token'>.</span><span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='date identifier id'>date</span><span class='rparen token'>)</span> <span class='colon op'>:</span> <span class='date identifier id'>date</span>
+      <span class='instance_variable_set identifier id'>instance_variable_set</span><span class='lparen token'>(</span><span class='dstring node'>&quot;@#{attr}&quot;</span><span class='comma token'>,</span> <span class='date identifier id'>date</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="find-class_method">
+  
+    + (<tt>Object</tt>) <strong>find</strong>(client, id) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+16
+17
+18
+19
+20</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 16</span>
+
+<span class='def def kw'>def</span> <span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='client identifier id'>client</span><span class='comma token'>,</span> <span class='id identifier id'>id</span><span class='rparen token'>)</span>
+  <span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='colon2 op'>::</span><span class='ENDPOINT constant id'>ENDPOINT</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='string val'>':id'</span><span class='comma token'>,</span> <span class='id identifier id'>id</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+  <span class='data identifier id'>data</span> <span class='assign token'>=</span> <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='api_get identifier id'>api_get</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='from_hash identifier id'>from_hash</span><span class='lparen token'>(</span><span class='client identifier id'>client</span><span class='comma token'>,</span> <span class='data identifier id'>data</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="from_hash-class_method">
+  
+    + (<tt>Object</tt>) <strong>from_hash</strong>(client, hash) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+10
+11
+12
+13
+14</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 10</span>
+
+<span class='def def kw'>def</span> <span class='from_hash identifier id'>from_hash</span><span class='lparen token'>(</span><span class='client identifier id'>client</span><span class='comma token'>,</span> <span class='hash identifier id'>hash</span><span class='rparen token'>)</span>
+  <span class='obj identifier id'>obj</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='client identifier id'>client</span><span class='rparen token'>)</span>
+  <span class='hash identifier id'>hash</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='key identifier id'>key</span><span class='comma token'>,</span><span class='val identifier id'>val</span><span class='bitor op'>|</span> <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{key}=&quot;</span><span class='comma token'>,</span> <span class='val identifier id'>val</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='obj identifier id'>obj</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="reference_accessor-class_method">
+  
+    + (<tt>Object</tt>) <strong>reference_accessor</strong>(*args) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+73
+74
+75
+76</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 73</span>
+
+<span class='def def kw'>def</span> <span class='reference_accessor identifier id'>reference_accessor</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='reference_reader identifier id'>reference_reader</span> <span class='mult op'>*</span><span class='args identifier id'>args</span>
+  <span class='reference_writer identifier id'>reference_writer</span> <span class='mult op'>*</span><span class='args identifier id'>args</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="reference_reader-class_method">
+  
+    + (<tt>Object</tt>) <strong>reference_reader</strong>(*args) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 36</span>
+
+<span class='def def kw'>def</span> <span class='reference_reader identifier id'>reference_reader</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='attr_reader identifier id'>attr_reader</span> <span class='mult op'>*</span><span class='args identifier id'>args</span>
+
+  <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='attr identifier id'>attr</span><span class='bitor op'>|</span>
+    <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='attr identifier id'>attr</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='end_with? fid id'>end_with?</span><span class='lparen token'>(</span><span class='string val'>'_id'</span><span class='rparen token'>)</span>
+      <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='string val'>'reference_reader args must end with _id'</span>
+    <span class='end end kw'>end</span>
+
+    <span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='attr identifier id'>attr</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/_id$/</span><span class='comma token'>,</span> <span class='string val'>''</span><span class='rparen token'>)</span>
+    <span class='define_method identifier id'>define_method</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rparen token'>)</span> <span class='do do kw'>do</span>
+      <span class='obj_id identifier id'>obj_id</span> <span class='assign token'>=</span> <span class='instance_variable_get identifier id'>instance_variable_get</span><span class='lparen token'>(</span><span class='dstring node'>&quot;@#{attr}&quot;</span><span class='rparen token'>)</span>
+      <span class='klass identifier id'>klass</span> <span class='assign token'>=</span> <span class='Grapi constant id'>Grapi</span><span class='dot token'>.</span><span class='const_get identifier id'>const_get</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='dot token'>.</span><span class='camelize identifier id'>camelize</span><span class='rparen token'>)</span>
+      <span class='klass identifier id'>klass</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='@client ivar id'>@client</span><span class='comma token'>,</span> <span class='obj_id identifier id'>obj_id</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="reference_writer-class_method">
+  
+    + (<tt>Object</tt>) <strong>reference_writer</strong>(*args) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 53</span>
+
+<span class='def def kw'>def</span> <span class='reference_writer identifier id'>reference_writer</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='attr_writer identifier id'>attr_writer</span> <span class='mult op'>*</span><span class='args identifier id'>args</span>
+
+  <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='attr identifier id'>attr</span><span class='bitor op'>|</span>
+    <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='attr identifier id'>attr</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='end_with? fid id'>end_with?</span><span class='lparen token'>(</span><span class='string val'>'_id'</span><span class='rparen token'>)</span>
+      <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='string val'>'reference_writer args must end with _id'</span>
+    <span class='end end kw'>end</span>
+
+    <span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='attr identifier id'>attr</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/_id$/</span><span class='comma token'>,</span> <span class='string val'>''</span><span class='rparen token'>)</span>
+    <span class='define_method identifier id'>define_method</span><span class='lparen token'>(</span><span class='dstring node'>&quot;#{name}=&quot;</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='rparen token'>)</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='obj identifier id'>obj</span><span class='bitor op'>|</span>
+      <span class='klass identifier id'>klass</span> <span class='assign token'>=</span> <span class='Grapi constant id'>Grapi</span><span class='dot token'>.</span><span class='const_get identifier id'>const_get</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='dot token'>.</span><span class='camelize identifier id'>camelize</span><span class='rparen token'>)</span>
+      <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span><span class='lparen token'>(</span><span class='klass identifier id'>klass</span><span class='rparen token'>)</span>
+        <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Object must be an instance of #{klass}&quot;</span>
+      <span class='end end kw'>end</span>
+
+      <span class='instance_variable_set identifier id'>instance_variable_set</span><span class='lparen token'>(</span><span class='dstring node'>&quot;@#{attr}&quot;</span><span class='comma token'>,</span> <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='id identifier id'>id</span><span class='rparen token'>)</span>
+    <span class='end end kw'>end</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+    
+    
+      <div class="method_details first">
+  <p class="signature first" id="inspect-instance_method">
+  
+    - (<tt>Object</tt>) <strong>inspect</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+90
+91
+92</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 90</span>
+
+<span class='def def kw'>def</span> <span class='inspect identifier id'>inspect</span>
+  <span class='dstring node'>&quot;#&lt;#{self.class} #{to_hash.map { |k,v| &quot;#{k}=#{v.inspect}&quot; }.join(', ')}&gt;&quot;</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="persisted?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>persisted?</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+94
+95
+96</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 94</span>
+
+<span class='def def kw'>def</span> <span class='persisted? fid id'>persisted?</span>
+  <span class='notop op'>!</span><span class='id identifier id'>id</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="save-instance_method">
+  
+    - (<tt>Object</tt>) <strong>save</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+98
+99
+100
+101</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 98</span>
+
+<span class='def def kw'>def</span> <span class='save identifier id'>save</span>
+  <span class='method identifier id'>method</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='persisted? fid id'>persisted?</span> <span class='integer val'>? </span><span class='string val'>'put'</span> <span class='colon op'>:</span> <span class='string val'>'post'</span>
+  <span class='@client ivar id'>@client</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='dstring node'>&quot;api_#{method}&quot;</span><span class='comma token'>,</span> <span class='to_hash identifier id'>to_hash</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="to_hash-instance_method">
+  
+    - (<tt>Object</tt>) <strong>to_hash</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+81
+82
+83
+84</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 81</span>
+
+<span class='def def kw'>def</span> <span class='to_hash identifier id'>to_hash</span>
+  <span class='attrs identifier id'>attrs</span> <span class='assign token'>=</span> <span class='instance_variables identifier id'>instance_variables</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='v identifier id'>v</span><span class='bitor op'>|</span> <span class='v identifier id'>v</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/^@/</span><span class='comma token'>,</span> <span class='string val'>''</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+  <span class='Hash constant id'>Hash</span><span class='lbrack token'>[</span><span class='attrs identifier id'>attrs</span><span class='dot token'>.</span><span class='select identifier id'>select</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='v identifier id'>v</span><span class='bitor op'>|</span> <span class='respond_to? fid id'>respond_to?</span> <span class='v identifier id'>v</span> <span class='rbrace token'>}</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='v identifier id'>v</span><span class='bitor op'>|</span> <span class='lbrack token'>[</span><span class='v identifier id'>v</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span><span class='comma token'>,</span> <span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='v identifier id'>v</span><span class='rparen token'>)</span><span class='rbrack token'>]</span> <span class='rbrace token'>}</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="to_json-instance_method">
+  
+    - (<tt>Object</tt>) <strong>to_json</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+86
+87
+88</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 86</span>
+
+<span class='def def kw'>def</span> <span class='to_json identifier id'>to_json</span>
+  <span class='to_hash identifier id'>to_hash</span><span class='dot token'>.</span><span class='to_json identifier id'>to_json</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+    
+    <div id="footer">
+  Generated on Mon Jul 18 12:47:25 2011 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.7.2 (ruby-1.8.7).
+</div>
+
+  </body>
+</html>
