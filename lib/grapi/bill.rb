@@ -2,6 +2,9 @@ module Grapi
   class Bill < Resource
     ENDPOINT = '/bills/:id'
 
+    creatable
+    updatable
+
     attr_accessor :amount
     attr_accessor :source_type
 
