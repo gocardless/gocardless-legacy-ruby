@@ -15,6 +15,10 @@ module Grapi
       self.access_token = token if token
     end
 
+    # Generate the OAuth authorize url
+    # @param [Hash] options parameters to be included in the url.
+    #   +:redirect_uri+ is required.
+    # @return [String] the authorize url
     def authorize_url(options)
       raise ArgumentError, ':redirect_uri required' unless options[:redirect_uri]
       params = {:client_id => @app_id, :response_type => 'code'}
@@ -39,19 +43,32 @@ module Grapi
       @access_token.params[:scope] = scope
     end
 
-    # @method api_get(path) fetches data at the specified path
-    # @param [String] TODO: document me
-    # @return [Hash] hash of data at the request path
+    # Issue an GET request to the API server
+    #
+    # @note this method is for internal use
+    # @param [String] path the path that will be added to the API prefix
+    # @param [Hash] params query string parameters
+    # @return [Hash] hash the parsed response data
     def api_get(path, params = {})
       request(:get, "#{API_PATH}#{path}", :params => params).parsed
     end
 
-    # @private
+    # Issue a POST request to the API server
+    #
+    # @note this method is for internal use
+    # @param [String] path the path that will be added to the API prefix
+    # @param [Hash] data a hash of data that will be sent as the request body
+    # @return [Hash] hash the parsed response data
     def api_post(path, data = {})
       request(:post, "#{API_PATH}#{path}", :data => data).parsed
     end
 
-    # @visibility private
+    # Issue a PUT request to the API server
+    #
+    # @note this method is for internal use
+    # @param [String] path the path that will be added to the API prefix
+    # @param [Hash] data a hash of data that will be sent as the request body
+    # @return [Hash] hash the parsed response data
     def api_put(path, data = {})
       request(:put, "#{API_PATH}#{path}", :data => data).parsed
     end
