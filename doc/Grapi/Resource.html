@@ -171,6 +171,48 @@ The uri property of the object.
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#creatable-class_method" title="creatable (class method)">+ (Object) <strong>creatable</strong>(val = true) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#creatable%3F-class_method" title="creatable? (class method)">+ (Boolean) <strong>creatable?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#date_accessor-class_method" title="date_accessor (class method)">+ (Object) <strong>date_accessor</strong>(*args) </a>
     
 
@@ -298,6 +340,48 @@ The uri property of the object.
   <span class="summary_signature">
     
       <a href="#reference_writer-class_method" title="reference_writer (class method)">+ (Object) <strong>reference_writer</strong>(*args) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#updatable-class_method" title="updatable (class method)">+ (Object) <strong>updatable</strong>(val = true) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#updatable%3F-class_method" title="updatable? (class method)">+ (Boolean) <strong>updatable?</strong> </a>
     
 
     
@@ -552,12 +636,12 @@ the id property of the object
       <pre class="lines">
 
 
-82
-83
-84</pre>
+98
+99
+100</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 82</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 98</span>
 
 <span class='def def kw'>def</span> <span class='id identifier id'>id</span>
   <span class='@id ivar id'>@id</span>
@@ -614,12 +698,12 @@ the uri property of the object
       <pre class="lines">
 
 
-83
-84
-85</pre>
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 83</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 99</span>
 
 <span class='def def kw'>def</span> <span class='uri identifier id'>uri</span>
   <span class='@uri ivar id'>@uri</span>
@@ -638,7 +722,86 @@ the uri property of the object
     
     
       <div class="method_details first">
-  <p class="signature first" id="date_accessor-class_method">
+  <p class="signature first" id="creatable-class_method">
+  
+    + (<tt>Object</tt>) <strong>creatable</strong>(val = true) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+78
+79
+80</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 78</span>
+
+<span class='def def kw'>def</span> <span class='creatable identifier id'>creatable</span><span class='lparen token'>(</span><span class='val identifier id'>val</span> <span class='assign token'>=</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+  <span class='@creatable ivar id'>@creatable</span> <span class='assign token'>=</span> <span class='val identifier id'>val</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="creatable?-class_method">
+  
+    + (<tt>Boolean</tt>) <strong>creatable?</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+86
+87
+88</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 86</span>
+
+<span class='def def kw'>def</span> <span class='creatable? fid id'>creatable?</span>
+  <span class='notop op'>!</span><span class='notop op'>!</span><span class='@creatable ivar id'>@creatable</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="date_accessor-class_method">
   
     + (<tt>Object</tt>) <strong>date_accessor</strong>(*args) 
   
@@ -730,7 +893,7 @@ the uri property of the object
       <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 16</span>
 
 <span class='def def kw'>def</span> <span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='client identifier id'>client</span><span class='comma token'>,</span> <span class='id identifier id'>id</span><span class='rparen token'>)</span>
-  <span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='colon2 op'>::</span><span class='ENDPOINT constant id'>ENDPOINT</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='string val'>':id'</span><span class='comma token'>,</span> <span class='id identifier id'>id</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+  <span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='endpoint identifier id'>endpoint</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='string val'>':id'</span><span class='comma token'>,</span> <span class='id identifier id'>id</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
   <span class='data identifier id'>data</span> <span class='assign token'>=</span> <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='api_get identifier id'>api_get</span><span class='lparen token'>(</span><span class='path identifier id'>path</span><span class='rparen token'>)</span>
   <span class='self self kw'>self</span><span class='dot token'>.</span><span class='from_hash identifier id'>from_hash</span><span class='lparen token'>(</span><span class='client identifier id'>client</span><span class='comma token'>,</span> <span class='data identifier id'>data</span><span class='rparen token'>)</span>
 <span class='end end kw'>end</span>
@@ -920,6 +1083,85 @@ the uri property of the object
 </table>
 </div>
     
+      <div class="method_details ">
+  <p class="signature " id="updatable-class_method">
+  
+    + (<tt>Object</tt>) <strong>updatable</strong>(val = true) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+82
+83
+84</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 82</span>
+
+<span class='def def kw'>def</span> <span class='updatable identifier id'>updatable</span><span class='lparen token'>(</span><span class='val identifier id'>val</span> <span class='assign token'>=</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>
+  <span class='@updatable ivar id'>@updatable</span> <span class='assign token'>=</span> <span class='val identifier id'>val</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="updatable?-class_method">
+  
+    + (<tt>Boolean</tt>) <strong>updatable?</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+90
+91
+92</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 90</span>
+
+<span class='def def kw'>def</span> <span class='updatable? fid id'>updatable?</span>
+  <span class='notop op'>!</span><span class='notop op'>!</span><span class='@updatable ivar id'>@updatable</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
   </div>
 
   <div id="instance_method_details" class="method_details_list">
@@ -939,12 +1181,12 @@ the uri property of the object
       <pre class="lines">
 
 
-94
-95
-96</pre>
+110
+111
+112</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 94</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 110</span>
 
 <span class='def def kw'>def</span> <span class='inspect identifier id'>inspect</span>
   <span class='dstring node'>&quot;#&lt;#{self.class} #{to_hash.map { |k,v| &quot;#{k}=#{v.inspect}&quot; }.join(', ')}&gt;&quot;</span>
@@ -989,12 +1231,12 @@ the uri property of the object
       <pre class="lines">
 
 
-98
-99
-100</pre>
+114
+115
+116</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 98</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 114</span>
 
 <span class='def def kw'>def</span> <span class='persisted? fid id'>persisted?</span>
   <span class='notop op'>!</span><span class='id identifier id'>id</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
@@ -1018,18 +1260,30 @@ the uri property of the object
       <pre class="lines">
 
 
-102
-103
-104
-105
-106</pre>
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 102</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 118</span>
 
 <span class='def def kw'>def</span> <span class='save identifier id'>save</span>
-  <span class='method identifier id'>method</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='persisted? fid id'>persisted?</span> <span class='integer val'>? </span><span class='string val'>'put'</span> <span class='colon op'>:</span> <span class='string val'>'post'</span>
-  <span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='colon2 op'>::</span><span class='ENDPOINT constant id'>ENDPOINT</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='string val'>':id'</span><span class='comma token'>,</span> <span class='id identifier id'>id</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
+  <span class='method identifier id'>method</span> <span class='assign token'>=</span> <span class='if if kw'>if</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='persisted? fid id'>persisted?</span>
+    <span class='raise identifier id'>raise</span> <span class='dstring node'>&quot;#{self.class} cannot be updated&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='updatable? fid id'>updatable?</span>
+    <span class='string val'>'put'</span>
+  <span class='else else kw'>else</span>
+    <span class='raise identifier id'>raise</span> <span class='dstring node'>&quot;#{self.class} cannot be created&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='creatable? fid id'>creatable?</span>
+    <span class='string val'>'post'</span>
+  <span class='end end kw'>end</span>
+  <span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='class identifier id'>class</span><span class='dot token'>.</span><span class='endpoint identifier id'>endpoint</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='string val'>':id'</span><span class='comma token'>,</span> <span class='id identifier id'>id</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='rparen token'>)</span>
   <span class='@client ivar id'>@client</span><span class='dot token'>.</span><span class='send identifier id'>send</span><span class='lparen token'>(</span><span class='dstring node'>&quot;api_#{method}&quot;</span><span class='comma token'>,</span> <span class='path identifier id'>path</span><span class='comma token'>,</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='to_hash identifier id'>to_hash</span><span class='rparen token'>)</span>
 <span class='end end kw'>end</span>
 </pre>
@@ -1051,13 +1305,13 @@ the uri property of the object
       <pre class="lines">
 
 
-85
-86
-87
-88</pre>
+101
+102
+103
+104</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 85</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 101</span>
 
 <span class='def def kw'>def</span> <span class='to_hash identifier id'>to_hash</span>
   <span class='attrs identifier id'>attrs</span> <span class='assign token'>=</span> <span class='instance_variables identifier id'>instance_variables</span><span class='dot token'>.</span><span class='map identifier id'>map</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='v identifier id'>v</span><span class='bitor op'>|</span> <span class='v identifier id'>v</span><span class='dot token'>.</span><span class='sub identifier id'>sub</span><span class='lparen token'>(</span><span class='regexp val'>/^@/</span><span class='comma token'>,</span> <span class='string val'>''</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
@@ -1082,12 +1336,12 @@ the uri property of the object
       <pre class="lines">
 
 
-90
-91
-92</pre>
+106
+107
+108</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'lib/grapi/resource.rb', line 106</span>
 
 <span class='def def kw'>def</span> <span class='to_json identifier id'>to_json</span>
   <span class='to_hash identifier id'>to_hash</span><span class='dot token'>.</span><span class='to_json identifier id'>to_json</span>
@@ -1103,7 +1357,7 @@ the uri property of the object
 </div>
     
     <div id="footer">
-  Generated on Mon Jul 18 15:02:26 2011 by 
+  Generated on Mon Jul 18 17:06:28 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.8.7).
 </div>

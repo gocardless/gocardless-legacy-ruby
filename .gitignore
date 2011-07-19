@@ -1,2 +1,4 @@
 lib/irb_seed.rb
+lib/seed.rb
+lib/example.rb
 .yardoc
