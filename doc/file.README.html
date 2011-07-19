@@ -54,13 +54,45 @@
     
     <iframe id="search_frame"></iframe>
     
-    <div id="content"><div id='filecontents'><p>
-README for Grapi-Ruby
-</p>
+    <div id="content"><div id='filecontents'><h1>GoCardless Ruby API</h1>
+<h2>Example usage</h2>
+<pre class="code">
+  <span class='require identifier id'>require</span> <span class='string val'>'grapi'</span>
+
+  <span class='comment val'># These are found in the GoCardless app admin interface</span>
+  <span class='APP_ID constant id'>APP_ID</span> <span class='assign token'>=</span> <span class='string val'>'3QmpV5yi8Ii9Rc2uCwalWRsqkpibtk5ISOk/F+oyzrOoNpjGguZ4IRn2379agARS'</span>
+  <span class='APP_SECRET constant id'>APP_SECRET</span> <span class='assign token'>=</span> <span class='string val'>'8oCITH2AVhaUYqJ+5hjyt8JUlSo5m/WTYLH8E/GO+TrBWdRK45lvoRt/zetr+t5Y'</span>
+
+  <span class='comment val'># Create a new instance of the GoCardless API client</span>
+  <span class='client identifier id'>client</span> <span class='assign token'>=</span> <span class='Grapi constant id'>Grapi</span><span class='colon2 op'>::</span><span class='Client constant id'>Client</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='app_id identifier id'>app_id</span><span class='comma token'>,</span> <span class='app_secret identifier id'>app_secret</span><span class='rparen token'>)</span>
+
+  <span class='comment val'># Generate the OAuth 'authorize endpoint' URL</span>
+  <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='authorize_url identifier id'>authorize_url</span><span class='lparen token'>(</span><span class='symbol val'>:redirect_uri</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'http://mywebsite.com/cb'</span><span class='rparen token'>)</span>
+
+  <span class='comment val'># Once the authorization code has been retrieved, exchange it for an access token</span>
+  <span class='auth_code identifier id'>auth_code</span> <span class='assign token'>=</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:auth_code</span><span class='rbrack token'>]</span>
+  <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='fetch_access_token identifier id'>fetch_access_token</span><span class='lparen token'>(</span><span class='auth_code identifier id'>auth_code</span><span class='comma token'>,</span> <span class='symbol val'>:redirect_uri</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'http://mywebsite.com/cb'</span><span class='rparen token'>)</span>
+
+  <span class='comment val'># The API client will associated with a merchant account</span>
+  <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='merchant identifier id'>merchant</span>  <span class='comment val'># =&gt; &lt;Grapi::Merchant ...&gt;</span>
+
+  <span class='comment val'># The client allows you to look up most resources by their id</span>
+  <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='subscription identifier id'>subscription</span><span class='lparen token'>(</span><span class='integer val'>5</span><span class='rparen token'>)</span>       <span class='comment val'># =&gt; &lt;Grapi::Subscription ...&gt;</span>
+  <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='pre_authorization identifier id'>pre_authorization</span><span class='lparen token'>(</span><span class='integer val'>5</span><span class='rparen token'>)</span>  <span class='comment val'># =&gt; &lt;Grapi::PreAuthorization ...&gt;</span>
+  <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='bill identifier id'>bill</span><span class='lparen token'>(</span><span class='integer val'>5</span><span class='rparen token'>)</span>               <span class='comment val'># =&gt; &lt;Grapi::Bill ...&gt;</span>
+  <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='payment identifier id'>payment</span><span class='lparen token'>(</span><span class='integer val'>5</span><span class='rparen token'>)</span>            <span class='comment val'># =&gt; &lt;Grapi::Payment ...&gt;</span>
+
+  <span class='comment val'># Retrieve referenced resources directly from resource objects</span>
+  <span class='subscription identifier id'>subscription</span> <span class='assign token'>=</span> <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='subscription identifier id'>subscription</span><span class='lparen token'>(</span><span class='integer val'>5</span><span class='rparen token'>)</span>
+  <span class='subscription identifier id'>subscription</span><span class='dot token'>.</span><span class='merchant identifier id'>merchant</span>  <span class='comment val'># =&gt; &lt;Grapi::Merchant ...&gt;</span>
+
+  <span class='comment val'># Create a new bill</span>
+  <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='merchant identifier id'>merchant</span><span class='dot token'>.</span><span class='pre_authorizations identifier id'>pre_authorizations</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='dot token'>.</span><span class='create_bill identifier id'>create_bill</span><span class='lparen token'>(</span><span class='integer val'>500</span><span class='rparen token'>)</span> <span class='comment val'># £5.00 bill</span>
+</pre>
 </div></div>
     
     <div id="footer">
-  Generated on Tue Jul 19 13:08:58 2011 by 
+  Generated on Tue Jul 19 13:29:59 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.8.7).
 </div>

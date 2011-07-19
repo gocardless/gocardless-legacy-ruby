@@ -33,10 +33,15 @@ module Grapi
       @access_token = @oauth_client.auth_code.get_token(auth_code, options)
     end
 
+    # @return [String] a serialized form of the access token with its scope
     def access_token
       @access_token && "#{@access_token.token} #{@access_token.params[:scope]}"
     end
 
+    # Set the client's access token
+    #
+    # @param [String] token a string with format <code>"#{token} #{scope}"</code> (as
+    #   returned by {#access_token})
     def access_token=(token)
       token, scope = token.split(' ', 2)
       @access_token = OAuth2::AccessToken.new(@oauth_client, token)

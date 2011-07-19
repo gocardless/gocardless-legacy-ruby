@@ -1,0 +1,35 @@
+= GoCardless Ruby API
+
+== Example usage
+  require 'grapi'
+
+  # These are found in the GoCardless app admin interface
+  APP_ID = '3QmpV5yi8Ii9Rc2uCwalWRsqkpibtk5ISOk/F+oyzrOoNpjGguZ4IRn2379agARS'
+  APP_SECRET = '8oCITH2AVhaUYqJ+5hjyt8JUlSo5m/WTYLH8E/GO+TrBWdRK45lvoRt/zetr+t5Y'
+
+  # Create a new instance of the GoCardless API client
+  client = Grapi::Client.new(app_id, app_secret)
+
+  # Generate the OAuth 'authorize endpoint' URL
+  client.authorize_url(:redirect_uri => 'http://mywebsite.com/cb')
+
+  # Once the authorization code has been retrieved, exchange it for an access token
+  auth_code = params[:auth_code]
+  client.fetch_access_token(auth_code, :redirect_uri => 'http://mywebsite.com/cb')
+
+  # The API client will associated with a merchant account
+  client.merchant  # => <Grapi::Merchant ...>
+
+  # The client allows you to look up most resources by their id
+  client.subscription(5)       # => <Grapi::Subscription ...>
+  client.pre_authorization(5)  # => <Grapi::PreAuthorization ...>
+  client.bill(5)               # => <Grapi::Bill ...>
+  client.payment(5)            # => <Grapi::Payment ...>
+
+  # Retrieve referenced resources directly from resource objects
+  subscription = client.subscription(5)
+  subscription.merchant  # => <Grapi::Merchant ...>
+
+  # Create a new bill
+  client.merchant.pre_authorizations.first.create_bill(500) # £5.00 bill
+
