@@ -1,6 +1,6 @@
 module Grapi
   class Merchant < Resource
-    ENDPOINT = '/merchants/:id'
+    self.endpoint = '/merchants/:id'
 
     attr_accessor :name
     attr_accessor :description

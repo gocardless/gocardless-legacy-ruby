@@ -7,6 +7,8 @@ module Grapi
     end
 
     class << self
+      attr_accessor :endpoint
+
       def from_hash(client, hash)
         obj = self.new(client)
         hash.each { |key,val| obj.send("#{key}=", val) }
@@ -14,7 +16,7 @@ module Grapi
       end
 
       def find(client, id)
-        path = const_get('ENDPOINT').gsub(':id', id.to_s)
+        path = endpoint.gsub(':id', id.to_s)
         data = client.api_get(path)
         self.from_hash(client, data)
       end
@@ -123,7 +125,7 @@ module Grapi
         raise "#{self.class} cannot be created" unless self.class.creatable?
         'post'
       end
-      path = self.class.const_get('ENDPOINT').gsub(':id', id.to_s)
+      path = self.class.endpoint.gsub(':id', id.to_s)
       @client.send("api_#{method}", path, self.to_hash)
     end
   end

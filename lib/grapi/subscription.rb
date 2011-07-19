@@ -1,7 +1,7 @@
 module Grapi
   class Subscription < Resource
 
-    ENDPOINT = '/subscriptions/:id'
+    self.endpoint = '/subscriptions/:id'
 
     attr_accessor  :amount, :currency, :frequency_length, :frequency_unit,
                    :description, :setup_fee, :trial_length, :trial_unit

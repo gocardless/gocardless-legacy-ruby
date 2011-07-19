@@ -1,6 +1,6 @@
 module Grapi
   class Bill < Resource
-    ENDPOINT = '/bills/:id'
+    self.endpoint = '/bills/:id'
 
     creatable
     updatable

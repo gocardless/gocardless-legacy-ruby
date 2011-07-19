@@ -1,6 +1,6 @@
 module Grapi
   class Payment < Resource
-    ENDPOINT = '/payments/:id'
+    self.endpoint = '/payments/:id'
 
     attr_accessor :amount, :currency, :status
     reference_accessor :merchant_id, :user_id

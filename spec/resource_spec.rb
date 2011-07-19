@@ -61,7 +61,7 @@ describe Grapi::Resource do
   describe "#find" do
     it "instantiates the correct object" do
       test_resource = Class.new(Grapi::Resource) do
-        ENDPOINT = '/test/:id'
+        self.endpoint = '/test/:id'
       end
       mock_client = mock
       mock_client.expects(:api_get).returns({:id => 123})
@@ -178,6 +178,7 @@ describe Grapi::Resource do
     describe "succeeds and" do
       before :each do
         @test_resource = Class.new(Grapi::Resource) do
+          self.endpoint = '/test'
           attr_accessor :x, :y
           creatable
           updatable
@@ -200,7 +201,6 @@ describe Grapi::Resource do
 
       it "sends the correct path" do
         client = mock
-        @test_resource::ENDPOINT = '/test'
         resource = @test_resource.new(client)
         client.expects(:api_post).with do |path, params|
           path.should == '/test'
@@ -225,6 +225,7 @@ describe Grapi::Resource do
 
     it "succeeds when not persisted and create allowed" do
       test_resource = Class.new(Grapi::Resource) do
+        self.endpoint = '/test'
         creatable
       end
 
@@ -234,6 +235,7 @@ describe Grapi::Resource do
 
     it "succeeds when persisted and update allowed" do
       test_resource = Class.new(Grapi::Resource) do
+        self.endpoint = '/test'
         updatable
       end
 
