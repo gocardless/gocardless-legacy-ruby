@@ -9,32 +9,37 @@ module Grapi
     attr_accessor :last_name
     date_accessor :created_at
 
-    def subscriptions
-      @client.api_get("/merchants/#{self.id}/subscriptions").map do |attrs|
+    def subscriptions(params = {})
+      path = "/merchants/#{self.id}/subscriptions"
+      @client.api_get(path, params).map do |attrs|
         Grapi::Subscription.new(@client, attrs)
       end
     end
 
-    def pre_authorizations
-      @client.api_get("/merchants/#{self.id}/pre_authorizations").map do |attrs|
+    def pre_authorizations(params = {})
+      path = "/merchants/#{self.id}/pre_authorizations"
+      @client.api_get(path, params).map do |attrs|
         Grapi::PreAuthorization.new(@client, attrs)
       end
     end
 
-    def users
-      @client.api_get("/merchants/#{self.id}/users").map do |attrs|
+    def users(params = {})
+      path = "/merchants/#{self.id}/users"
+      @client.api_get(path, params).map do |attrs|
         Grapi::User.new(@client, attrs)
       end
     end
 
-    def bills
-      @client.api_get("/merchants/#{self.id}/bills").map do |attrs|
+    def bills(params = {})
+      path = "/merchants/#{self.id}/bills"
+      @client.api_get(path, params).map do |attrs|
         Grapi::Bill.new(@client, attrs)
       end
     end
 
-    def payments
-      @client.api_get("/merchants/#{self.id}/payments").map do |attrs|
+    def payments(params = {})
+      path = "/merchants/#{self.id}/payments"
+      @client.api_get(path, params).map do |attrs|
         Grapi::Payment.new(@client, attrs)
       end
     end

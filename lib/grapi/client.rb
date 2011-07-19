@@ -42,16 +42,16 @@ module Grapi
     # @method api_get(path) fetches data at the specified path
     # @param [String] TODO: document me
     # @return [Hash] hash of data at the request path
-    def api_get(path)
-      request(:get, "#{API_PATH}#{path}").parsed
+    def api_get(path, params = {})
+      request(:get, "#{API_PATH}#{path}", :params => params).parsed
     end
 
     def api_post(path, data = {})
-      request(:post, "#{API_PATH}#{path}", data).parsed
+      request(:post, "#{API_PATH}#{path}", :data => data).parsed
     end
 
     def api_put(path, data = {})
-      request(:put, "#{API_PATH}#{path}", data).parsed
+      request(:put, "#{API_PATH}#{path}", :data => data).parsed
     end
 
     # @method merchant
@@ -104,11 +104,11 @@ module Grapi
 
   private
 
-    def request(method, path, data = nil)
-      headers = { 'Accept' => 'application/json' }
-      headers['Content-Type'] = 'application/json' unless method == :get
-      body = JSON.generate(data) if !data.nil?
-      @access_token.send(method, path, :headers => headers, :body => body)
+    def request(method, path, opts = {})
+      opts[:headers] = { 'Accept' => 'application/json' }
+      opts[:headers]['Content-Type'] = 'application/json' unless method == :get
+      opts[:body] = JSON.generate(opts[:data]) if !opts[:data].nil?
+      @access_token.send(method, path, opts)
     end
   end
 end
