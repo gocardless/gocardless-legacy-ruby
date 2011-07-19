@@ -39,13 +39,6 @@ module Grapi
       @access_token.params[:scope] = scope
     end
 
-    def request(method, path, data = nil)
-      headers = { 'Accept' => 'application/json' }
-      headers['Content-Type'] = 'application/json' unless method == :get
-      body = JSON.generate(data) if !data.nil?
-      @access_token.send(method, path, :headers => headers, :body => body)
-    end
-
     # @method api_get(path) fetches data at the specified path
     # @param [String] TODO: document me
     # @return [Hash] hash of data at the request path
@@ -107,6 +100,15 @@ module Grapi
 
     def create_bill(attrs)
       Bill.from_hash(self, attrs).save
+    end
+
+  private
+
+    def request(method, path, data = nil)
+      headers = { 'Accept' => 'application/json' }
+      headers['Content-Type'] = 'application/json' unless method == :get
+      body = JSON.generate(data) if !data.nil?
+      @access_token.send(method, path, :headers => headers, :body => body)
     end
   end
 end
