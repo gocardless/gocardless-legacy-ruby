@@ -41,9 +41,9 @@ describe Grapi::Client do
         @client.instance_variable_get(:@access_token).should be_nil
 
         oauth_client = @client.instance_variable_get(:@oauth_client)
-        oauth_client.auth_code.expects(:get_token).with { |code,options|
-          code == auth_code && options[:redirect_uri] == @redirect_uri
-        }
+        oauth_client.auth_code.expects(:get_token).with(
+          auth_code, has_entry(:redirect_uri => @redirect_uri)
+        )
 
         @client.fetch_access_token(auth_code, {:redirect_uri => @redirect_uri})
       end
