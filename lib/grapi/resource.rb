@@ -2,23 +2,18 @@ require 'date'
 
 module Grapi
   class Resource
-    def initialize(client)
+    def initialize(client, hash = {})
       @client = client
+      hash.each { |key,val| send("#{key}=", val) }
     end
 
     class << self
       attr_accessor :endpoint
 
-      def from_hash(client, hash)
-        obj = self.new(client)
-        hash.each { |key,val| obj.send("#{key}=", val) }
-        obj
-      end
-
       def find(client, id)
         path = endpoint.gsub(':id', id.to_s)
         data = client.api_get(path)
-        self.from_hash(client, data)
+        self.new(client, data)
       end
 
       def date_writer(*args)

@@ -6,7 +6,7 @@ describe Grapi::Resource do
       attr_accessor :id, :name, :uri
     end
     props = {:id => 1, :name => 'test', :uri => 'http://test'}
-    resource = test_resource.from_hash(mock, props)
+    resource = test_resource.new(mock, props)
     props.each { |k,v| resource.send(k).should == v }
   end
 
@@ -89,7 +89,7 @@ describe Grapi::Resource do
       end
 
       resource = test_resource.new(nil)
-      resource.user = Grapi::User.from_hash(nil, :id => 123)
+      resource.user = Grapi::User.new(nil, :id => 123)
       resource.instance_variable_get(:@user_id).should == 123
     end
 
@@ -171,7 +171,7 @@ describe Grapi::Resource do
 
   it "#persisted? works" do
     Grapi::Resource.new(nil).persisted?.should be_false
-    Grapi::Resource.from_hash(nil, :id => 1).persisted?.should be_true
+    Grapi::Resource.new(nil, :id => 1).persisted?.should be_true
   end
 
   describe "#save" do
@@ -192,7 +192,7 @@ describe Grapi::Resource do
       it "sends the correct data parameters" do
         client = mock
         data = {:x => 1, :y => 2}
-        resource = @test_resource.from_hash(client, data)
+        resource = @test_resource.new(client, data)
         client.expects(:api_post).with(anything, data)
         resource.save
       end
@@ -213,7 +213,7 @@ describe Grapi::Resource do
 
       it "PUTs when already persisted" do
         client = mock
-        resource = @test_resource.from_hash(client, :id => 1)
+        resource = @test_resource.new(client, :id => 1)
         client.expects(:api_put)
         resource.save
       end
@@ -236,7 +236,7 @@ describe Grapi::Resource do
       end
 
       client = mock('client') { stubs :api_put }
-      test_resource.from_hash(client, :id => 1).save
+      test_resource.new(client, :id => 1).save
     end
 
     it "fails when not persisted and create not allowed" do
@@ -252,7 +252,7 @@ describe Grapi::Resource do
         creatable
       end
 
-      expect { test_resource.from_hash(mock, :id => 1).save }.to raise_error
+      expect { test_resource.new(mock, :id => 1).save }.to raise_error
     end
   end
 
@@ -262,7 +262,7 @@ describe Grapi::Resource do
     end
 
     attrs = {:id => 1, :uri => 'http:', :x => 'y'}
-    resource = test_resource.from_hash('CLIENT', attrs)
+    resource = test_resource.new('CLIENT', attrs)
     resource.to_hash.should == attrs
   end
 
@@ -273,7 +273,7 @@ describe Grapi::Resource do
       reference_accessor :person_id
     end
 
-    bill = test_resource.from_hash(nil, {
+    bill = test_resource.new(nil, {
       :amount => 10,
       :when => DateTime.now,
       :person_id => 15

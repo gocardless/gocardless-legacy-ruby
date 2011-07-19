@@ -8,7 +8,7 @@ describe Grapi::Bill do
   end
 
   it "source getter works" do
-    b = Grapi::Bill.from_hash(@client, :source_type => :subscription,
+    b = Grapi::Bill.new(@client, :source_type => :subscription,
                                        :source_id => 123)
     stub_get(@client, :id => 123)
     source = b.source
@@ -18,7 +18,7 @@ describe Grapi::Bill do
 
   it "source setter works" do
     b = Grapi::Bill.new(@client)
-    b.source = Grapi::Subscription.from_hash(@client, :id => 123)
+    b.source = Grapi::Subscription.new(@client, :id => 123)
     b.source_id.should == 123
     b.source_type.should.to_s == 'subscription'
   end

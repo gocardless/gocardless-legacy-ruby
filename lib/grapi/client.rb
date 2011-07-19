@@ -60,7 +60,7 @@ module Grapi
       scope = @access_token.params[:scope].split
       perm = scope.select {|p| p.start_with?('manage_merchant:') }.first
       merchant_id = perm.split(':')[1]
-      Merchant.from_hash(self, api_get("/merchants/#{merchant_id}"))
+      Merchant.new(self, api_get("/merchants/#{merchant_id}"))
     end
 
     # @method subscripton(id)
@@ -99,7 +99,7 @@ module Grapi
     end
 
     def create_bill(attrs)
-      Bill.from_hash(self, attrs).save
+      Bill.new(self, attrs).save
     end
 
   private

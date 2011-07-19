@@ -117,7 +117,7 @@ describe Grapi::Client do
       merchant_url = '/api/v1/merchants/123'
       token.expects(:get).with { |p,o| p == merchant_url }.returns response
 
-      Grapi::Merchant.stubs(:from_hash)
+      Grapi::Merchant.stubs(:new)
 
       @client.merchant
     end
