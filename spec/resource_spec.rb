@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Grapi::Resource do
+describe GoCardless::Resource do
   it "initializes from hash" do
-    test_resource = Class.new(Grapi::Resource) do
+    test_resource = Class.new(GoCardless::Resource) do
       attr_accessor :id, :name, :uri
     end
     props = {:id => 1, :name => 'test', :uri => 'http://test'}
@@ -12,7 +12,7 @@ describe Grapi::Resource do
 
   describe "#date_writer" do
     it "creates date writers properly" do
-      test_resource = Class.new(Grapi::Resource) do
+      test_resource = Class.new(GoCardless::Resource) do
         date_writer :created_at, :modified_at
       end
 
@@ -21,7 +21,7 @@ describe Grapi::Resource do
     end
 
     it "date writers work properly" do
-      test_resource = Class.new(Grapi::Resource) do
+      test_resource = Class.new(GoCardless::Resource) do
         date_writer :created_at
       end
 
@@ -36,7 +36,7 @@ describe Grapi::Resource do
 
   describe "#date_accessor" do
     it "creates date readers and writers properly" do
-      test_resource = Class.new(Grapi::Resource) do
+      test_resource = Class.new(GoCardless::Resource) do
         date_accessor :created_at, :modified_at
       end
 
@@ -47,7 +47,7 @@ describe Grapi::Resource do
     end
 
     it "date readers work properly" do
-      test_resource = Class.new(Grapi::Resource) do
+      test_resource = Class.new(GoCardless::Resource) do
         date_accessor :created_at
       end
 
@@ -60,7 +60,7 @@ describe Grapi::Resource do
 
   describe "#find" do
     it "instantiates the correct object" do
-      test_resource = Class.new(Grapi::Resource) do
+      test_resource = Class.new(GoCardless::Resource) do
         self.endpoint = '/test/:id'
       end
       mock_client = mock
@@ -73,7 +73,7 @@ describe Grapi::Resource do
 
   describe "#reference_writer" do
     it "creates reference writers properly" do
-      test_resource = Class.new(Grapi::Resource) do
+      test_resource = Class.new(GoCardless::Resource) do
         reference_writer :merchant_id, :user_id
       end
 
@@ -84,25 +84,25 @@ describe Grapi::Resource do
     end
 
     it "direct assignment methods work properly" do
-      test_resource = Class.new(Grapi::Resource) do
+      test_resource = Class.new(GoCardless::Resource) do
         reference_writer :user_id
       end
 
       resource = test_resource.new(nil)
-      resource.user = Grapi::User.new(nil, :id => 123)
+      resource.user = GoCardless::User.new(nil, :id => 123)
       resource.instance_variable_get(:@user_id).should == 123
     end
 
     it "requires args to end with _id" do
       expect do
-        test_resource = Class.new(Grapi::Resource) do
+        test_resource = Class.new(GoCardless::Resource) do
           reference_writer :user
         end
       end.to raise_exception ArgumentError
     end
 
     it "fails with the wrong object type" do
-      test_resource = Class.new(Grapi::Resource) do
+      test_resource = Class.new(GoCardless::Resource) do
         reference_writer :user_id
       end
       expect do
@@ -115,12 +115,12 @@ describe Grapi::Resource do
     before :each do
       @app_id = 'abc'
       @app_secret = 'xyz'
-      @client = Grapi::Client.new(@app_id, @app_secret)
+      @client = GoCardless::Client.new(@app_id, @app_secret)
       @redirect_uri = 'http://test.com/cb'
     end
 
     it "creates reference writers properly" do
-      test_resource = Class.new(Grapi::Resource) do
+      test_resource = Class.new(GoCardless::Resource) do
         reference_reader :merchant_id, :user_id
       end
 
@@ -131,7 +131,7 @@ describe Grapi::Resource do
     end
 
     it "lookup methods work properly" do
-      test_resource = Class.new(Grapi::Resource) do
+      test_resource = Class.new(GoCardless::Resource) do
         reference_reader :user_id
       end
 
@@ -139,13 +139,13 @@ describe Grapi::Resource do
       resource.instance_variable_set(:@user_id, 123)
       stub_get(@client, {:id => 123})
       user = resource.user
-      user.should be_a Grapi::User
+      user.should be_a GoCardless::User
       user.id.should == 123
     end
 
     it "requires args to end with _id" do
       expect do
-        test_resource = Class.new(Grapi::Resource) do
+        test_resource = Class.new(GoCardless::Resource) do
           reference_reader :user
         end
       end.to raise_exception ArgumentError
@@ -154,7 +154,7 @@ describe Grapi::Resource do
 
   describe "#reference_accessor" do
     it "creates reference readers and writers" do
-      test_resource = Class.new(Grapi::Resource) do
+      test_resource = Class.new(GoCardless::Resource) do
         reference_accessor :merchant_id, :user_id
       end
 
@@ -170,14 +170,14 @@ describe Grapi::Resource do
   end
 
   it "#persisted? works" do
-    Grapi::Resource.new(nil).persisted?.should be_false
-    Grapi::Resource.new(nil, :id => 1).persisted?.should be_true
+    GoCardless::Resource.new(nil).persisted?.should be_false
+    GoCardless::Resource.new(nil, :id => 1).persisted?.should be_true
   end
 
   describe "#save" do
     describe "succeeds and" do
       before :each do
-        @test_resource = Class.new(Grapi::Resource) do
+        @test_resource = Class.new(GoCardless::Resource) do
           self.endpoint = '/test'
           attr_accessor :x, :y
           creatable
@@ -220,7 +220,7 @@ describe Grapi::Resource do
     end
 
     it "succeeds when not persisted and create allowed" do
-      test_resource = Class.new(Grapi::Resource) do
+      test_resource = Class.new(GoCardless::Resource) do
         self.endpoint = '/test'
         creatable
       end
@@ -230,7 +230,7 @@ describe Grapi::Resource do
     end
 
     it "succeeds when persisted and update allowed" do
-      test_resource = Class.new(Grapi::Resource) do
+      test_resource = Class.new(GoCardless::Resource) do
         self.endpoint = '/test'
         updatable
       end
@@ -240,7 +240,7 @@ describe Grapi::Resource do
     end
 
     it "fails when not persisted and create not allowed" do
-      test_resource = Class.new(Grapi::Resource) do
+      test_resource = Class.new(GoCardless::Resource) do
         updatable
       end
 
@@ -248,7 +248,7 @@ describe Grapi::Resource do
     end
 
     it "fails when persisted and update not allowed" do
-      test_resource = Class.new(Grapi::Resource) do
+      test_resource = Class.new(GoCardless::Resource) do
         creatable
       end
 
@@ -257,7 +257,7 @@ describe Grapi::Resource do
   end
 
   it "#to_hash pulls out the correct attributes" do
-    test_resource = Class.new(Grapi::Resource) do
+    test_resource = Class.new(GoCardless::Resource) do
       attr_accessor :x
     end
 
@@ -267,7 +267,7 @@ describe Grapi::Resource do
   end
 
   it "#to_json converts to the correct JSON format" do
-    test_resource = Class.new(Grapi::Resource) do
+    test_resource = Class.new(GoCardless::Resource) do
       attr_accessor :amount
       date_accessor :when
       reference_accessor :person_id
@@ -287,16 +287,16 @@ describe Grapi::Resource do
 
   describe "resource permissions" do
     it "are not given by default" do
-      Grapi::Resource.creatable?.should be_false
-      Grapi::Resource.updatable?.should be_false
+      GoCardless::Resource.creatable?.should be_false
+      GoCardless::Resource.updatable?.should be_false
     end
 
     it "are present when specified" do
-      class CreatableResource < Grapi::Resource
+      class CreatableResource < GoCardless::Resource
         creatable
       end
 
-      class UpdatableResource < Grapi::Resource
+      class UpdatableResource < GoCardless::Resource
         updatable
       end
 
@@ -306,8 +306,8 @@ describe Grapi::Resource do
       UpdatableResource.creatable?.should be_false
       UpdatableResource.updatable?.should be_true
 
-      Grapi::Resource.creatable?.should be_false
-      Grapi::Resource.updatable?.should be_false
+      GoCardless::Resource.creatable?.should be_false
+      GoCardless::Resource.updatable?.should be_false
     end
   end
 end

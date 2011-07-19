@@ -1,6 +1,6 @@
 require 'mocha'
 require 'json'
-require 'grapi'
+require 'gocardless'
 
 RSpec.configure do |config|
   config.mock_with :mocha

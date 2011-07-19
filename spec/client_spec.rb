@@ -2,11 +2,11 @@ require 'spec_helper'
 require 'uri'
 require 'cgi'
 
-describe Grapi::Client do
+describe GoCardless::Client do
   before :each do
     @app_id = 'abc'
     @app_secret = 'xyz'
-    @client = Grapi::Client.new(@app_id, @app_secret)
+    @client = GoCardless::Client.new(@app_id, @app_secret)
     @redirect_uri = 'http://test.com/cb'
   end
 
@@ -25,7 +25,7 @@ describe Grapi::Client do
   end
 
   describe "#fetch_access_token" do
-    access_token_url = "#{Grapi::Client::BASE_URL}/oauth/access_token"
+    access_token_url = "#{GoCardless::Client::BASE_URL}/oauth/access_token"
 
     it "fails without a redirect uri" do
       lambda do
@@ -117,7 +117,7 @@ describe Grapi::Client do
       merchant_url = '/api/v1/merchants/123'
       token.expects(:get).with { |p,o| p == merchant_url }.returns response
 
-      Grapi::Merchant.stubs(:new)
+      GoCardless::Merchant.stubs(:new)
 
       @client.merchant
     end
@@ -131,7 +131,7 @@ describe Grapi::Client do
       token.expects(:get).returns response
 
       merchant = @client.merchant
-      merchant.should be_an_instance_of Grapi::Merchant
+      merchant.should be_an_instance_of GoCardless::Merchant
       merchant.id.should == 123
       merchant.name.should == 'test'
     end
@@ -142,7 +142,7 @@ describe Grapi::Client do
       it "returns the correct #{resource.camelize} object" do
         stub_get(@client, {:id => 123})
         obj = @client.send(resource, 123)
-        obj.should be_a Grapi.const_get(resource.camelize)
+        obj.should be_a GoCardless.const_get(resource.camelize)
         obj.id.should == 123
       end
     end

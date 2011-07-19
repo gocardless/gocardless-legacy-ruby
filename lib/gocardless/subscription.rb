@@ -1,4 +1,4 @@
-module Grapi
+module GoCardless
   class Subscription < Resource
 
     self.endpoint = '/subscriptions/:id'

@@ -1,6 +1,6 @@
 require 'date'
 
-module Grapi
+module GoCardless
   class Resource
     def initialize(client, hash = {})
       @client = client
@@ -41,7 +41,7 @@ module Grapi
           name = attr.to_s.sub(/_id$/, '')
           define_method(name.to_sym) do
             obj_id = instance_variable_get("@#{attr}")
-            klass = Grapi.const_get(name.camelize)
+            klass = GoCardless.const_get(name.camelize)
             klass.find(@client, obj_id)
           end
         end
@@ -57,7 +57,7 @@ module Grapi
 
           name = attr.to_s.sub(/_id$/, '')
           define_method("#{name}=".to_sym) do |obj|
-            klass = Grapi.const_get(name.camelize)
+            klass = GoCardless.const_get(name.camelize)
             if !obj.is_a?(klass)
               raise ArgumentError, "Object must be an instance of #{klass}"
             end

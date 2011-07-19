@@ -2,7 +2,7 @@ require 'rubygems'
 require 'json'
 require 'oauth2'
 
-module Grapi
+module GoCardless
   class Client
     BASE_URL = 'http://localhost:3000'
     API_PATH = '/api/v1'

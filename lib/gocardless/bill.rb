@@ -1,4 +1,4 @@
-module Grapi
+module GoCardless
   class Bill < Resource
     self.endpoint = '/bills/:id'
 
@@ -16,7 +16,7 @@ module Grapi
     date_accessor :created_at
 
     def source
-      klass = Grapi.const_get(source_type.to_s.camelize)
+      klass = GoCardless.const_get(source_type.to_s.camelize)
       klass.find(@client, @source_id)
     end
 

@@ -1,4 +1,4 @@
-module Grapi
+module GoCardless
   class PreAuthorization < Resource
     self.endpoint = '/pre_authorizations/:id'
 

@@ -1,4 +1,4 @@
-module Grapi
+module GoCardless
   class User < Resource
     self.endpoint = '/users/:id'
 

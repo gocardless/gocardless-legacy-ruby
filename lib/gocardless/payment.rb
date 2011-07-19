@@ -1,4 +1,4 @@
-module Grapi
+module GoCardless
   class Payment < Resource
     self.endpoint = '/payments/:id'
 

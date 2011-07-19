@@ -1,4 +1,4 @@
-module Grapi
+module GoCardless
   class Merchant < Resource
     self.endpoint = '/merchants/:id'
 
@@ -12,35 +12,35 @@ module Grapi
     def subscriptions(params = {})
       path = "/merchants/#{self.id}/subscriptions"
       @client.api_get(path, params).map do |attrs|
-        Grapi::Subscription.new(@client, attrs)
+        GoCardless::Subscription.new(@client, attrs)
       end
     end
 
     def pre_authorizations(params = {})
       path = "/merchants/#{self.id}/pre_authorizations"
       @client.api_get(path, params).map do |attrs|
-        Grapi::PreAuthorization.new(@client, attrs)
+        GoCardless::PreAuthorization.new(@client, attrs)
       end
     end
 
     def users(params = {})
       path = "/merchants/#{self.id}/users"
       @client.api_get(path, params).map do |attrs|
-        Grapi::User.new(@client, attrs)
+        GoCardless::User.new(@client, attrs)
       end
     end
 
     def bills(params = {})
       path = "/merchants/#{self.id}/bills"
       @client.api_get(path, params).map do |attrs|
-        Grapi::Bill.new(@client, attrs)
+        GoCardless::Bill.new(@client, attrs)
       end
     end
 
     def payments(params = {})
       path = "/merchants/#{self.id}/payments"
       @client.api_get(path, params).map do |attrs|
-        Grapi::Payment.new(@client, attrs)
+        GoCardless::Payment.new(@client, attrs)
       end
     end
   end

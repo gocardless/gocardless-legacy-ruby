@@ -1,4 +1,4 @@
-require File.expand_path('../lib/grapi/version', __FILE__)
+require File.expand_path('../lib/gocardless/version', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'oauth', '~> 0.5.0.rc1'
@@ -8,13 +8,13 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'mocha', '~> 0.9.12'
 
   gem.authors = ["Harry Marr"]
-  gem.description = %q{A Ruby wrapper for Grapi}
+  gem.description = %q{A Ruby wrapper for the GoCardless API}
   gem.email = ['harry@groupay.co.uk']
   gem.files = `git ls-files`.split("\n")
-  gem.homepage = 'https://github.com/groupay/grapi'
+  gem.homepage = 'https://github.com/gocardless/gocardless-ruby'
   gem.name = 'grapi'
   gem.require_paths = ['lib']
-  gem.summary = %q{Ruby wrapper for Grapi}
+  gem.summary = %q{Ruby wrapper for the GoCardless API}
   gem.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
   gem.version = Grapi::VERSION.dup
 end
