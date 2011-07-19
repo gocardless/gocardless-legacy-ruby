@@ -188,12 +188,22 @@ describe Grapi::Resource do
         @test_resource = nil
       end
 
-      it "sends the correct parameters" do
+      it "sends the correct data parameters" do
         client = mock
         data = {:x => 1, :y => 2}
         resource = @test_resource.from_hash(client, data)
         client.expects(:api_post).with do |path, params|
           params.should == data
+        end
+        resource.save
+      end
+
+      it "sends the correct path" do
+        client = mock
+        @test_resource::ENDPOINT = '/test'
+        resource = @test_resource.new(client)
+        client.expects(:api_post).with do |path, params|
+          path.should == '/test'
         end
         resource.save
       end
