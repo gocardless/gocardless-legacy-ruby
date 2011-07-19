@@ -46,10 +46,12 @@ module Grapi
       request(:get, "#{API_PATH}#{path}", :params => params).parsed
     end
 
+    # @private
     def api_post(path, data = {})
       request(:post, "#{API_PATH}#{path}", :data => data).parsed
     end
 
+    # @visibility private
     def api_put(path, data = {})
       request(:put, "#{API_PATH}#{path}", :data => data).parsed
     end
@@ -98,6 +100,11 @@ module Grapi
       Payment.find(self, id)
     end
 
+    # Create a new bill under a given pre-authorization
+    # @see PreAuthorization#create_bill
+    #
+    # @param [Hash] attrs must include +:pre_authorization_id+ and +:amount+
+    # @return [Bill] the created bill object
     def create_bill(attrs)
       Bill.new(self, attrs).save
     end
