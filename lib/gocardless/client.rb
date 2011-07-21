@@ -21,7 +21,11 @@ module GoCardless
     # @return [String] the authorize url
     def authorize_url(options)
       raise ArgumentError, ':redirect_uri required' unless options[:redirect_uri]
-      params = {:client_id => @app_id, :response_type => 'code'}
+      params = {
+        :client_id => @app_id,
+        :response_type => 'code',
+        :scope => 'manage_merchant'
+      }
       @oauth_client.authorize_url(params.merge(options))
     end
 
@@ -31,11 +35,13 @@ module GoCardless
     def fetch_access_token(auth_code, options)
       raise ArgumentError, ':redirect_uri required' unless options[:redirect_uri]
       @access_token = @oauth_client.auth_code.get_token(auth_code, options)
+      self.access_token
     end
 
     # @return [String] a serialized form of the access token with its scope
     def access_token
-      @access_token && "#{@access_token.token} #{@access_token.params[:scope]}"
+      scope = @access_token.params[:scope] || @access_token.params['scope']
+      @access_token && "#{@access_token.token} #{scope}".strip
     end
 
     # Set the client's access token

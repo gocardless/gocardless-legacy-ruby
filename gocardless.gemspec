@@ -1,7 +1,7 @@
 require File.expand_path('../lib/gocardless/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.add_runtime_dependency 'oauth', '~> 0.5.0.rc1'
+  gem.add_runtime_dependency 'oauth2', '~> 0.5.0.rc1'
   gem.add_runtime_dependency 'json', '~> 1.5.3'
 
   gem.add_development_dependency 'rspec', '~> 2.6'
