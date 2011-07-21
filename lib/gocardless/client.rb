@@ -138,6 +138,8 @@ module GoCardless
       opts[:headers]['Content-Type'] = 'application/json' unless method == :get
       opts[:body] = JSON.generate(opts[:data]) if !opts[:data].nil?
       @access_token.send(method, path, opts)
+    rescue OAuth2::Error => err
+      raise GoCardless::ApiError.new(err.response)
     end
   end
 end
