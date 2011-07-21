@@ -12,9 +12,9 @@ Gem::Specification.new do |gem|
   gem.email = ['harry@groupay.co.uk']
   gem.files = `git ls-files`.split("\n")
   gem.homepage = 'https://github.com/gocardless/gocardless-ruby'
-  gem.name = 'grapi'
+  gem.name = 'gocardless'
   gem.require_paths = ['lib']
   gem.summary = %q{Ruby wrapper for the GoCardless API}
   gem.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
-  gem.version = Grapi::VERSION.dup
+  gem.version = GoCardless::VERSION.dup
 end
