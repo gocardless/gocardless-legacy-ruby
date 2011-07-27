@@ -50,6 +50,8 @@ describe GoCardless::Client do
 
       it "sets @access_token" do
         access_token = mock
+        access_token.stubs(:params).returns(:scope => '')
+        access_token.stubs(:token).returns('')
 
         oauth_client = @client.instance_variable_get(:@oauth_client)
         oauth_client.auth_code.expects(:get_token).returns(access_token)
@@ -145,6 +147,26 @@ describe GoCardless::Client do
         obj.should be_a GoCardless.const_get(resource.camelize)
         obj.id.should == 123
       end
+    end
+  end
+
+  describe "#encode_params" do
+    it "correctly encodes hashes" do
+      params = {:a => {:b => :c}, :x => :y}
+      result = 'a%5Bb%5D=c&x=y'
+      @client.send(:encode_params, params).should == result
+    end
+
+    it "correctly encodes arrays" do
+      params = {:a => [1,2]}
+      result = 'a%5B%5D=1&a%5B%5D=2'
+      @client.send(:encode_params, params).should == result
+    end
+
+    it "sorts params by key" do
+      params = {:b => 1, :a => 2}
+      result = 'a=2&b=1'
+      @client.send(:encode_params, params).should == result
     end
   end
 end

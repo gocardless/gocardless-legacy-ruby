@@ -40,8 +40,10 @@ module GoCardless
 
     # @return [String] a serialized form of the access token with its scope
     def access_token
-      scope = @access_token.params[:scope] || @access_token.params['scope']
-      @access_token && "#{@access_token.token} #{scope}".strip
+      if @access_token
+        scope = @access_token.params[:scope] || @access_token.params['scope']
+        "#{@access_token.token} #{scope}".strip
+      end
     end
 
     # Set the client's access token
@@ -137,7 +139,29 @@ module GoCardless
       Bill.new(self, attrs).save
     end
 
+    def sign_params(params)
+      params_str = params.to_param
+
+      digest = OpenSSL::Digest::Digest.new('sha256')
+      OpenSSL::HMAC.hexdigest(digest, self.secret, params_str)
+    end
+
   private
+
+    # Convert a hash into query-string style parameters
+    def encode_params(params, ns = nil)
+      params.map do |key,val|
+        key = ns ? "#{ns}[#{key.is_a?(Integer) ? '' : key.to_s}]" : key.to_s
+        case val
+        when Hash
+          encode_params(val, key)
+        when Array
+          encode_params(Hash[(1..val.length).zip(val)], key)
+        else
+          "#{CGI.escape(key)}=#{CGI.escape(val.to_s)}"
+        end
+      end.sort * '&'
+    end
 
     def request(method, path, opts = {})
       opts[:headers] = { 'Accept' => 'application/json' }
