@@ -112,6 +112,9 @@ module GoCardless
       !id.nil?
     end
 
+    # Save a resource on the API server. If the resource already exists (has a
+    # non-null id), it will be updated with a PUT, otherwise it will be created
+    # with a POST.
     def save
       method = if self.persisted?
         raise "#{self.class} cannot be updated" unless self.class.updatable?
