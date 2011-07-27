@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'json'
 require 'oauth2'
+require 'openssl'
 
 module GoCardless
   class Client
@@ -140,10 +141,10 @@ module GoCardless
     end
 
     def sign_params(params)
-      params_str = params.to_param
-
+      msg = encode_params(params)
       digest = OpenSSL::Digest::Digest.new('sha256')
-      OpenSSL::HMAC.hexdigest(digest, self.secret, params_str)
+      params[:signature] = OpenSSL::HMAC.hexdigest(digest, @app_secret, msg)
+      params
     end
 
   private

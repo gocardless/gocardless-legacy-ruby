@@ -169,4 +169,11 @@ describe GoCardless::Client do
       @client.send(:encode_params, params).should == result
     end
   end
+
+  it "#sign_params signs pararmeter hashes correctly" do
+    @client.instance_variable_set(:@app_secret, 'testsecret')
+    params = {:test => true}
+    sig = '6e4613b729ce15c288f70e72463739feeb05fc0b89b55d248d7f259b5367148b'
+    @client.sign_params(params)[:signature].should == sig
+  end
 end
