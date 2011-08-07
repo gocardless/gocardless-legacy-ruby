@@ -55,6 +55,142 @@
     <iframe id="search_frame"></iframe>
     
     <div id="content"><div id='filecontents'><h1>GoCardless Ruby API</h1>
+<h2>Introduction</h2>
+<p>
+This library provides a simple Ruby wrapper around the GoCardless REST API.
+To use the API, you will need a GoCardless app id and app secret. To start
+with, you&#8217;ll need to create an instance of the <span class='object_link'><a href="GoCardless/Client.html" title="GoCardless::Client (class)">GoCardless::Client</a></span>
+class, providing your app id and app secret as arguments to the
+constructor:
+</p>
+<pre class="code">
+  <span class='client identifier id'>client</span> <span class='assign token'>=</span> <span class='GoCardless constant id'>GoCardless</span><span class='colon2 op'>::</span><span class='Client constant id'>Client</span><span class='lparen token'>(</span><span class='APP_ID constant id'>APP_ID</span><span class='comma token'>,</span> <span class='APP_SECRET constant id'>APP_SECRET</span><span class='rparen token'>)</span>
+</pre>
+<h2>Setting up an Access Token</h2>
+<p>
+To retrieve data from the API, an access token is required. An access token
+corresponds to a single merchant account, and give an app permission to
+access and modify the merchant&#8217;s data via the API. Multiple merchant
+accounts may be accessed by using different access tokens.
+</p>
+<h3>Obtaining a new Access Token</h3>
+<p>
+If you don&#8217;t already have an access token stored, you will need the
+owner of a merchant account to authorize your app via the web interface.
+Once they have authorized your app, they will be redirected back to your
+website with an authorization code. This code should then be exchanged for
+an access token, which may be used to make authenticated requests against
+the API. The <span class='object_link'><a href="GoCardless/Client.html" title="GoCardless::Client (class)">client</a></span> object can be used to generate the
+authorize url:
+</p>
+<pre class="code">
+  <span class='auth_url identifier id'>auth_url</span> <span class='assign token'>=</span> <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='authorize_url identifier id'>authorize_url</span><span class='lparen token'>(</span><span class='symbol val'>:redirect_uri</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'http://mywebsite.com/cb'</span><span class='rparen token'>)</span>
+  <span class='redirect_to identifier id'>redirect_to</span> <span class='auth_url identifier id'>auth_url</span>
+</pre>
+<p>
+The <tt>redirect_uri</tt> parameter specifies where the merchant account
+owner should be sent after they have authorized your app. When the user is
+sent to this url, the authorization code will be present as a query
+parameter named <tt>code</tt>. You can use the <span class='object_link'><a href="GoCardless/Client.html" title="GoCardless::Client (class)">client</a></span>
+object to exchange this code for an access token. Note that you must also
+provide the same <tt>redirect_uri</tt> used in the previous step:
+</p>
+<pre class="code">
+  <span class='auth_code identifier id'>auth_code</span> <span class='assign token'>=</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:code</span><span class='rbrack token'>]</span>
+  <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='fetch_access_token identifier id'>fetch_access_token</span><span class='lparen token'>(</span><span class='auth_code identifier id'>auth_code</span><span class='comma token'>,</span> <span class='symbol val'>:redirect_uri</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'http://mywebsite.com/cb'</span><span class='rparen token'>)</span>
+</pre>
+<p>
+You can access a serialized version of the access token using the
+<span class='object_link'><a href="GoCardless/Client.html#access_token-instance_method" title="GoCardless::Client#access_token (method)">access_token</a></span> attribute on the
+<span class='object_link'><a href="GoCardless/Client.html" title="GoCardless::Client (class)">client</a></span> object. This should be stored alongside the
+merchant for later use:
+</p>
+<pre class="code">
+  <span class='merchant identifier id'>merchant</span> <span class='assign token'>=</span> <span class='Merchant constant id'>Merchant</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='symbol val'>:name</span>  <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='session identifier id'>session</span><span class='lbrack token'>[</span><span class='symbol val'>:merchant_name</span><span class='rbrack token'>]</span><span class='comma token'>,</span>
+                          <span class='symbol val'>:token</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='access_token identifier id'>access_token</span><span class='rparen token'>)</span>
+  <span class='merchant identifier id'>merchant</span><span class='dot token'>.</span><span class='save! fid id'>save!</span>
+</pre>
+<h3>Using an existing Access Token</h3>
+<p>
+To use a stored access token, just set the <tt>access_token</tt> attribute
+of a <span class='object_link'><a href="GoCardless/Client.html" title="GoCardless::Client (class)">client</a></span> object to the stored token value, or
+initialize the client object with the token as the third argument:
+</p>
+<pre class="code">
+  <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='access_token identifier id'>access_token</span> <span class='assign token'>=</span> <span class='Merchant constant id'>Merchant</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='integer val'>123</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='token identifier id'>token</span>
+</pre>
+<h2>Retrieving Data from the API</h2>
+<p>
+Once your <span class='object_link'><a href="GoCardless/Client.html" title="GoCardless::Client (class)">client</a></span> has a valid access token, you may
+request data about the merchant associated with the token. To access the
+merchant&#8217;s information, use the <tt>merchant</tt> attribute on the
+client object. This returns an instance of <span class='object_link'><a href="GoCardless/Merchant.html" title="GoCardless::Merchant (class)">GoCardless::Merchant</a></span>:
+</p>
+<pre class="code">
+  <span class='merchant identifier id'>merchant</span> <span class='assign token'>=</span> <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='merchant identifier id'>merchant</span>  <span class='comment val'># =&gt; &lt;GoCardless::Merchant ...&gt;</span>
+  <span class='merchant identifier id'>merchant</span><span class='dot token'>.</span><span class='name identifier id'>name</span>               <span class='comment val'># =&gt; &quot;Harry's Burritos&quot;</span>
+</pre>
+<p>
+The <span class='object_link'><a href="GoCardless/Merchant.html" title="GoCardless::Merchant (class)">merchant</a></span> object also provides access to related
+data, such as <span class='object_link'><a href="GoCardless/Bill.html" title="GoCardless::Bill (class)">bills</a></span>, <span class='object_link'><a href="GoCardless/Subscription.html" title="GoCardless::Subscription (class)">subscriptions</a></span> and <span class='object_link'><a href="GoCardless/PreAuthorization.html" title="GoCardless::PreAuthorization (class)">pre-authorizations</a></span>:
+</p>
+<pre class="code">
+  <span class='merchant identifier id'>merchant</span><span class='dot token'>.</span><span class='bills identifier id'>bills</span>               <span class='comment val'># =&gt; [&lt;GoCardless::Bill&gt;, ...]</span>
+  <span class='merchant identifier id'>merchant</span><span class='dot token'>.</span><span class='subscriptions identifier id'>subscriptions</span>       <span class='comment val'># =&gt; [&lt;GoCardless::Subscription&gt;, ...]</span>
+  <span class='merchant identifier id'>merchant</span><span class='dot token'>.</span><span class='pre_authorizations identifier id'>pre_authorizations</span>  <span class='comment val'># =&gt; [&lt;GoCardless::PreAuthorization&gt;, ...]</span>
+</pre>
+<p>
+These may also be filtered with various parameters:
+</p>
+<pre class="code">
+  <span class='merchant identifier id'>merchant</span><span class='dot token'>.</span><span class='bills identifier id'>bills</span><span class='lparen token'>(</span><span class='symbol val'>:paid</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='true true kw'>true</span><span class='rparen token'>)</span>          <span class='comment val'># Only fetches paid bills</span>
+  <span class='merchant identifier id'>merchant</span><span class='dot token'>.</span><span class='subscriptions identifier id'>subscriptions</span><span class='lparen token'>(</span><span class='symbol val'>:user_id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>1</span><span class='rparen token'>)</span>  <span class='comment val'># User 1's subscriptions</span>
+</pre>
+<p>
+Note that each time you use the <span class='object_link'><a href="GoCardless/Client.html#merchant-instance_method" title="GoCardless::Client#merchant (method)">merchant</a></span>
+attribute of <span class='object_link'><a href="GoCardless/Client.html" title="GoCardless::Client (class)">GoCardless::Client</a></span>, an API call will be made. So to prevent
+many of unnecessary slow calls to the API server from being made, assign
+the <span class='object_link'><a href="GoCardless/Merchant.html" title="GoCardless::Merchant (class)">merchant</a></span> object to a variable and use that:
+</p>
+<pre class="code">
+  <span class='comment val'># Rather than this (6 API calls):</span>
+  <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='merchant identifier id'>merchant</span><span class='dot token'>.</span><span class='bills identifier id'>bills</span>
+  <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='merchant identifier id'>merchant</span><span class='dot token'>.</span><span class='subscriptions identifier id'>subscriptions</span>
+  <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='merchant identifier id'>merchant</span><span class='dot token'>.</span><span class='pre_authorizations identifier id'>pre_authorizations</span>
+
+  <span class='comment val'># Do this (4 API calls):</span>
+  <span class='merchant identifier id'>merchant</span> <span class='assign token'>=</span> <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='merchant identifier id'>merchant</span>
+  <span class='merchant identifier id'>merchant</span><span class='dot token'>.</span><span class='bills identifier id'>bills</span>
+  <span class='merchant identifier id'>merchant</span><span class='dot token'>.</span><span class='subscriptions identifier id'>subscriptions</span>
+  <span class='merchant identifier id'>merchant</span><span class='dot token'>.</span><span class='pre_authorizations identifier id'>pre_authorizations</span>
+</pre>
+<p>
+To lookup instances of each resource type by id, accessor methods are
+provided on <span class='object_link'><a href="GoCardless/Client.html" title="GoCardless::Client (class)">client</a></span> objects:
+</p>
+<pre class="code">
+  <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='subscription identifier id'>subscription</span><span class='lparen token'>(</span><span class='integer val'>5</span><span class='rparen token'>)</span>  <span class='comment val'># =&gt; &lt;GoCardless::Subscription ...&gt;</span>
+  <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='payment identifier id'>payment</span><span class='lparen token'>(</span><span class='integer val'>10</span><span class='rparen token'>)</span>      <span class='comment val'># =&gt; &lt;GoCardless::Payment ...&gt;</span>
+</pre>
+<h2>Creating and modifying bills</h2>
+<p>
+The GoCardless API may also be used to create and modify bills. Bills must
+be created on a pre authorization. To create a bill, use the
+<span class='object_link'><a href="GoCardless/PreAuthorization.html#create_bill-instance_method" title="GoCardless::PreAuthorization#create_bill (method)">create_bill</a></span> method on
+<span class='object_link'><a href="GoCardless/PreAuthorization.html" title="GoCardless::PreAuthorization (class)">PreAuthorization</a></span> objects, providing the
+amount in pence as the only argument:
+</p>
+<pre class="code">
+  <span class='bill identifier id'>bill</span> <span class='assign token'>=</span> <span class='pre_authorization identifier id'>pre_authorization</span><span class='dot token'>.</span><span class='create_bill identifier id'>create_bill</span><span class='lparen token'>(</span><span class='integer val'>150</span><span class='rparen token'>)</span>  <span class='comment val'># =&gt; &lt;GoCardless::Bill ...&gt;</span>
+</pre>
+<p>
+To modify the bill, alter the attributes and call the
+<span class='object_link'><a href="GoCardless/Resource.html#save-instance_method" title="GoCardless::Resource#save (method)">save</a></span> method:
+</p>
+<pre class="code">
+  <span class='bill identifier id'>bill</span><span class='dot token'>.</span><span class='amount identifier id'>amount</span> <span class='assign token'>=</span> <span class='integer val'>250</span>
+  <span class='bill identifier id'>bill</span><span class='dot token'>.</span><span class='save identifier id'>save</span>
+</pre>
 <h2>Example usage</h2>
 <pre class="code">
   <span class='require identifier id'>require</span> <span class='string val'>'gocardless'</span>
@@ -92,7 +228,7 @@
 </div></div>
     
     <div id="footer">
-  Generated on Tue Jul 19 14:55:26 2011 by 
+  Generated on Fri Aug  5 18:02:02 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.8.7).
 </div>
