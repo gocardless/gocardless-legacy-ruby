@@ -14,7 +14,7 @@ module GoCardless
     # @param [Integer] amount the bill amount in pence
     # @return [Bill] the created bill object
     def create_bill(amount)
-      Bill.new(self, attrs).save
+      Bill.new(@client, :source => self, :amount => amount).save
     end
   end
 end

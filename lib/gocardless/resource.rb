@@ -116,6 +116,12 @@ module GoCardless
     # non-null id), it will be updated with a PUT, otherwise it will be created
     # with a POST.
     def save
+      save_data self.to_hash
+    end
+
+  protected
+
+    def save_data(data)
       method = if self.persisted?
         raise "#{self.class} cannot be updated" unless self.class.updatable?
         'put'
@@ -124,7 +130,7 @@ module GoCardless
         'post'
       end
       path = self.class.endpoint.gsub(':id', id.to_s)
-      @client.send("api_#{method}", path, self.to_hash)
+      @client.send("api_#{method}", path, data)
     end
   end
 end

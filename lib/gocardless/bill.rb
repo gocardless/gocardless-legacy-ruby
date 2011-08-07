@@ -27,6 +27,16 @@ module GoCardless
                               "PreAuthorization")
       end
       @source_id = obj.id
+      @source_type = klass.underscore
+    end
+
+    def save
+      save_data({
+        :bill => {
+          :pre_authorization_id => self.source_id,
+          :amount => self.amount,
+        }
+      })
     end
   end
 end
