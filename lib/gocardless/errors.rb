@@ -10,7 +10,7 @@ module GoCardless
       @code = response.status
       body = JSON.parse(response.body) rescue nil
       if body.is_a? Hash
-        @description = body["error"] || "Unknown error"
+        @description = body["error"] || response.body.strip || "Unknown error"
       end
     end
 
