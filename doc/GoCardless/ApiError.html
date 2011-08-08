@@ -290,7 +290,7 @@ A new instance of ApiError
   <span class='@code ivar id'>@code</span> <span class='assign token'>=</span> <span class='response identifier id'>response</span><span class='dot token'>.</span><span class='status identifier id'>status</span>
   <span class='body identifier id'>body</span> <span class='assign token'>=</span> <span class='JSON constant id'>JSON</span><span class='dot token'>.</span><span class='parse identifier id'>parse</span><span class='lparen token'>(</span><span class='response identifier id'>response</span><span class='dot token'>.</span><span class='body identifier id'>body</span><span class='rparen token'>)</span> <span class='rescue rescue kw'>rescue</span> <span class='nil nil kw'>nil</span>
   <span class='if if kw'>if</span> <span class='body identifier id'>body</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span> <span class='Hash constant id'>Hash</span>
-    <span class='@description ivar id'>@description</span> <span class='assign token'>=</span> <span class='body identifier id'>body</span><span class='lbrack token'>[</span><span class='string val'>&quot;error&quot;</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='string val'>&quot;Unknown error&quot;</span>
+    <span class='@description ivar id'>@description</span> <span class='assign token'>=</span> <span class='body identifier id'>body</span><span class='lbrack token'>[</span><span class='string val'>&quot;error&quot;</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='response identifier id'>response</span><span class='dot token'>.</span><span class='body identifier id'>body</span><span class='dot token'>.</span><span class='strip identifier id'>strip</span> <span class='orop op'>||</span> <span class='string val'>&quot;Unknown error&quot;</span>
   <span class='end end kw'>end</span>
 <span class='end end kw'>end</span>
 </pre>
@@ -474,7 +474,7 @@ Returns the value of attribute response
 </div>
     
     <div id="footer">
-  Generated on Fri Aug  5 18:02:03 2011 by 
+  Generated on Mon Aug  8 15:34:36 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.8.7).
 </div>

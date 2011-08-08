@@ -208,6 +208,27 @@ Returns the value of attribute source_type.
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#save-instance_method" title="#save (instance method)">- (Object) <strong>save</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#source-instance_method" title="#source (instance method)">- (Object) <strong>source</strong> </a>
     
 
@@ -259,7 +280,7 @@ Returns the value of attribute source_type.
   
   
   <h3 class="inherited">Methods inherited from <span class='object_link'><a href="Resource.html" title="GoCardless::Resource (class)">Resource</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Resource.html#creatable-class_method" title="GoCardless::Resource.creatable (method)">creatable</a></span>, <span class='object_link'><a href="Resource.html#creatable%3F-class_method" title="GoCardless::Resource.creatable? (method)">creatable?</a></span>, <span class='object_link'><a href="Resource.html#date_accessor-class_method" title="GoCardless::Resource.date_accessor (method)">date_accessor</a></span>, <span class='object_link'><a href="Resource.html#date_writer-class_method" title="GoCardless::Resource.date_writer (method)">date_writer</a></span>, <span class='object_link'><a href="Resource.html#find-class_method" title="GoCardless::Resource.find (method)">find</a></span>, <span class='object_link'><a href="Resource.html#initialize-instance_method" title="GoCardless::Resource#initialize (method)">#initialize</a></span>, <span class='object_link'><a href="Resource.html#inspect-instance_method" title="GoCardless::Resource#inspect (method)">#inspect</a></span>, <span class='object_link'><a href="Resource.html#persisted%3F-instance_method" title="GoCardless::Resource#persisted? (method)">#persisted?</a></span>, <span class='object_link'><a href="Resource.html#reference_accessor-class_method" title="GoCardless::Resource.reference_accessor (method)">reference_accessor</a></span>, <span class='object_link'><a href="Resource.html#reference_reader-class_method" title="GoCardless::Resource.reference_reader (method)">reference_reader</a></span>, <span class='object_link'><a href="Resource.html#reference_writer-class_method" title="GoCardless::Resource.reference_writer (method)">reference_writer</a></span>, <span class='object_link'><a href="Resource.html#save-instance_method" title="GoCardless::Resource#save (method)">#save</a></span>, <span class='object_link'><a href="Resource.html#to_hash-instance_method" title="GoCardless::Resource#to_hash (method)">#to_hash</a></span>, <span class='object_link'><a href="Resource.html#to_json-instance_method" title="GoCardless::Resource#to_json (method)">#to_json</a></span>, <span class='object_link'><a href="Resource.html#updatable-class_method" title="GoCardless::Resource.updatable (method)">updatable</a></span>, <span class='object_link'><a href="Resource.html#updatable%3F-class_method" title="GoCardless::Resource.updatable? (method)">updatable?</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Resource.html#creatable-class_method" title="GoCardless::Resource.creatable (method)">creatable</a></span>, <span class='object_link'><a href="Resource.html#creatable%3F-class_method" title="GoCardless::Resource.creatable? (method)">creatable?</a></span>, <span class='object_link'><a href="Resource.html#date_accessor-class_method" title="GoCardless::Resource.date_accessor (method)">date_accessor</a></span>, <span class='object_link'><a href="Resource.html#date_writer-class_method" title="GoCardless::Resource.date_writer (method)">date_writer</a></span>, <span class='object_link'><a href="Resource.html#find-class_method" title="GoCardless::Resource.find (method)">find</a></span>, <span class='object_link'><a href="Resource.html#initialize-instance_method" title="GoCardless::Resource#initialize (method)">#initialize</a></span>, <span class='object_link'><a href="Resource.html#inspect-instance_method" title="GoCardless::Resource#inspect (method)">#inspect</a></span>, <span class='object_link'><a href="Resource.html#persisted%3F-instance_method" title="GoCardless::Resource#persisted? (method)">#persisted?</a></span>, <span class='object_link'><a href="Resource.html#reference_accessor-class_method" title="GoCardless::Resource.reference_accessor (method)">reference_accessor</a></span>, <span class='object_link'><a href="Resource.html#reference_reader-class_method" title="GoCardless::Resource.reference_reader (method)">reference_reader</a></span>, <span class='object_link'><a href="Resource.html#reference_writer-class_method" title="GoCardless::Resource.reference_writer (method)">reference_writer</a></span>, <span class='object_link'><a href="Resource.html#to_hash-instance_method" title="GoCardless::Resource#to_hash (method)">#to_hash</a></span>, <span class='object_link'><a href="Resource.html#to_json-instance_method" title="GoCardless::Resource#to_json (method)">#to_json</a></span>, <span class='object_link'><a href="Resource.html#updatable-class_method" title="GoCardless::Resource.updatable (method)">updatable</a></span>, <span class='object_link'><a href="Resource.html#updatable%3F-class_method" title="GoCardless::Resource.updatable? (method)">updatable?</a></span></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
@@ -426,7 +447,46 @@ Returns the value of attribute source_type
     
     
       <div class="method_details first">
-  <p class="signature first" id="source-instance_method">
+  <p class="signature first" id="save-instance_method">
+  
+    - (<tt>Object</tt>) <strong>save</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+33
+34
+35
+36
+37
+38
+39
+40</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/gocardless/bill.rb', line 33</span>
+
+<span class='def def kw'>def</span> <span class='save identifier id'>save</span>
+  <span class='save_data identifier id'>save_data</span><span class='lparen token'>(</span><span class='lbrace token'>{</span>
+    <span class='symbol val'>:bill</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span>
+      <span class='symbol val'>:pre_authorization_id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='source_id identifier id'>source_id</span><span class='comma token'>,</span>
+      <span class='symbol val'>:amount</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='amount identifier id'>amount</span><span class='comma token'>,</span>
+    <span class='rbrace token'>}</span>
+  <span class='rbrace token'>}</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="source-instance_method">
   
     - (<tt>Object</tt>) <strong>source</strong> 
   
@@ -476,7 +536,8 @@ Returns the value of attribute source_type
 27
 28
 29
-30</pre>
+30
+31</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/gocardless/bill.rb', line 23</span>
@@ -488,6 +549,7 @@ Returns the value of attribute source_type
                           <span class='string val'>&quot;PreAuthorization&quot;</span><span class='rparen token'>)</span>
   <span class='end end kw'>end</span>
   <span class='@source_id ivar id'>@source_id</span> <span class='assign token'>=</span> <span class='obj identifier id'>obj</span><span class='dot token'>.</span><span class='id identifier id'>id</span>
+  <span class='@source_type ivar id'>@source_type</span> <span class='assign token'>=</span> <span class='klass identifier id'>klass</span><span class='dot token'>.</span><span class='underscore identifier id'>underscore</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -500,7 +562,7 @@ Returns the value of attribute source_type
 </div>
     
     <div id="footer">
-  Generated on Fri Aug  5 18:02:04 2011 by 
+  Generated on Mon Aug  8 15:34:36 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.8.7).
 </div>
