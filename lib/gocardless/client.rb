@@ -140,11 +140,47 @@ module GoCardless
       Bill.new(self, attrs).save
     end
 
+    # Add a signature to a Hash of parameters. The signature will be generated
+    # from the app secret and the provided parameters, and should be used
+    # whenever signed data needs to be sent to GoCardless (e.g. when creating
+    # a new subscription). The signature will be added to the hash under the
+    # key +:signature+.
+    #
+    # @param [Hash] params the parameters to sign
+    # @return [Hash] the parameters with the new +:signature+ key
     def sign_params(params)
       msg = encode_params(params)
       digest = OpenSSL::Digest::Digest.new('sha256')
       params[:signature] = OpenSSL::HMAC.hexdigest(digest, @app_secret, msg)
       params
+    end
+
+    # Confirm a newly-created subscription, pre-authorzation or one-off
+    # payment. This method also checks that the resource response data includes
+    # a valid signature and will raise a {SignatureError} if the signature is
+    # invalid.
+    #
+    # @param [Hash] params the response parameters returned by the API server
+    # @return [Resource] the confirmed resource object
+    def confirm_resource(params)
+      # Only pull out the relevant parameters, other won't be included in the
+      # signature so will cause false negatives
+      keys = [:resource_id, :resource_type, :resource_uri, :state, :signature]
+      params = Hash[params.select { |k,v| keys.include? k }]
+      (keys - [:state]).each do |key|
+        raise ArgumentError, "Parameters missing #{key}" if !params.key?(key)
+      end
+
+      if signature_valid?(params)
+        data = { :resource_id => params[:resource_id] }
+        request(:post, "#{BASE_URL}/confirm", :data => data)
+
+        # Initialize the correct class according to the resource's type
+        klass = GoCardless.const_get(params[:resource_type].camelize)
+        klass.find(self, params[:resource_id])
+      else
+        raise SignatureError, 'An invalid signature was detected'
+      end
     end
 
   private
@@ -171,6 +207,13 @@ module GoCardless
       @access_token.send(method, path, opts)
     rescue OAuth2::Error => err
       raise GoCardless::ApiError.new(err.response)
+    end
+
+    # Check if a hash's :signature is valid
+    def signature_valid?(params)
+      params = params.clone
+      signature = params.delete(:signature)
+      sign_params(params)[:signature] == signature
     end
   end
 end

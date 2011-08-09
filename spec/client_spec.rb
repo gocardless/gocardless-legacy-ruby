@@ -176,4 +176,63 @@ describe GoCardless::Client do
     sig = '6e4613b729ce15c288f70e72463739feeb05fc0b89b55d248d7f259b5367148b'
     @client.sign_params(params)[:signature].should == sig
   end
+
+  describe "#signature_valid?" do
+    before(:each) { @params = { :x => 'y', :a => 'b' } }
+
+    it "succeeds with a valid signature" do
+      params = @client.sign_params(@params)
+      @client.send(:signature_valid?, params).should be_true
+    end
+
+    it "fails with an invalid signature" do
+      params = {:signature => 'invalid'}.merge(@params)
+      @client.send(:signature_valid?, params).should be_false
+    end
+  end
+
+  describe "#confirm_resource" do
+    before :each do
+      @params = {
+        :resource_id   => '1',
+        :resource_uri  => 'a',
+        :resource_type => 'subscription',
+      }
+    end
+
+    [:resource_id, :resource_uri, :resource_type].each do |param|
+      it "fails when :#{param} is missing" do
+        p = @params.tap { |d| d.delete(param) }
+        expect { @client.confirm_resource p }.to raise_exception ArgumentError
+      end
+    end
+
+    it "doesn't confirm the resource when the signature is invalid" do
+      @client.expects(:request).never
+      @client.confirm_resource({:signature => 'xxx'}.merge(@params)) rescue nil
+    end
+
+    it "fails when the signature is invalid" do
+      expect do
+        @client.confirm_resource({:signature => 'xxx'}.merge(@params))
+      end.to raise_exception GoCardless::SignatureError
+    end
+
+    it "confirms the resource when the signature is valid" do
+      # Once for confirm, once to fetch result
+      @client.expects(:request).twice.returns(stub(:parsed => {}))
+      @client.confirm_resource(@client.sign_params(@params))
+    end
+
+    it "returns the correct object when the signature is valid" do
+      @client.stubs(:request).returns(stub(:parsed => {}))
+      subscription = GoCardless::Subscription.new @client
+      GoCardless::Subscription.expects(:find).returns subscription
+
+      # confirm_resource should use the Subcription class because
+      # the :response_type is set to subscription
+      resource = @client.confirm_resource(@client.sign_params(@params))
+      resource.should be_a GoCardless::Subscription
+    end
+  end
 end

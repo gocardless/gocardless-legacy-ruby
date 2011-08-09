@@ -66,12 +66,14 @@
   
     <dt class="r1">Inherits:</dt>
     <dd class="r1">
-      <span class="inheritName">StandardError</span>
+      <span class="inheritName"><span class='object_link'><a href="Error.html" title="GoCardless::Error (class)">Error</a></span></span>
       
         <ul class="fullTree">
           <li>Object</li>
           
             <li class="next">StandardError</li>
+          
+            <li class="next"><span class='object_link'><a href="Error.html" title="GoCardless::Error (class)">Error</a></span></li>
           
             <li class="next">GoCardless::ApiError</li>
           
@@ -96,6 +98,10 @@
 
 
 
+  
+  
+  
+  
   
   <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
   <ul class="summary">
@@ -186,6 +192,9 @@ Returns the value of attribute response.
 
 
   
+  
+  
+  
 
   
     <h2>
@@ -246,6 +255,11 @@ A new instance of ApiError.
   
 
 
+  
+  
+  
+  
+  
   <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
@@ -273,17 +287,17 @@ A new instance of ApiError
       <pre class="lines">
 
 
-8
-9
-10
 11
 12
 13
 14
-15</pre>
+15
+16
+17
+18</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/gocardless/errors.rb', line 8</span>
+      <pre class="code"><span class="info file"># File 'lib/gocardless/errors.rb', line 11</span>
 
 <span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='response identifier id'>response</span><span class='rparen token'>)</span>
   <span class='@response ivar id'>@response</span> <span class='assign token'>=</span> <span class='response identifier id'>response</span>
@@ -331,12 +345,12 @@ Returns the value of attribute code
       <pre class="lines">
 
 
-6
-7
-8</pre>
+9
+10
+11</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/gocardless/errors.rb', line 6</span>
+      <pre class="code"><span class="info file"># File 'lib/gocardless/errors.rb', line 9</span>
 
 <span class='def def kw'>def</span> <span class='code identifier id'>code</span>
   <span class='@code ivar id'>@code</span>
@@ -374,12 +388,12 @@ Returns the value of attribute description
       <pre class="lines">
 
 
-6
-7
-8</pre>
+9
+10
+11</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/gocardless/errors.rb', line 6</span>
+      <pre class="code"><span class="info file"># File 'lib/gocardless/errors.rb', line 9</span>
 
 <span class='def def kw'>def</span> <span class='description identifier id'>description</span>
   <span class='@description ivar id'>@description</span>
@@ -417,12 +431,12 @@ Returns the value of attribute response
       <pre class="lines">
 
 
-6
-7
-8</pre>
+9
+10
+11</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/gocardless/errors.rb', line 6</span>
+      <pre class="code"><span class="info file"># File 'lib/gocardless/errors.rb', line 9</span>
 
 <span class='def def kw'>def</span> <span class='response identifier id'>response</span>
   <span class='@response ivar id'>@response</span>
@@ -453,12 +467,12 @@ Returns the value of attribute response
       <pre class="lines">
 
 
-17
-18
-19</pre>
+20
+21
+22</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/gocardless/errors.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/gocardless/errors.rb', line 20</span>
 
 <span class='def def kw'>def</span> <span class='to_s identifier id'>to_s</span>
   <span class='dstring node'>&quot;#{super} [#{self.code}] #{self.description}&quot;</span>
@@ -474,7 +488,7 @@ Returns the value of attribute response
 </div>
     
     <div id="footer">
-  Generated on Mon Aug  8 21:08:12 2011 by 
+  Generated on Tue Aug  9 15:31:36 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.8.7).
 </div>

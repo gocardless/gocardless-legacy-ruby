@@ -2,7 +2,10 @@ require 'rubygems'
 require 'json'
 
 module GoCardless
-  class ApiError < StandardError
+  class Error < StandardError
+  end
+
+  class ApiError < Error
     attr_reader :response, :code, :description
 
     def initialize(response)
@@ -17,5 +20,8 @@ module GoCardless
     def to_s
       "#{super} [#{self.code}] #{self.description}"
     end
+  end
+
+  class SignatureError < Error
   end
 end

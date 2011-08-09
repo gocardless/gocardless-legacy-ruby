@@ -295,6 +295,30 @@ The Bill matching the id requested.
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#confirm_resource-instance_method" title="#confirm_resource (instance method)">- (Resource) <strong>confirm_resource</strong>(params) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Confirm a newly-created subscription, pre-authorzation or one-off payment.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#create_bill-instance_method" title="#create_bill (instance method)">- (Bill) <strong>create_bill</strong>(attrs) </a>
     
 
@@ -441,7 +465,7 @@ The pre_authorization matching the id requested.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#sign_params-instance_method" title="#sign_params (instance method)">- (Object) <strong>sign_params</strong>(params) </a>
+      <a href="#sign_params-instance_method" title="#sign_params (instance method)">- (Hash) <strong>sign_params</strong>(params) </a>
     
 
     
@@ -454,7 +478,10 @@ The pre_authorization matching the id requested.
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'><p>
+Add a signature to a Hash of parameters.
+</p>
+</div></span>
   
 </li>
 
@@ -1209,6 +1236,122 @@ the Bill matching the id requested
 </div>
     
       <div class="method_details ">
+  <p class="signature " id="confirm_resource-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Resource.html" title="GoCardless::Resource (class)">Resource</a></span></tt>) <strong>confirm_resource</strong>(params) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Confirm a newly-created subscription, pre-authorzation or one-off payment.
+This method also checks that the resource response data includes a valid
+signature and will raise a <span class='object_link'><a href="SignatureError.html" title="GoCardless::SignatureError (class)">SignatureError</a></span> if the signature is invalid.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>params</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the response parameters returned by the API server
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Resource.html" title="GoCardless::Resource (class)">Resource</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the confirmed resource object
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/gocardless/client.rb', line 165</span>
+
+<span class='def def kw'>def</span> <span class='confirm_resource identifier id'>confirm_resource</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='rparen token'>)</span>
+  <span class='comment val'># Only pull out the relevant parameters, other won't be included in the</span>
+  <span class='comment val'># signature so will cause false negatives</span>
+  <span class='keys identifier id'>keys</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='symbol val'>:resource_id</span><span class='comma token'>,</span> <span class='symbol val'>:resource_type</span><span class='comma token'>,</span> <span class='symbol val'>:resource_uri</span><span class='comma token'>,</span> <span class='symbol val'>:state</span><span class='comma token'>,</span> <span class='symbol val'>:signature</span><span class='rbrack token'>]</span>
+  <span class='params identifier id'>params</span> <span class='assign token'>=</span> <span class='Hash constant id'>Hash</span><span class='lbrack token'>[</span><span class='params identifier id'>params</span><span class='dot token'>.</span><span class='select identifier id'>select</span> <span class='lbrace token'>{</span> <span class='bitor op'>|</span><span class='k identifier id'>k</span><span class='comma token'>,</span><span class='v identifier id'>v</span><span class='bitor op'>|</span> <span class='keys identifier id'>keys</span><span class='dot token'>.</span><span class='include? fid id'>include?</span> <span class='k identifier id'>k</span> <span class='rbrace token'>}</span><span class='rbrack token'>]</span>
+  <span class='lparen token'>(</span><span class='keys identifier id'>keys</span> <span class='minus op'>-</span> <span class='lbrack token'>[</span><span class='symbol val'>:state</span><span class='rbrack token'>]</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='key identifier id'>key</span><span class='bitor op'>|</span>
+    <span class='raise identifier id'>raise</span> <span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;Parameters missing #{key}&quot;</span> <span class='if if_mod kw'>if</span> <span class='notop op'>!</span><span class='params identifier id'>params</span><span class='dot token'>.</span><span class='key? fid id'>key?</span><span class='lparen token'>(</span><span class='key identifier id'>key</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+
+  <span class='if if kw'>if</span> <span class='signature_valid? fid id'>signature_valid?</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='rparen token'>)</span>
+    <span class='data identifier id'>data</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span> <span class='symbol val'>:resource_id</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:resource_id</span><span class='rbrack token'>]</span> <span class='rbrace token'>}</span>
+    <span class='request identifier id'>request</span><span class='lparen token'>(</span><span class='symbol val'>:post</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{BASE_URL}/confirm&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:data</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='data identifier id'>data</span><span class='rparen token'>)</span>
+
+    <span class='comment val'># Initialize the correct class according to the resource's type</span>
+    <span class='klass identifier id'>klass</span> <span class='assign token'>=</span> <span class='GoCardless constant id'>GoCardless</span><span class='dot token'>.</span><span class='const_get identifier id'>const_get</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:resource_type</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='camelize identifier id'>camelize</span><span class='rparen token'>)</span>
+    <span class='klass identifier id'>klass</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:resource_id</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='raise identifier id'>raise</span> <span class='SignatureError constant id'>SignatureError</span><span class='comma token'>,</span> <span class='string val'>'An invalid signature was detected'</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <p class="signature " id="create_bill-instance_method">
   
     - (<tt><span class='object_link'><a href="Bill.html" title="GoCardless::Bill (class)">Bill</a></span></tt>) <strong>create_bill</strong>(attrs) 
@@ -1620,25 +1763,80 @@ the pre_authorization matching the id requested
       <div class="method_details ">
   <p class="signature " id="sign_params-instance_method">
   
-    - (<tt>Object</tt>) <strong>sign_params</strong>(params) 
+    - (<tt>Hash</tt>) <strong>sign_params</strong>(params) 
   
 
   
-</p><table class="source_code">
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Add a signature to a Hash of parameters. The signature will be generated
+from the app secret and the provided parameters, and should be used
+whenever signed data needs to be sent to GoCardless (e.g. when creating a
+new subscription). The signature will be added to the hash under the key
+<tt>:signature</tt>.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>params</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the parameters to sign
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the parameters with the new <tt>:signature</tt> key
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-143
-144
-145
-146
-147
-148</pre>
+151
+152
+153
+154
+155
+156</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/gocardless/client.rb', line 143</span>
+      <pre class="code"><span class="info file"># File 'lib/gocardless/client.rb', line 151</span>
 
 <span class='def def kw'>def</span> <span class='sign_params identifier id'>sign_params</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='rparen token'>)</span>
   <span class='msg identifier id'>msg</span> <span class='assign token'>=</span> <span class='encode_params identifier id'>encode_params</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='rparen token'>)</span>
@@ -1817,7 +2015,7 @@ the User matching the id requested
 </div>
     
     <div id="footer">
-  Generated on Mon Aug  8 21:08:10 2011 by 
+  Generated on Tue Aug  9 15:31:37 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.8.7).
 </div>
