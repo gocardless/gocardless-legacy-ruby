@@ -1,63 +1,73 @@
-# GoCardless Ruby API
+
+# GoCardless Ruby Client
+
 
 ## Introduction
 
-This library provides a simple Ruby wrapper around the GoCardless REST API. To
-use the API, you will need a GoCardless app id and app secret. To start with,
-you'll need to create an instance of the {GoCardless::Client} class, providing
-your app id and app secret as arguments to the constructor:
+The GoCardless Ruby client provides a simple Ruby interface to the GoCardless
+API. This document covers the usage of the Ruby library, for information on the
+structure of the API itself, or for details on particular API resources, read
+the [API overview](../).
+
+
+To use the GoCardless API, you'll need to register your app in the Developer
+Panel. Registering an app provides you with an app ID and an app secret. These
+are both required to access the API.
+
+To start with, you'll need to create an instance of the {GoCardless::Client}
+class, providing your app id and app secret as arguments to the constructor:
 
     client = GoCardless::Client(APP_ID, APP_SECRET)
 
-## Setting up an Access Token
 
-To retrieve data from the API, an access token is required. An access token
-corresponds to a single merchant account, and give an app permission to access
-and modify the merchant's data via the API. Multiple merchant accounts may be
-accessed by using different access tokens.
+## Linking a Merchant Account with the App
 
-### Obtaining a new Access Token
+The API allows you to act on behalf of a merchant. For this to happen, the
+merchant must give your app access to their account. This authorization process
+results in an access token, which you may then use to act as the merchant via
+the API. Note that an app may have access tokens for many merchant accounts.
 
-![Authorization Flow](http://i.imgur.com/sSgTy.png)
-
-If you don't already have an access token stored, you will need the owner of a
-merchant account to authorize your app via the web interface. Once they have
-authorized your app, they will be redirected back to your website with an
-authorization code. This code should then be exchanged for an access token,
-which may be used to make authenticated requests against the API. The
-{GoCardless::Client client} object can be used to generate the authorize url:
+To authorize your app the merchant must be redirected to the GoCardless
+servers, where they will be presented with a page that allows them to link
+their account with your app. The URL that you send the merchant to contains
+information about your app, as well as the URL where the merchant should be
+sent back to once they've completed the process. The Ruby client library takes
+care of most of this for you, all you need to provide is the URL:
 
     auth_url = client.authorize_url(:redirect_uri => 'http://mywebsite.com/cb')
-    redirect_to auth_url
 
-The `redirect_uri` parameter specifies where the merchant account owner should
-be sent after they have authorized your app. When the user is sent to this url,
-the authorization code will be present as a query parameter named +code+. You
-can use the {GoCardless::Client client} object to exchange this code for an
-access token. Note that you must also provide the same `redirect_uri` used in
-the previous step:
+Now you need to redirect the merchant to `auth_url`, so the merchant can give
+your app access to their account. If the merchant hasn't already created a
+merchant account on GoCardless, they will be prompted to do so first.
+
+Once the merchant has authorized your app, they will be redirected back to the
+URL you specified earlier (`http://mywebsite.com/cb` in the example above). The
+API servers will include an "authorization code" as a query string parameter
+(`code`):
 
     auth_code = params[:code]
+
+This authorization code may be exchanged for an access token, which may be used
+to access the merchant's account through the API. You can use the
+{GoCardless::Client client} object to perform the exchange. The `redirect_uri`
+that you used in the previous step must also be provided:
+
     client.fetch_access_token(auth_code, :redirect_uri => 'http://mywebsite.com/cb')
+    token = client.access_token
 
-You can access a serialized version of the access token using the
-{GoCardless::Client#access_token access\_token} attribute on the
-{GoCardless::Client client} object. This should be stored alongside the
-merchant for later use:
+The `token` is the access token that gives your app access to the merchant's
+account. You should store this access token alongside the merchant's record in
+your database.
 
-    merchant = Merchant.new(:name  => session[:merchant_name],
-                            :token => client.access_token)
-    merchant.save!
-
-### Using an existing Access Token
-
-To use a stored access token, just set the `access_token` attribute of a
-{GoCardless::Client client} object to the stored token value, or initialize the
-client object with the token as the third argument:
-
-    client.access_token = Merchant.find(123).token
 
 ## Retrieving Data from the API
+
+To access the API on behalf of a merchant, you need to provide the
+{GoCardless::Client client} object with the access token that corresponds to
+the merchant. This may be done by assigning the token to the `access_token`
+attribute:
+
+    client.access_token = token
 
 Once your {GoCardless::Client client} has a valid access token, you may request
 data about the merchant associated with the token. To access the merchant's
@@ -102,6 +112,7 @@ on {GoCardless::Client client} objects:
     client.subscription(5)  # => <GoCardless::Subscription ...>
     client.payment(10)      # => <GoCardless::Payment ...>
 
+
 ## Creating and modifying bills
 
 The GoCardless API may also be used to create and modify bills. Bills must be
@@ -117,6 +128,7 @@ To modify the bill, alter the attributes and call the
 
     bill.amount = 250
     bill.save
+
 
 ## Example usage
     require 'gocardless'
