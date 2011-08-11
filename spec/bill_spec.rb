@@ -10,6 +10,7 @@ describe GoCardless::Bill do
   it "source getter works" do
     b = GoCardless::Bill.new(@client, :source_type => :subscription,
                                        :source_id => 123)
+    @client.access_token = 'TOKEN manage_merchant:123'
     stub_get(@client, :id => 123)
     source = b.source
     source.should be_a GoCardless::Subscription

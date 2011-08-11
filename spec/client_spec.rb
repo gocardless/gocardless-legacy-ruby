@@ -96,6 +96,10 @@ describe GoCardless::Client do
       token.expects(:get).with { |p,o| p =~ %r|/api/v1/test| }.returns(r)
       @client.api_get('/test')
     end
+
+    it "fails without an access_token" do
+      expect { @client.api_get '/' }.to raise_exception GoCardless::ClientError
+    end
   end
 
   describe "#api_post" do
@@ -106,6 +110,10 @@ describe GoCardless::Client do
       r.stubs(:parsed)
       token.expects(:post).with { |p,opts| opts[:body] == '{"a":1}' }.returns(r)
       @client.api_post('/test', {:a => 1})
+    end
+
+    it "fails without an access_token" do
+      expect { @client.api_get '/' }.to raise_exception GoCardless::ClientError
     end
   end
 
@@ -142,6 +150,7 @@ describe GoCardless::Client do
   %w{subscription pre_authorization user bill payment}.each do |resource|
     describe "##{resource}" do
       it "returns the correct #{resource.camelize} object" do
+        @client.access_token = 'TOKEN manage_merchant:123'
         stub_get(@client, {:id => 123})
         obj = @client.send(resource, 123)
         obj.should be_a GoCardless.const_get(resource.camelize)

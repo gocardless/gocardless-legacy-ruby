@@ -22,6 +22,9 @@ module GoCardless
     end
   end
 
+  class ClientError < Error
+  end
+
   class SignatureError < Error
   end
 end

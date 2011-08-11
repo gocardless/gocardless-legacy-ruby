@@ -90,6 +90,7 @@ module GoCardless
     # @method merchant
     # @return [Merchant] the merchant associated with the client's access token
     def merchant
+      raise ClientError, 'Access token missing' unless @access_token
       scope = @access_token.params[:scope].split
       perm = scope.select {|p| p.start_with?('manage_merchant:') }.first
       merchant_id = perm.split(':')[1]
@@ -228,6 +229,7 @@ module GoCardless
     # @option [String] body the request body
     # @option [Hash] params query string parameters
     def request(method, path, opts = {})
+      raise ClientError, 'Access token missing' unless @access_token
       opts[:headers] = { 'Accept' => 'application/json' }
       opts[:headers]['Content-Type'] = 'application/json' unless method == :get
       opts[:body] = JSON.generate(opts[:data]) if !opts[:data].nil?

@@ -137,6 +137,7 @@ describe GoCardless::Resource do
 
       resource = test_resource.new(@client)
       resource.instance_variable_set(:@user_id, 123)
+      @client.access_token = 'TOKEN manage_merchant:123'
       stub_get(@client, {:id => 123})
       user = resource.user
       user.should be_a GoCardless::User
