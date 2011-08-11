@@ -1,6 +1,4 @@
 require 'spec_helper'
-require 'uri'
-require 'cgi'
 
 describe GoCardless::Client do
   before :each do
