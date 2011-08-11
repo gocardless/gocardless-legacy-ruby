@@ -221,6 +221,12 @@ module GoCardless
       end.sort * '&'
     end
 
+    # Send a request to the GoCardless API servers
+    #
+    # @param [Symbol] method the HTTP method to use (e.g. +:get+, +:post+)
+    # @param [String] path the path fragment of the URL
+    # @option [String] body the request body
+    # @option [Hash] params query string parameters
     def request(method, path, opts = {})
       opts[:headers] = { 'Accept' => 'application/json' }
       opts[:headers]['Content-Type'] = 'application/json' unless method == :get

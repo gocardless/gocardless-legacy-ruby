@@ -163,16 +163,33 @@ To modify the bill, alter the attributes and call the
     APP_SECRET = '8oCITH2AVhaUYqJ+5hjyt8JUlSo5m/WTYLH8E/GO+TrBWdRK45lvoRt/zetr+t5Y'
 
     # Create a new instance of the GoCardless API client
-    client = GoCardless::Client.new(app_id, app_secret)
+    client = GoCardless::Client.new(APP_ID, APP_SECRET)
 
     # Generate the OAuth 'authorize endpoint' URL
-    client.authorize_url(:redirect_uri => 'http://mywebsite.com/cb')
+    authorize_url = client.authorize_url(:redirect_uri => 'http://mywebsite.com/cb')
 
-    # Once the authorization code has been retrieved, exchange it for an access token
-    auth_code = params[:auth_code]
+    # Now, redirect the user (merchant) to 'authorize_url'. In Rails this would
+    # look like:
+    #
+    #   redirect_to authorize_url
+    #
+    # They will be presented with a screen where they confirm the link between
+    # their merchant account and your app. Once they are done, they will be
+    # redirected back to the 'redirect_url' you provided.
+
+    # Now you need to retrieve the authorization code from the query string
+    # parameters:
+    #
+    #   auth_code = params[:auth_code]
+    #
+    # Then exchange the authorization code for an access token:
+
     client.fetch_access_token(auth_code, :redirect_uri => 'http://mywebsite.com/cb')
 
-    # The API client will associated with a merchant account
+    # The access token should be saved to the database alongside the merchant.
+    # You can get the access token using 'client.access_token'
+
+    # The API client will be associated with a merchant account
     client.merchant  # => <GoCardless::Merchant ...>
 
     # The client allows you to look up most resources by their id
@@ -185,5 +202,20 @@ To modify the bill, alter the attributes and call the
     subscription = client.subscription(5)
     subscription.merchant  # => <GoCardless::Merchant ...>
 
-    # Create a new bill
+    # To create a new subscription, generate the appropirate URL:
+    url = client.new_subscription_url(:frequency_unit   => :week,
+                                      :frequency_length => 6,
+                                      :amount           => 30,
+                                      :description      => 'Premium membership')
+
+    # Then redirect the user to the URL:
+    #
+    #   redirect_to url
+    #
+    # When the user is redirected back to your site, you need to confirm the
+    # new subscription (assuming params is the query-string parameters):
+    subscription = client.confirm_resource(params)
+
+    # Create a new bill via the API under a pre authorization:
     client.merchant.pre_authorizations.first.create_bill(500) # £5.00 bill
+
