@@ -140,19 +140,40 @@ module GoCardless
       Bill.new(self, attrs).save
     end
 
-    # Add a signature to a Hash of parameters. The signature will be generated
-    # from the app secret and the provided parameters, and should be used
-    # whenever signed data needs to be sent to GoCardless (e.g. when creating
-    # a new subscription). The signature will be added to the hash under the
-    # key +:signature+.
+    # Generate the URL for creating a new subscription. The parameters passed
+    # in define various attributes of the subscription. Redirecting a user to
+    # the resulting URL will show them a page where they can approve or reject
+    # the subscription described by the parameters. Note that this method
+    # automatically includes the nonce, timestamp and signature.
     #
-    # @param [Hash] params the parameters to sign
-    # @return [Hash] the parameters with the new +:signature+ key
-    def sign_params(params)
-      msg = encode_params(params)
-      digest = OpenSSL::Digest::Digest.new('sha256')
-      params[:signature] = OpenSSL::HMAC.hexdigest(digest, @app_secret, msg)
-      params
+    # @param [Hash] params the subscription parameters
+    # @return [String] the generated URL
+    def new_subscription_url(params)
+      new_limit_url(:subscription, params)
+    end
+
+    # Generate the URL for creating a new pre authorization. The parameters
+    # passed in define various attributes of the pre authorization. Redirecting
+    # a user to the resulting URL will show them a page where they can approve
+    # or reject the pre authorization described by the parameters. Note that
+    # this method automatically includes the nonce, timestamp and signature.
+    #
+    # @param [Hash] params the pre authorization parameters
+    # @return [String] the generated URL
+    def new_pre_authorization_url(params)
+      new_limit_url(:pre_authorization, params)
+    end
+
+    # Generate the URL for creating a new bill. The parameters passed in define
+    # various attributes of the bill. Redirecting a user to the resulting URL
+    # will show them a page where they can approve or reject the bill described
+    # by the parameters. Note that this method automatically includes the
+    # nonce, timestamp and signature.
+    #
+    # @param [Hash] params the bill parameters
+    # @return [String] the generated URL
+    def new_bill_url(params)
+      new_limit_url(:bill, params)
     end
 
     # Confirm a newly-created subscription, pre-authorzation or one-off
@@ -209,11 +230,60 @@ module GoCardless
       raise GoCardless::ApiError.new(err.response)
     end
 
+    # Add a signature to a Hash of parameters. The signature will be generated
+    # from the app secret and the provided parameters, and should be used
+    # whenever signed data needs to be sent to GoCardless (e.g. when creating
+    # a new subscription). The signature will be added to the hash under the
+    # key +:signature+.
+    #
+    # @param [Hash] params the parameters to sign
+    # @return [Hash] the parameters with the new +:signature+ key
+    def sign_params(params)
+      msg = encode_params(params)
+      digest = OpenSSL::Digest::Digest.new('sha256')
+      params[:signature] = OpenSSL::HMAC.hexdigest(digest, @app_secret, msg)
+      params
+    end
+
     # Check if a hash's :signature is valid
+    #
+    # @param [Hash] params the parameters to check
+    # @return [Boolean] whether or not the signature is valid
     def signature_valid?(params)
       params = params.clone
       signature = params.delete(:signature)
       sign_params(params)[:signature] == signature
+    end
+
+    # Generate a random base64-encoded string
+    #
+    # @return [String] a randomly generated string
+    def generate_nonce
+      Base64.encode64((0...45).map { rand(256).chr }.join).strip
+    end
+
+    # Generate the URL for creating a limit of type +type+, including the
+    # provided params, nonce, timestamp and signature
+    #
+    # @param [Symbol] type the limit type (+:subscription+, etc)
+    # @param [Hash] params the bill parameters
+    # @return [String] the generated URL
+    def new_limit_url(type, params)
+      url = URI.parse("#{BASE_URL}/connect/#{type}/new")
+
+      # Don't make changes to the original params hash
+      params = params.clone
+      params[:nonce] = generate_nonce
+      # ISO formatted UTC time
+      params[:timestamp] = Time.now.getutc.strftime('%Y-%m-%dT%H:%M:%SZ')
+
+      sign_params(params)
+
+      query_parts = params.map do |name,value|
+        "#{CGI.escape(name.to_s)}=#{CGI.escape(value.to_s)}"
+      end
+      url.query = query_parts.join('&')
+      url.to_s
     end
   end
 end

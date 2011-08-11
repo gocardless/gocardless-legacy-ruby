@@ -172,6 +172,20 @@ on <span class='object_link'><a href="GoCardless/Client.html" title="GoCardless:
 <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='payment identifier id'>payment</span><span class='lparen token'>(</span><span class='integer val'>10</span><span class='rparen token'>)</span>      <span class='comment val'># =&gt; &lt;GoCardless::Payment ...&gt;</span>
 </pre>
 
+<h2>Creating new Subscriptions, Pre Authorizations and One-Off Payments</h2>
+
+<p>To set up new subscriptions, pre-authorizations and one-off payments between a
+user and merchant account, you need to send the user to the GoCardless site to
+approve it. This is broadly similar to how you link merchant accounts with your
+app, the principal difference being that you don't get an access token at the
+end of it.</p>
+
+<p>You may set the value certain fields in the authorization form, for example the
+amount and frequency of a subscription. This data should be POSTed to the
+appropriate endpoint.</p>
+
+<p><span class='object_link'><a href="GoCardless/Client.html" title="GoCardless::Client (class)">client</a></span> object</p>
+
 <h2>Creating and modifying bills</h2>
 
 <p>The GoCardless API may also be used to create and modify bills. Bills must be
@@ -227,7 +241,7 @@ in pence as the only argument:</p>
 </div></div>
     
     <div id="footer">
-  Generated on Tue Aug  9 15:31:35 2011 by 
+  Generated on Wed Aug 10 18:54:45 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.8.7).
 </div>

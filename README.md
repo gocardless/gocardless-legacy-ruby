@@ -113,6 +113,21 @@ on {GoCardless::Client client} objects:
     client.payment(10)      # => <GoCardless::Payment ...>
 
 
+## Creating new Subscriptions, Pre Authorizations and One-Off Payments
+
+To set up new subscriptions, pre-authorizations and one-off payments between a
+user and merchant account, you need to send the user to the GoCardless site to
+approve it. This is broadly similar to how you link merchant accounts with your
+app, the principal difference being that you don't get an access token at the
+end of it.
+
+You may set the value certain fields in the authorization form, for example the
+amount and frequency of a subscription. This data should be POSTed to the
+appropriate endpoint.
+
+{GoCardless::Client client} object
+
+
 ## Creating and modifying bills
 
 The GoCardless API may also be used to create and modify bills. Bills must be

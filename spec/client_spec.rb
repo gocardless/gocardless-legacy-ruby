@@ -174,14 +174,14 @@ describe GoCardless::Client do
     @client.instance_variable_set(:@app_secret, 'testsecret')
     params = {:test => true}
     sig = '6e4613b729ce15c288f70e72463739feeb05fc0b89b55d248d7f259b5367148b'
-    @client.sign_params(params)[:signature].should == sig
+    @client.send(:sign_params, params)[:signature].should == sig
   end
 
   describe "#signature_valid?" do
     before(:each) { @params = { :x => 'y', :a => 'b' } }
 
     it "succeeds with a valid signature" do
-      params = @client.sign_params(@params)
+      params = @client.send(:sign_params, @params)
       @client.send(:signature_valid?, params).should be_true
     end
 
@@ -221,7 +221,7 @@ describe GoCardless::Client do
     it "confirms the resource when the signature is valid" do
       # Once for confirm, once to fetch result
       @client.expects(:request).twice.returns(stub(:parsed => {}))
-      @client.confirm_resource(@client.sign_params(@params))
+      @client.confirm_resource(@client.send(:sign_params, @params))
     end
 
     it "returns the correct object when the signature is valid" do
@@ -231,8 +231,50 @@ describe GoCardless::Client do
 
       # confirm_resource should use the Subcription class because
       # the :response_type is set to subscription
-      resource = @client.confirm_resource(@client.sign_params(@params))
+      resource = @client.confirm_resource(@client.send(:sign_params, @params))
       resource.should be_a GoCardless::Subscription
+    end
+  end
+
+  it "#generate_nonce should generate a random string" do
+    @client.send(:generate_nonce).should_not == @client.send(:generate_nonce)
+  end
+
+  describe "#new_limit_url" do
+    def get_params(url)
+      Hash[CGI.parse(URI.parse(url).query).map{ |k,v| [k, v.first] }]
+    end
+
+    it "should use the correct path" do
+      url = @client.send(:new_limit_url, :a_test_limit, {})
+      URI.parse(url).path.should == '/connect/a_test_limit/new'
+    end
+
+    it "should include the params in the URL query" do
+      params = { 'a' => '1', 'b' => '2' }
+      url = @client.send(:new_limit_url, :subscription, params)
+      Hash[get_params(url).select { |k,v| params.key?(k) }].should == params
+    end
+
+    it "should include a valid signature" do
+      params = get_params(@client.send(:new_limit_url, :subscription, :x => 1))
+      params.key?('signature').should be_true
+      sig = params.delete('signature')
+      sig.should == @client.send(:sign_params, params.clone)[:signature]
+    end
+
+    it "should include a nonce" do
+      params = get_params(@client.send(:new_limit_url, :subscription, :x => 1))
+      params['nonce'].should be_a String
+    end
+
+    it "should include a timestamp" do
+      # Time.now returning Pacific time
+      time = Time.local(0, 0, 0, 1, 1, 2011, 0, 0, false, 'PDT')
+      Time.expects(:now).returns time
+      params = get_params(@client.send(:new_limit_url, :subscription, :x => 1))
+      # Check that timezone is ISO formatted UTC
+      params['timestamp'].should == "2011-01-01T08:00:00Z"
     end
   end
 end

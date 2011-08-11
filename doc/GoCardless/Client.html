@@ -417,6 +417,78 @@ The merchant associated with the client&#8217;s access token.
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#new_bill_url-instance_method" title="#new_bill_url (instance method)">- (String) <strong>new_bill_url</strong>(params) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Generate the URL for creating a new bill.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#new_pre_authorization_url-instance_method" title="#new_pre_authorization_url (instance method)">- (String) <strong>new_pre_authorization_url</strong>(params) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Generate the URL for creating a new pre authorization.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#new_subscription_url-instance_method" title="#new_subscription_url (instance method)">- (String) <strong>new_subscription_url</strong>(params) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Generate the URL for creating a new subscription.
+</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#payment-instance_method" title="#payment (instance method)">- (Payment) <strong>payment</strong>(id) </a>
     
 
@@ -456,30 +528,6 @@ The payment matching the id requested.
   
     <span class="summary_desc"><div class='inline'><p>
 The pre_authorization matching the id requested.
-</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#sign_params-instance_method" title="#sign_params (instance method)">- (Hash) <strong>sign_params</strong>(params) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>
-Add a signature to a Hash of parameters.
 </p>
 </div></span>
   
@@ -1301,29 +1349,29 @@ the confirmed resource object
       <pre class="lines">
 
 
-165
-166
-167
-168
-169
-170
-171
-172
-173
-174
-175
-176
-177
-178
-179
-180
-181
-182
-183
-184</pre>
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/gocardless/client.rb', line 165</span>
+      <pre class="code"><span class="info file"># File 'lib/gocardless/client.rb', line 186</span>
 
 <span class='def def kw'>def</span> <span class='confirm_resource identifier id'>confirm_resource</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='rparen token'>)</span>
   <span class='comment val'># Only pull out the relevant parameters, other won't be included in the</span>
@@ -1601,6 +1649,258 @@ the merchant associated with the client&#8217;s access token
 </div>
     
       <div class="method_details ">
+  <p class="signature " id="new_bill_url-instance_method">
+  
+    - (<tt>String</tt>) <strong>new_bill_url</strong>(params) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Generate the URL for creating a new bill. The parameters passed in define
+various attributes of the bill. Redirecting a user to the resulting URL
+will show them a page where they can approve or reject the bill described
+by the parameters. Note that this method automatically includes the nonce,
+timestamp and signature.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>params</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the bill parameters
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the generated URL
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+175
+176
+177</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/gocardless/client.rb', line 175</span>
+
+<span class='def def kw'>def</span> <span class='new_bill_url identifier id'>new_bill_url</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='rparen token'>)</span>
+  <span class='new_limit_url identifier id'>new_limit_url</span><span class='lparen token'>(</span><span class='symbol val'>:bill</span><span class='comma token'>,</span> <span class='params identifier id'>params</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="new_pre_authorization_url-instance_method">
+  
+    - (<tt>String</tt>) <strong>new_pre_authorization_url</strong>(params) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Generate the URL for creating a new pre authorization. The parameters
+passed in define various attributes of the pre authorization. Redirecting a
+user to the resulting URL will show them a page where they can approve or
+reject the pre authorization described by the parameters. Note that this
+method automatically includes the nonce, timestamp and signature.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>params</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the pre authorization parameters
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the generated URL
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+163
+164
+165</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/gocardless/client.rb', line 163</span>
+
+<span class='def def kw'>def</span> <span class='new_pre_authorization_url identifier id'>new_pre_authorization_url</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='rparen token'>)</span>
+  <span class='new_limit_url identifier id'>new_limit_url</span><span class='lparen token'>(</span><span class='symbol val'>:pre_authorization</span><span class='comma token'>,</span> <span class='params identifier id'>params</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="new_subscription_url-instance_method">
+  
+    - (<tt>String</tt>) <strong>new_subscription_url</strong>(params) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Generate the URL for creating a new subscription. The parameters passed in
+define various attributes of the subscription. Redirecting a user to the
+resulting URL will show them a page where they can approve or reject the
+subscription described by the parameters. Note that this method
+automatically includes the nonce, timestamp and signature.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>params</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the subscription parameters
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>
+the generated URL
+</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+151
+152
+153</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/gocardless/client.rb', line 151</span>
+
+<span class='def def kw'>def</span> <span class='new_subscription_url identifier id'>new_subscription_url</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='rparen token'>)</span>
+  <span class='new_limit_url identifier id'>new_limit_url</span><span class='lparen token'>(</span><span class='symbol val'>:subscription</span><span class='comma token'>,</span> <span class='params identifier id'>params</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <p class="signature " id="payment-instance_method">
   
     - (<tt><span class='object_link'><a href="Payment.html" title="GoCardless::Payment (class)">Payment</a></span></tt>) <strong>payment</strong>(id) 
@@ -1753,96 +2053,6 @@ the pre_authorization matching the id requested
 
 <span class='def def kw'>def</span> <span class='pre_authorization identifier id'>pre_authorization</span><span class='lparen token'>(</span><span class='id identifier id'>id</span><span class='rparen token'>)</span>
   <span class='PreAuthorization constant id'>PreAuthorization</span><span class='dot token'>.</span><span class='find identifier id'>find</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='id identifier id'>id</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <p class="signature " id="sign_params-instance_method">
-  
-    - (<tt>Hash</tt>) <strong>sign_params</strong>(params) 
-  
-
-  
-</p><div class="docstring">
-  <div class="discussion">
-    <p>
-Add a signature to a Hash of parameters. The signature will be generated
-from the app secret and the provided parameters, and should be used
-whenever signed data needs to be sent to GoCardless (e.g. when creating a
-new subscription). The signature will be added to the hash under the key
-<tt>:signature</tt>.
-</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  <h3>Parameters:</h3>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>params</span>
-      
-      
-        <span class='type'>(<tt>Hash</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>
-the parameters to sign
-</p>
-</div>
-      
-    </li>
-  
-</ul>
-<h3>Returns:</h3>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>Hash</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>
-the parameters with the new <tt>:signature</tt> key
-</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-151
-152
-153
-154
-155
-156</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/gocardless/client.rb', line 151</span>
-
-<span class='def def kw'>def</span> <span class='sign_params identifier id'>sign_params</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='rparen token'>)</span>
-  <span class='msg identifier id'>msg</span> <span class='assign token'>=</span> <span class='encode_params identifier id'>encode_params</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='rparen token'>)</span>
-  <span class='digest identifier id'>digest</span> <span class='assign token'>=</span> <span class='OpenSSL constant id'>OpenSSL</span><span class='colon2 op'>::</span><span class='Digest constant id'>Digest</span><span class='colon2 op'>::</span><span class='Digest constant id'>Digest</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>'sha256'</span><span class='rparen token'>)</span>
-  <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:signature</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='OpenSSL constant id'>OpenSSL</span><span class='colon2 op'>::</span><span class='HMAC constant id'>HMAC</span><span class='dot token'>.</span><span class='hexdigest identifier id'>hexdigest</span><span class='lparen token'>(</span><span class='digest identifier id'>digest</span><span class='comma token'>,</span> <span class='@app_secret ivar id'>@app_secret</span><span class='comma token'>,</span> <span class='msg identifier id'>msg</span><span class='rparen token'>)</span>
-  <span class='params identifier id'>params</span>
 <span class='end end kw'>end</span>
 </pre>
     </td>
@@ -2015,7 +2225,7 @@ the User matching the id requested
 </div>
     
     <div id="footer">
-  Generated on Tue Aug  9 15:31:37 2011 by 
+  Generated on Wed Aug 10 18:54:46 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.8.7).
 </div>
