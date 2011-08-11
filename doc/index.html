@@ -176,15 +176,26 @@ on <span class='object_link'><a href="GoCardless/Client.html" title="GoCardless:
 
 <p>To set up new subscriptions, pre-authorizations and one-off payments between a
 user and merchant account, you need to send the user to the GoCardless site to
-approve it. This is broadly similar to how you link merchant accounts with your
-app, the principal difference being that you don't get an access token at the
-end of it.</p>
+approve the process. This is broadly similar to how you link merchant accounts
+with your app, the principal difference being that you don't get an access
+token at the end of it.</p>
 
-<p>You may set the value certain fields in the authorization form, for example the
-amount and frequency of a subscription. This data should be POSTed to the
-appropriate endpoint.</p>
+<p>You should pass through certain attributes about the resource that you're
+trying to create, such as the payment amount, or the subscription frequency.
+These attributes are sent as query-string arguments. For security purposes, the
+request must also contain a timestamp, nonce (randomly-generated value),
+merchant id and a signature. The <span class='object_link'><a href="GoCardless/Client.html" title="GoCardless::Client (class)">client</a></span> object does this
+for you, so you just need to provide the attributes:</p>
 
-<p><span class='object_link'><a href="GoCardless/Client.html" title="GoCardless::Client (class)">client</a></span> object</p>
+<pre class="code"><span class='url identifier id'>url</span> <span class='assign token'>=</span> <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='new_subscription_url identifier id'>new_subscription_url</span><span class='lparen token'>(</span><span class='symbol val'>:frequency_unit</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:week</span><span class='comma token'>,</span>
+                                  <span class='symbol val'>:frequency_length</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>6</span><span class='comma token'>,</span>
+                                  <span class='symbol val'>:amount</span>           <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>30</span><span class='comma token'>,</span>
+                                  <span class='symbol val'>:description</span>      <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'Premium membership'</span><span class='rparen token'>)</span>
+</pre>
+
+<p>Redirecting a user to <code>url</code> will take them to a page where they can authorize a
+weekly subscription of £30 for a period of 6 weeks. Once they have authorized
+the subscription, they will be taken back to your site.</p>
 
 <h2>Creating and modifying bills</h2>
 
@@ -241,7 +252,7 @@ in pence as the only argument:</p>
 </div></div>
     
     <div id="footer">
-  Generated on Wed Aug 10 18:54:45 2011 by 
+  Generated on Wed Aug 10 19:15:38 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.8.7).
 </div>

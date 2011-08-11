@@ -117,15 +117,25 @@ on {GoCardless::Client client} objects:
 
 To set up new subscriptions, pre-authorizations and one-off payments between a
 user and merchant account, you need to send the user to the GoCardless site to
-approve it. This is broadly similar to how you link merchant accounts with your
-app, the principal difference being that you don't get an access token at the
-end of it.
+approve the process. This is broadly similar to how you link merchant accounts
+with your app, the principal difference being that you don't get an access
+token at the end of it.
 
-You may set the value certain fields in the authorization form, for example the
-amount and frequency of a subscription. This data should be POSTed to the
-appropriate endpoint.
+You should pass through certain attributes about the resource that you're
+trying to create, such as the payment amount, or the subscription frequency.
+These attributes are sent as query-string arguments. For security purposes, the
+request must also contain a timestamp, nonce (randomly-generated value),
+merchant id and a signature. The {GoCardless::Client client} object does this
+for you, so you just need to provide the attributes:
 
-{GoCardless::Client client} object
+    url = client.new_subscription_url(:frequency_unit   => :week,
+                                      :frequency_length => 6,
+                                      :amount           => 30,
+                                      :description      => 'Premium membership')
+
+Redirecting a user to `url` will take them to a page where they can authorize a
+weekly subscription of £30 for a period of 6 weeks. Once they have authorized
+the subscription, they will be taken back to your site.
 
 
 ## Creating and modifying bills
