@@ -9,7 +9,6 @@ API. This document covers the usage of the Ruby library, for information on the
 structure of the API itself, or for details on particular API resources, read
 the [API overview](../).
 
-
 To use the GoCardless API, you'll need to register your app in the Developer
 Panel. Registering an app provides you with an app ID and an app secret. These
 are both required to access the API.
@@ -18,6 +17,17 @@ To start with, you'll need to create an instance of the {GoCardless::Client}
 class, providing your app id and app secret as arguments to the constructor:
 
     client = GoCardless::Client(APP_ID, APP_SECRET)
+
+
+### Using the API Sandbox
+
+By default, the {GoCardless::Client client} will use
+`https://www.gocardless.com` as the base URL. To use the API sandbox, you need
+to set the base URL to `https://sandbox.gocardless.com`:
+
+    GoCardless::Client.base_url = 'https://sandbox.gocardless.com'
+
+This will force all requests to use the sandbox rather than the main site.
 
 
 ## Linking a Merchant Account with the App

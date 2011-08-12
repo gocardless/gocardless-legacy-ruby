@@ -23,7 +23,7 @@ describe GoCardless::Client do
   end
 
   describe "#fetch_access_token" do
-    access_token_url = "#{GoCardless::Client::BASE_URL}/oauth/access_token"
+    access_token_url = "#{GoCardless::Client.base_url}/oauth/access_token"
 
     it "fails without a redirect uri" do
       lambda do

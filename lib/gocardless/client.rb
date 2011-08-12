@@ -7,13 +7,28 @@ require 'cgi'
 
 module GoCardless
   class Client
-    BASE_URL = 'http://localhost:3000'
+    DEFAULT_BASE_URL = 'https://www.gocardless.com'
     API_PATH = '/api/v1'
+
+    class << self
+      def base_url=(url)
+        @base_url = url.sub(%r|/$|, '')
+      end
+
+      def base_url
+        @base_url || DEFAULT_BASE_URL
+      end
+
+      def api_url
+        "#{base_url}#{API_PATH}"
+      end
+    end
 
     def initialize(app_id, app_secret, token = nil)
       @app_id = app_id
       @app_secret = app_secret
-      @oauth_client = OAuth2::Client.new(app_id, app_secret, :site => BASE_URL,
+      @oauth_client = OAuth2::Client.new(app_id, app_secret,
+                                         :site => self.class.base_url,
                                          :token_url => '/oauth/access_token')
       self.access_token = token if token
     end
@@ -194,7 +209,7 @@ module GoCardless
 
       if signature_valid?(params)
         data = { :resource_id => params[:resource_id] }
-        request(:post, "#{BASE_URL}#{API_PATH}/confirm", :data => data)
+        request(:post, "#{self.class.api_url}/confirm", :data => data)
 
         # Initialize the correct class according to the resource's type
         klass = GoCardless.const_get(params[:resource_type].camelize)
@@ -276,7 +291,7 @@ module GoCardless
     # @param [Hash] params the bill parameters
     # @return [String] the generated URL
     def new_limit_url(type, limit_params)
-      url = URI.parse("#{BASE_URL}/connect/#{type}s/new")
+      url = URI.parse("#{self.class.base_url}/connect/#{type}s/new")
 
       limit_params[:merchant_id] = merchant_id
 
