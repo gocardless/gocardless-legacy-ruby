@@ -248,19 +248,32 @@ describe GoCardless::Client do
   end
 
   describe "#new_limit_url" do
+    before(:each) do
+      @merchant_id = '123'
+      @client.access_token = "TOKEN manage_merchant:#{@merchant_id}"
+    end
+
     def get_params(url)
       Hash[CGI.parse(URI.parse(url).query).map{ |k,v| [k, v.first] }]
     end
 
     it "should use the correct path" do
-      url = @client.send(:new_limit_url, :a_test_limit, {})
-      URI.parse(url).path.should == '/connect/a_test_limit/new'
+      url = @client.send(:new_limit_url, :test_limit, {})
+      URI.parse(url).path.should == '/connect/test_limits/new'
     end
 
     it "should include the params in the URL query" do
       params = { 'a' => '1', 'b' => '2' }
       url = @client.send(:new_limit_url, :subscription, params)
-      Hash[get_params(url).select { |k,v| params.key?(k) }].should == params
+      url_params = get_params(url)
+      params.each do |key, value|
+        url_params["subscription[#{key}]"].should == value
+      end
+    end
+
+    it "should add merchant_id to the limit" do
+      url = @client.send(:new_limit_url, :subscription, {})
+      get_params(url)['subscription[merchant_id]'].should == @merchant_id
     end
 
     it "should include a valid signature" do
@@ -275,6 +288,11 @@ describe GoCardless::Client do
       params['nonce'].should be_a String
     end
 
+    it "should include a client_id" do
+      params = get_params(@client.send(:new_limit_url, :subscription, :x => 1))
+      params['client_id'].should == @client.instance_variable_get(:@app_id)
+    end
+
     it "should include a timestamp" do
       # Time.now returning Pacific time
       time = Time.local(0, 0, 0, 1, 1, 2011, 0, 0, false, 'PDT')
@@ -282,6 +300,19 @@ describe GoCardless::Client do
       params = get_params(@client.send(:new_limit_url, :subscription, :x => 1))
       # Check that timezone is ISO formatted UTC
       params['timestamp'].should == "2011-01-01T08:00:00Z"
+    end
+  end
+
+  describe "#merchant_id" do
+    it "returns the merchant id when an access token is set" do
+      @client.access_token = 'TOKEN manage_merchant:123'
+      @client.send(:merchant_id).should == '123'
+    end
+
+    it "fails if there's no access token" do
+      expect do
+        @client.send(:merchant_id)
+      end.to raise_exception GoCardless::ClientError
     end
   end
 end

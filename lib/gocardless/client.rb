@@ -93,9 +93,6 @@ module GoCardless
     # @return [Merchant] the merchant associated with the client's access token
     def merchant
       raise ClientError, 'Access token missing' unless @access_token
-      scope = @access_token.params[:scope].split
-      perm = scope.select {|p| p.start_with?('manage_merchant:') }.first
-      merchant_id = perm.split(':')[1]
       Merchant.new(self, api_get("/merchants/#{merchant_id}"))
     end
 
@@ -278,22 +275,29 @@ module GoCardless
     # @param [Symbol] type the limit type (+:subscription+, etc)
     # @param [Hash] params the bill parameters
     # @return [String] the generated URL
-    def new_limit_url(type, params)
-      url = URI.parse("#{BASE_URL}/connect/#{type}/new")
+    def new_limit_url(type, limit_params)
+      url = URI.parse("#{BASE_URL}/connect/#{type}s/new")
 
-      # Don't make changes to the original params hash
-      params = params.clone
-      params[:nonce] = generate_nonce
-      # ISO formatted UTC time
-      params[:timestamp] = Time.now.getutc.strftime('%Y-%m-%dT%H:%M:%SZ')
+      limit_params[:merchant_id] = merchant_id
+
+      params = {
+        :nonce       => generate_nonce,
+        :timestamp   => Time.now.getutc.strftime('%Y-%m-%dT%H:%M:%SZ'),
+        :client_id   => @app_id,
+        type         => limit_params,
+      }
 
       sign_params(params)
 
-      query_parts = params.map do |name,value|
-        "#{CGI.escape(name.to_s)}=#{CGI.escape(value.to_s)}"
-      end
-      url.query = query_parts.join('&')
+      url.query = encode_params(params)
       url.to_s
+    end
+
+    def merchant_id
+      raise ClientError, 'Access token missing' unless @access_token
+      scope = @access_token.params[:scope].split
+      perm = scope.select {|p| p.start_with?('manage_merchant:') }.first
+      perm.split(':')[1]
     end
   end
 end
