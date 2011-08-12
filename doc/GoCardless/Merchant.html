@@ -238,6 +238,33 @@ Returns the value of attribute name.
 </li>
 
     
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#sub_resource_uris-instance_method" title="#sub_resource_uris (instance method)">- (Object) <strong>sub_resource_uris</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>
+Returns the value of attribute sub_resource_uris.
+</p>
+</div></span>
+  
+</li>
+
+    
   </ul>
 
 
@@ -602,6 +629,49 @@ Returns the value of attribute name
 </table>
 </div>
     
+      
+      <span id="sub_resource_uris=-instance_method"></span>
+      <span id="sub_resource_uris-instance_method"></span>
+      <div class="method_details ">
+  <p class="signature " id="sub_resource_uris-instance_method">
+  
+    - (<tt>Object</tt>) <strong>sub_resource_uris</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Returns the value of attribute sub_resource_uris
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+10
+11
+12</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/gocardless/merchant.rb', line 10</span>
+
+<span class='def def kw'>def</span> <span class='sub_resource_uris identifier id'>sub_resource_uris</span>
+  <span class='@sub_resource_uris ivar id'>@sub_resource_uris</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
   </div>
 
 
@@ -622,15 +692,15 @@ Returns the value of attribute name
       <pre class="lines">
 
 
-33
 34
 35
 36
 37
-38</pre>
+38
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/gocardless/merchant.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'lib/gocardless/merchant.rb', line 34</span>
 
 <span class='def def kw'>def</span> <span class='bills identifier id'>bills</span><span class='lparen token'>(</span><span class='params identifier id'>params</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;/merchants/#{self.id}/bills&quot;</span>
@@ -657,15 +727,15 @@ Returns the value of attribute name
       <pre class="lines">
 
 
-40
 41
 42
 43
 44
-45</pre>
+45
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/gocardless/merchant.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'lib/gocardless/merchant.rb', line 41</span>
 
 <span class='def def kw'>def</span> <span class='payments identifier id'>payments</span><span class='lparen token'>(</span><span class='params identifier id'>params</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;/merchants/#{self.id}/payments&quot;</span>
@@ -692,15 +762,15 @@ Returns the value of attribute name
       <pre class="lines">
 
 
-19
 20
 21
 22
 23
-24</pre>
+24
+25</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/gocardless/merchant.rb', line 19</span>
+      <pre class="code"><span class="info file"># File 'lib/gocardless/merchant.rb', line 20</span>
 
 <span class='def def kw'>def</span> <span class='pre_authorizations identifier id'>pre_authorizations</span><span class='lparen token'>(</span><span class='params identifier id'>params</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;/merchants/#{self.id}/pre_authorizations&quot;</span>
@@ -727,15 +797,15 @@ Returns the value of attribute name
       <pre class="lines">
 
 
-12
 13
 14
 15
 16
-17</pre>
+17
+18</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/gocardless/merchant.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'lib/gocardless/merchant.rb', line 13</span>
 
 <span class='def def kw'>def</span> <span class='subscriptions identifier id'>subscriptions</span><span class='lparen token'>(</span><span class='params identifier id'>params</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;/merchants/#{self.id}/subscriptions&quot;</span>
@@ -762,15 +832,15 @@ Returns the value of attribute name
       <pre class="lines">
 
 
-26
 27
 28
 29
 30
-31</pre>
+31
+32</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/gocardless/merchant.rb', line 26</span>
+      <pre class="code"><span class="info file"># File 'lib/gocardless/merchant.rb', line 27</span>
 
 <span class='def def kw'>def</span> <span class='users identifier id'>users</span><span class='lparen token'>(</span><span class='params identifier id'>params</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
   <span class='path identifier id'>path</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;/merchants/#{self.id}/users&quot;</span>
@@ -789,7 +859,7 @@ Returns the value of attribute name
 </div>
     
     <div id="footer">
-  Generated on Wed Aug 10 19:15:41 2011 by 
+  Generated on Fri Aug 12 00:54:34 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.8.7).
 </div>

@@ -224,16 +224,33 @@ in pence as the only argument:</p>
 <span class='APP_SECRET constant id'>APP_SECRET</span> <span class='assign token'>=</span> <span class='string val'>'8oCITH2AVhaUYqJ+5hjyt8JUlSo5m/WTYLH8E/GO+TrBWdRK45lvoRt/zetr+t5Y'</span>
 
 <span class='comment val'># Create a new instance of the GoCardless API client</span>
-<span class='client identifier id'>client</span> <span class='assign token'>=</span> <span class='GoCardless constant id'>GoCardless</span><span class='colon2 op'>::</span><span class='Client constant id'>Client</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='app_id identifier id'>app_id</span><span class='comma token'>,</span> <span class='app_secret identifier id'>app_secret</span><span class='rparen token'>)</span>
+<span class='client identifier id'>client</span> <span class='assign token'>=</span> <span class='GoCardless constant id'>GoCardless</span><span class='colon2 op'>::</span><span class='Client constant id'>Client</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='APP_ID constant id'>APP_ID</span><span class='comma token'>,</span> <span class='APP_SECRET constant id'>APP_SECRET</span><span class='rparen token'>)</span>
 
 <span class='comment val'># Generate the OAuth 'authorize endpoint' URL</span>
-<span class='client identifier id'>client</span><span class='dot token'>.</span><span class='authorize_url identifier id'>authorize_url</span><span class='lparen token'>(</span><span class='symbol val'>:redirect_uri</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'http://mywebsite.com/cb'</span><span class='rparen token'>)</span>
+<span class='authorize_url identifier id'>authorize_url</span> <span class='assign token'>=</span> <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='authorize_url identifier id'>authorize_url</span><span class='lparen token'>(</span><span class='symbol val'>:redirect_uri</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'http://mywebsite.com/cb'</span><span class='rparen token'>)</span>
 
-<span class='comment val'># Once the authorization code has been retrieved, exchange it for an access token</span>
-<span class='auth_code identifier id'>auth_code</span> <span class='assign token'>=</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:auth_code</span><span class='rbrack token'>]</span>
+<span class='comment val'># Now, redirect the user (merchant) to 'authorize_url'. In Rails this would</span>
+<span class='comment val'># look like:</span>
+<span class='comment val'>#</span>
+<span class='comment val'>#   redirect_to authorize_url</span>
+<span class='comment val'>#</span>
+<span class='comment val'># They will be presented with a screen where they confirm the link between</span>
+<span class='comment val'># their merchant account and your app. Once they are done, they will be</span>
+<span class='comment val'># redirected back to the 'redirect_url' you provided.</span>
+
+<span class='comment val'># Now you need to retrieve the authorization code from the query string</span>
+<span class='comment val'># parameters:</span>
+<span class='comment val'>#</span>
+<span class='comment val'>#   auth_code = params[:auth_code]</span>
+<span class='comment val'>#</span>
+<span class='comment val'># Then exchange the authorization code for an access token:</span>
+
 <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='fetch_access_token identifier id'>fetch_access_token</span><span class='lparen token'>(</span><span class='auth_code identifier id'>auth_code</span><span class='comma token'>,</span> <span class='symbol val'>:redirect_uri</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'http://mywebsite.com/cb'</span><span class='rparen token'>)</span>
 
-<span class='comment val'># The API client will associated with a merchant account</span>
+<span class='comment val'># The access token should be saved to the database alongside the merchant.</span>
+<span class='comment val'># You can get the access token using 'client.access_token'</span>
+
+<span class='comment val'># The API client will be associated with a merchant account</span>
 <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='merchant identifier id'>merchant</span>  <span class='comment val'># =&gt; &lt;GoCardless::Merchant ...&gt;</span>
 
 <span class='comment val'># The client allows you to look up most resources by their id</span>
@@ -246,13 +263,27 @@ in pence as the only argument:</p>
 <span class='subscription identifier id'>subscription</span> <span class='assign token'>=</span> <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='subscription identifier id'>subscription</span><span class='lparen token'>(</span><span class='integer val'>5</span><span class='rparen token'>)</span>
 <span class='subscription identifier id'>subscription</span><span class='dot token'>.</span><span class='merchant identifier id'>merchant</span>  <span class='comment val'># =&gt; &lt;GoCardless::Merchant ...&gt;</span>
 
-<span class='comment val'># Create a new bill</span>
+<span class='comment val'># To create a new subscription, generate the appropirate URL:</span>
+<span class='url identifier id'>url</span> <span class='assign token'>=</span> <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='new_subscription_url identifier id'>new_subscription_url</span><span class='lparen token'>(</span><span class='symbol val'>:frequency_unit</span>   <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:week</span><span class='comma token'>,</span>
+                                  <span class='symbol val'>:frequency_length</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>6</span><span class='comma token'>,</span>
+                                  <span class='symbol val'>:amount</span>           <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>30</span><span class='comma token'>,</span>
+                                  <span class='symbol val'>:description</span>      <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'Premium membership'</span><span class='rparen token'>)</span>
+
+<span class='comment val'># Then redirect the user to the URL:</span>
+<span class='comment val'>#</span>
+<span class='comment val'>#   redirect_to url</span>
+<span class='comment val'>#</span>
+<span class='comment val'># When the user is redirected back to your site, you need to confirm the</span>
+<span class='comment val'># new subscription (assuming params is the query-string parameters):</span>
+<span class='subscription identifier id'>subscription</span> <span class='assign token'>=</span> <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='confirm_resource identifier id'>confirm_resource</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='rparen token'>)</span>
+
+<span class='comment val'># Create a new bill via the API under a pre authorization:</span>
 <span class='client identifier id'>client</span><span class='dot token'>.</span><span class='merchant identifier id'>merchant</span><span class='dot token'>.</span><span class='pre_authorizations identifier id'>pre_authorizations</span><span class='dot token'>.</span><span class='first identifier id'>first</span><span class='dot token'>.</span><span class='create_bill identifier id'>create_bill</span><span class='lparen token'>(</span><span class='integer val'>500</span><span class='rparen token'>)</span> <span class='comment val'># £5.00 bill</span>
 </pre>
 </div></div>
     
     <div id="footer">
-  Generated on Wed Aug 10 19:15:38 2011 by 
+  Generated on Fri Aug 12 00:54:33 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.2 (ruby-1.8.7).
 </div>
