@@ -194,7 +194,7 @@ module GoCardless
 
       if signature_valid?(params)
         data = { :resource_id => params[:resource_id] }
-        request(:post, "#{BASE_URL}/confirm", :data => data)
+        request(:post, "#{BASE_URL}#{API_PATH}/confirm", :data => data)
 
         # Initialize the correct class according to the resource's type
         klass = GoCardless.const_get(params[:resource_type].camelize)
