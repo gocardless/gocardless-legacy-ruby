@@ -71,7 +71,7 @@ module GoCardless
     def access_token=(token)
       token, scope = token.split(' ', 2)
       @access_token = OAuth2::AccessToken.new(@oauth_client, token)
-      @access_token.params[:scope] = scope
+      @access_token.params['scope'] = scope
     end
 
     # Issue an GET request to the API server
@@ -310,7 +310,7 @@ module GoCardless
 
     def merchant_id
       raise ClientError, 'Access token missing' unless @access_token
-      scope = @access_token.params[:scope].split
+      scope = @access_token.params['scope'].split
       perm = scope.select {|p| p.start_with?('manage_merchant:') }.first
       perm.split(':')[1]
     end

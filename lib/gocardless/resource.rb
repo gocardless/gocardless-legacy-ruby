@@ -96,7 +96,7 @@ module GoCardless
     attr_accessor :uri
 
     def to_hash
-      attrs = instance_variables.map { |v| v.sub(/^@/, '') }
+      attrs = instance_variables.map { |v| v.to_s.sub(/^@/, '') }
       Hash[attrs.select { |v| respond_to? v }.map { |v| [v.to_sym, send(v)] }]
     end
 

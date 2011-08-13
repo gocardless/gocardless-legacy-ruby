@@ -48,7 +48,7 @@ describe GoCardless::Client do
 
       it "sets @access_token" do
         access_token = mock
-        access_token.stubs(:params).returns(:scope => '')
+        access_token.stubs(:params).returns('scope' => '')
         access_token.stubs(:token).returns('')
 
         oauth_client = @client.instance_variable_get(:@oauth_client)
@@ -65,7 +65,7 @@ describe GoCardless::Client do
     it "serializes access token correctly" do
       oauth_client = @client.instance_variable_get(:@oauth_client)
       token = OAuth2::AccessToken.new(oauth_client, 'TOKEN123')
-      token.params[:scope] = 'a:1 b:2'
+      token.params['scope'] = 'a:1 b:2'
       @client.instance_variable_set(:@access_token, token)
 
       @client.access_token.should == 'TOKEN123 a:1 b:2'
@@ -81,7 +81,7 @@ describe GoCardless::Client do
       @client.access_token = 'TOKEN123 a:1 b:2'
       token = @client.instance_variable_get(:@access_token)
       token.token.should == 'TOKEN123'
-      token.params[:scope].should == 'a:1 b:2'
+      token.params['scope'].should == 'a:1 b:2'
     end
   end
 
