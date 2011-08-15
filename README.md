@@ -168,7 +168,8 @@ created on a pre authorization. To create a bill, use the
 {GoCardless::PreAuthorization PreAuthorization} objects, providing the amount
 in pence as the only argument:
 
-    bill = pre_authorization.create_bill(150)  # => <GoCardless::Bill ...>
+    bill = pre_authorization.create_bill(:amount => 150)
+    bill  # => <GoCardless::Bill ...>
 
 
 ## Example usage

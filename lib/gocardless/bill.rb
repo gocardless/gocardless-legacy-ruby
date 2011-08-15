@@ -37,6 +37,7 @@ module GoCardless
           :amount => self.amount,
         }
       })
+      self
     end
   end
 end

@@ -117,6 +117,7 @@ module GoCardless
     # with a POST.
     def save
       save_data self.to_hash
+      self
     end
 
   protected
@@ -130,7 +131,8 @@ module GoCardless
         'post'
       end
       path = self.class.endpoint.gsub(':id', id.to_s)
-      @client.send("api_#{method}", path, data)
+      response = @client.send("api_#{method}", path, data)
+      response.each { |key,val| send("#{key}=", val) }
     end
   end
 end

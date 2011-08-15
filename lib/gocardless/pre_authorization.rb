@@ -11,10 +11,10 @@ module GoCardless
     # Create a new bill under this pre-authorization. Similar to
     # {Client#create_bill}, but only requires the amount to be specified.
     #
-    # @param [Integer] amount the bill amount in pence
+    # @option attrs [amount] amount the bill amount in pence
     # @return [Bill] the created bill object
-    def create_bill(amount)
-      Bill.new(@client, :source => self, :amount => amount).save
+    def create_bill(attrs)
+      Bill.new(@client, attrs.merge(:source => self)).save
     end
   end
 end
