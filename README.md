@@ -16,7 +16,7 @@ are both required to access the API.
 To start with, you'll need to create an instance of the {GoCardless::Client}
 class, providing your app id and app secret as arguments to the constructor:
 
-    client = GoCardless::Client(APP_ID, APP_SECRET)
+    client = GoCardless::Client.new(APP_ID, APP_SECRET)
 
 
 ### Using the API Sandbox
