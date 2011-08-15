@@ -70,6 +70,10 @@ module GoCardless
     #   (as returned by {#access_token})
     def access_token=(token)
       token, scope = token.split(' ', 2)
+      if scope.nil?
+        raise ArgumentError, ('Access token missing scope. Use format '
+                              '<token> <scope>')
+      end
       @access_token = OAuth2::AccessToken.new(@oauth_client, token)
       @access_token.params['scope'] = scope
     end

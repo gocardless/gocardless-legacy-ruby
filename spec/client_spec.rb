@@ -83,6 +83,11 @@ describe GoCardless::Client do
       token.token.should == 'TOKEN123'
       token.params['scope'].should == 'a:1 b:2'
     end
+
+    it "handles invalid values correctly" do
+      token = 'TOKEN123'  # missing scope
+      expect { @client.access_token = token }.to raise_exception ArgumentError
+    end
   end
 
   describe "#api_get" do
