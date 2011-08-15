@@ -75,8 +75,11 @@ your database.
 To access the API on behalf of a merchant, you need to provide the
 {GoCardless::Client client} object with the access token that corresponds to
 the merchant. This may be done by assigning the token to the `access_token`
-attribute:
+attribute. Note that the access token should be followed by its associated
+scope (e.g. `'8qtbMqLdBTHZEBDQ2NO7eEBLmBo8QHi8g3L5XWuL5DnpDXpYuiby5nwGCh8X3WfJ
+manage_merchant:123'`):
 
+    # token should be in format '<token> <scope>'
     client.access_token = token
 
 Once your {GoCardless::Client client} has a valid access token, you may request
@@ -148,11 +151,11 @@ weekly subscription of £30 for a period of 6 weeks. Once they have authorized
 the subscription, they will be taken back to your site.
 
 The URL the user is sent back to will include some query string parameters
-containing information about the resource that has been created. Before the
-resource may be considered active, you must confirm it via the API. To do so,
-pass a hash of the parameters to the {GoCardless::Client#confirm\_resource}
-method on the {GoCardless::Client client} object. The confirmed resource (e.g.
-subscription) will be returned:
+containing information about the resource (subscription, pre authorization or
+bill) that has been created. Before the resource may be considered active, you
+must confirm it via the API. To do so, pass a hash of the parameters to the
+{GoCardless::Client#confirm\_resource} method on the {GoCardless::Client
+client} object. The confirmed resource (e.g. subscription) will be returned:
 
     subscription = client.confirm_resource(params)
 
