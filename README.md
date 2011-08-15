@@ -147,8 +147,17 @@ Redirecting a user to `url` will take them to a page where they can authorize a
 weekly subscription of £30 for a period of 6 weeks. Once they have authorized
 the subscription, they will be taken back to your site.
 
+The URL the user is sent back to will include some query string parameters
+containing information about the resource that has been created. Before the
+resource may be considered active, you must confirm it via the API. To do so,
+pass a hash of the parameters to the {GoCardless::Client#confirm\_resource}
+method on the {GoCardless::Client client} object. The confirmed resource (e.g.
+subscription) will be returned:
 
-## Creating and modifying bills
+    subscription = client.confirm_resource(params)
+
+
+## Creating bills
 
 The GoCardless API may also be used to create and modify bills. Bills must be
 created on a pre authorization. To create a bill, use the
@@ -157,12 +166,6 @@ created on a pre authorization. To create a bill, use the
 in pence as the only argument:
 
     bill = pre_authorization.create_bill(150)  # => <GoCardless::Bill ...>
-
-To modify the bill, alter the attributes and call the
-{GoCardless::Resource#save save} method:
-
-    bill.amount = 250
-    bill.save
 
 
 ## Example usage
@@ -185,7 +188,7 @@ To modify the bill, alter the attributes and call the
     #
     # They will be presented with a screen where they confirm the link between
     # their merchant account and your app. Once they are done, they will be
-    # redirected back to the 'redirect_url' you provided.
+    # redirected back to the 'redirect_uri' you provided.
 
     # Now you need to retrieve the authorization code from the query string
     # parameters:
