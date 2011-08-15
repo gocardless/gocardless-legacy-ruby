@@ -246,6 +246,17 @@ describe GoCardless::Client do
       resource = @client.confirm_resource(@client.send(:sign_params, @params))
       resource.should be_a GoCardless::Subscription
     end
+
+    it "includes valid http basic credentials" do
+      GoCardless::Subscription.stubs(:find)
+      auth = 'YWJjOnh5eg=='
+      @client.expects(:request).once.with do |type, path, opts|
+        opts.should include :headers
+        opts[:headers].should include :Authorization
+        opts[:headers][:Authorization].should == auth
+      end
+      @client.confirm_resource(@client.send(:sign_params, @params))
+    end
   end
 
   it "#generate_nonce should generate a random string" do

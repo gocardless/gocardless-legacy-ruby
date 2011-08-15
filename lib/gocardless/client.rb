@@ -1,4 +1,4 @@
-require 'rubygems'
+ 'rubygems'
 require 'json'
 require 'oauth2'
 require 'openssl'
@@ -212,8 +212,18 @@ module GoCardless
       end
 
       if signature_valid?(params)
-        data = { :resource_id => params[:resource_id] }
-        request(:post, "#{self.class.api_url}/confirm", :data => data)
+        data = {
+          :resource_id => params[:resource_id],
+          :resource_type => params[:resource_type],
+        }
+
+        credentials = Base64.encode64("#{@app_id}:#{@app_secret}")
+        credentials = credentials.gsub(/\s/, '')
+        headers = {
+          'Authorization' => "Basic #{credentials}"
+        }
+        request(:post, "#{self.class.api_url}/confirm", :data => data,
+                                                        :headers => headers)
 
         # Initialize the correct class according to the resource's type
         klass = GoCardless.const_get(params[:resource_type].camelize)
@@ -248,10 +258,16 @@ module GoCardless
     # @option [Hash] params query string parameters
     def request(method, path, opts = {})
       raise ClientError, 'Access token missing' unless @access_token
-      opts[:headers] = { 'Accept' => 'application/json' }
+      opts[:headers] = {} if opts[:headers].nil?
+      opts[:headers]['Accept'] = 'application/json'
       opts[:headers]['Content-Type'] = 'application/json' unless method == :get
       opts[:body] = JSON.generate(opts[:data]) if !opts[:data].nil?
-      @access_token.send(method, path, opts)
+      header_keys = opts[:headers].keys.map(&:to_s)
+      if header_keys.map(&:downcase).include?('authorization')
+        @oauth_client.request(method, path, opts)
+      else
+        @access_token.send(method, path, opts)
+      end
     rescue OAuth2::Error => err
       raise GoCardless::ApiError.new(err.response)
     end
