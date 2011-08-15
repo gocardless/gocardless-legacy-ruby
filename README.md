@@ -125,6 +125,14 @@ on {GoCardless::Client client} objects:
     client.subscription(5)  # => <GoCardless::Subscription ...>
     client.payment(10)      # => <GoCardless::Payment ...>
 
+Some resources have defined sub-resources. For example, bills are defined as
+sub-resources of subscriptions. When a {GoCardless::Resource Resource} is
+instantiated, methods will be created if any sub-resources are defined. These
+methods return an array of sub-resource objects:
+
+    subscription = merchant.subscriptions.first
+    subscription.bills  # => [<GoCardless::Bill>, ...]
+
 
 ## Creating new Subscriptions, Pre Authorizations and One-Off Payments
 
