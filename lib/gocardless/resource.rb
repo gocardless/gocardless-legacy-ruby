@@ -4,6 +4,39 @@ module GoCardless
   class Resource
     def initialize(client, hash = {})
       @client = client
+
+      # Handle sub resources
+      sub_resource_uris = hash.delete('sub_resource_uris')
+      unless sub_resource_uris.nil?
+        # Need to define a method for each sub resource
+        sub_resource_uris.each do |name,uri|
+          uri = URI.parse(uri)
+
+          # Convert the query string to a hash
+          query = if uri.query.nil? || uri.query == ''
+            nil
+          else
+            Hash[CGI.parse(uri.query).map { |k,v| [k,v.first] }]
+          end
+
+          # Strip api prefix from path
+          path = uri.path.sub(%r{^/api/v\d+}, '')
+
+          # Modify the instance's metaclass to add the method
+          metaclass = class << self; self; end
+          metaclass.send(:define_method, name) do
+            # 'name' will be something like 'bills', convert it to Bill and
+            # look up the resource class with that name
+            klass = GoCardless.const_get(name.to_s.singularize.camelize)
+            # Convert the results to instances of the looked-up class
+            client.api_get(path, query).map do |attrs|
+              klass.new(client, attrs)
+            end
+          end
+        end
+      end
+
+      # Set resource attribute values
       hash.each { |key,val| send("#{key}=", val) }
     end
 
@@ -132,7 +165,7 @@ module GoCardless
       end
       path = self.class.endpoint.gsub(':id', id.to_s)
       response = @client.send("api_#{method}", path, data)
-      response.each { |key,val| send("#{key}=", val) }
+      response.each { |key,val| send("#{key}=", val) } if response.is_a? Hash
     end
   end
 end

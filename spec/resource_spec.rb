@@ -311,5 +311,58 @@ describe GoCardless::Resource do
       GoCardless::Resource.updatable?.should be_false
     end
   end
+
+  describe "sub_resource_uri methods" do
+    before :each do
+      @test_resource = Class.new(GoCardless::Resource) do
+      end
+      @attrs = {
+        'sub_resource_uris' => {
+          'bills' => 'https://test.com/api/bills/?merchant_id=1'
+        }
+      }
+    end
+
+    it "are defined on instances" do
+      r = @test_resource.new(stub, @attrs)
+      r.should respond_to :bills
+    end
+
+    it "aren't defined for other instances of the class" do
+      @test_resource.new(stub, @attrs)
+      resource = @test_resource.new stub
+      resource.should_not respond_to :bills
+    end
+
+    it "use the correct uri path" do
+      client = mock()
+      client.expects(:api_get).with('/api/bills/', anything).returns([])
+      r = @test_resource.new(client, @attrs)
+      r.bills
+    end
+
+    it "strips the api prefix from the path" do
+      client = mock()
+      client.expects(:api_get).with('/bills/', anything).returns([])
+      uris = {'bills' => 'https://test.com/api/v123/bills/'}
+      r = @test_resource.new(client, 'sub_resource_uris' => uris)
+      r.bills
+    end
+
+    it "use the correct query string params" do
+      client = mock()
+      client.expects(:api_get).with(anything, 'merchant_id' => '1').returns([])
+      r = @test_resource.new(client, @attrs)
+      r.bills
+    end
+
+    it "return instances of the correct resource class" do
+      client = stub(:api_get => [{:id => 1}])
+      r = @test_resource.new(client, @attrs)
+      ret = r.bills
+      ret.should be_a Array
+      ret.first.should be_a GoCardless::Bill
+    end
+  end
 end
 
