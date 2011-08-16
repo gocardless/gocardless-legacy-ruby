@@ -3,7 +3,7 @@ module GoCardless
 
     self.endpoint = '/subscriptions/:id'
 
-    attr_accessor  :amount, :currency, :frequency_length, :frequency_unit,
+    attr_accessor  :amount, :currency, :interval_length, :interval_unit,
                    :description, :setup_fee, :trial_length, :trial_unit
 
     reference_accessor :merchant_id, :user_id

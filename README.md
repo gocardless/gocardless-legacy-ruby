@@ -143,14 +143,14 @@ with your app, the principal difference being that you don't get an access
 token at the end of it.
 
 You should pass through certain attributes about the resource that you're
-trying to create, such as the payment amount, or the subscription frequency.
+trying to create, such as the payment amount, or the subscription interval.
 These attributes are sent as query-string arguments. For security purposes, the
 request must also contain a timestamp, nonce (randomly-generated value),
 merchant id and a signature. The {GoCardless::Client client} object does this
 for you, so you just need to provide the attributes:
 
-    url = client.new_subscription_url(:frequency_unit   => :week,
-                                      :frequency_length => 6,
+    url = client.new_subscription_url(:interval_unit    => :week,
+                                      :interval_length  => 6,
                                       :amount           => 30,
                                       :description      => 'Premium membership')
 
@@ -228,8 +228,8 @@ in pence as the only argument:
     subscription.merchant  # => <GoCardless::Merchant ...>
 
     # To create a new subscription, generate the appropirate URL:
-    url = client.new_subscription_url(:frequency_unit   => :week,
-                                      :frequency_length => 6,
+    url = client.new_subscription_url(:interval_unit    => :week,
+                                      :interval_length  => 6,
                                       :amount           => 30,
                                       :description      => 'Premium membership')
 
