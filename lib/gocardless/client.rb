@@ -203,6 +203,7 @@ module GoCardless
     # @param [Hash] params the response parameters returned by the API server
     # @return [Resource] the confirmed resource object
     def confirm_resource(params)
+      params = params.symbolize_keys
       # Only pull out the relevant parameters, other won't be included in the
       # signature so will cause false negatives
       keys = [:resource_id, :resource_type, :resource_uri, :state, :signature]

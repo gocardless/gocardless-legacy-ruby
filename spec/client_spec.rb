@@ -257,6 +257,15 @@ describe GoCardless::Client do
       end
       @client.confirm_resource(@client.send(:sign_params, @params))
     end
+
+    it "works with string params" do
+      @client.stubs(:request)
+      GoCardless::Subscription.stubs(:find)
+      params = Hash[@params.dup.map { |k,v| [k.to_s, v] }]
+      params.keys.each { |p| p.should be_a String }
+      # No ArgumentErrors should be raised
+      @client.confirm_resource(@client.send(:sign_params, params))
+    end
   end
 
   it "#generate_nonce should generate a random string" do
