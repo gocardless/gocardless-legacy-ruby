@@ -46,6 +46,7 @@ module GoCardless
       }
       @oauth_client.authorize_url(params.merge(options))
     end
+    alias :new_merchant_url :authorize_url
 
     # @method fetch_access_token(auth_code, options)
     # @param [String] auth_code to exchange for the access_token
