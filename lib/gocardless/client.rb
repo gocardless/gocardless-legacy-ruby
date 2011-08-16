@@ -46,6 +46,7 @@ module GoCardless
       }
       @oauth_client.authorize_url(params.merge(options))
     end
+    alias :new_merchant_url :authorize_url
 
     # @method fetch_access_token(auth_code, options)
     # @param [String] auth_code to exchange for the access_token
@@ -203,6 +204,7 @@ module GoCardless
     # @param [Hash] params the response parameters returned by the API server
     # @return [Resource] the confirmed resource object
     def confirm_resource(params)
+      params = params.symbolize_keys
       # Only pull out the relevant parameters, other won't be included in the
       # signature so will cause false negatives
       keys = [:resource_id, :resource_type, :resource_uri, :state, :signature]
@@ -314,6 +316,7 @@ module GoCardless
       url = URI.parse("#{self.class.base_url}/connect/#{type}s/new")
 
       limit_params[:merchant_id] = merchant_id
+      redirect_uri = limit_params.delete(:redirect_uri)
 
       params = {
         :nonce       => generate_nonce,
@@ -321,6 +324,7 @@ module GoCardless
         :client_id   => @app_id,
         type         => limit_params,
       }
+      params[:redirect_uri] = redirect_uri unless redirect_uri.nil?
 
       sign_params(params)
 

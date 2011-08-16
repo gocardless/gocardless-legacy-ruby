@@ -3,7 +3,6 @@ module GoCardless
     self.endpoint = '/bills/:id'
 
     creatable
-    updatable
 
     attr_accessor :amount
     attr_accessor :source_type

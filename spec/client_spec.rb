@@ -249,13 +249,22 @@ describe GoCardless::Client do
 
     it "includes valid http basic credentials" do
       GoCardless::Subscription.stubs(:find)
-      auth = 'YWJjOnh5eg=='
+      auth = 'Basic YWJjOnh5eg=='
       @client.expects(:request).once.with do |type, path, opts|
         opts.should include :headers
-        opts[:headers].should include :Authorization
-        opts[:headers][:Authorization].should == auth
+        opts[:headers].should include 'Authorization'
+        opts[:headers]['Authorization'].should == auth
       end
       @client.confirm_resource(@client.send(:sign_params, @params))
+    end
+
+    it "works with string params" do
+      @client.stubs(:request)
+      GoCardless::Subscription.stubs(:find)
+      params = Hash[@params.dup.map { |k,v| [k.to_s, v] }]
+      params.keys.each { |p| p.should be_a String }
+      # No ArgumentErrors should be raised
+      @client.confirm_resource(@client.send(:sign_params, params))
     end
   end
 

@@ -7,7 +7,6 @@ module GoCardless
     attr_accessor :email
     attr_accessor :first_name
     attr_accessor :last_name
-    attr_accessor :sub_resource_uris
     date_accessor :created_at
 
     def subscriptions(params = {})
