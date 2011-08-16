@@ -117,8 +117,8 @@ request must also contain a `timestamp`, `nonce` (randomly-generated value),
 `merchant_id` and a `signature`. The {GoCardless::Client client} object takes
 care of this security, so you simply need to provide the relevant attributes;
 
-    url = client.new_subscription_url(:frequency_unit   => :week,
-                                      :frequency_length => 1,
+    url = client.new_subscription_url(:interval_unit    => :week,
+                                      :interval_length  => 1,
                                       :amount           => "30.00",
                                       :description      => 'Premium membership')
 
@@ -287,8 +287,8 @@ This process can be carried out in an IRB shell for testing
 
     # To create a new subscription (or pre_authorization or one-off bill),
     # generate the appropriate URL:
-    url = client.new_subscription_url(:frequency_unit   => :week,
-                                      :frequency_length => 6,
+    url = client.new_subscription_url(:interval_unit    => :week,
+                                      :interval_length  => 6,
                                       :amount           => "30.00",
                                       :description      => 'Premium membership')
 
