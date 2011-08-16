@@ -10,7 +10,21 @@ class String
 
   def singularize
     # This should probably be a bit more robust
-    self.sub(/i$/, 'us').sub(/s$/, '')
+    self.sub(/s$/, '').sub(/i$/, 'us')
+  end
+end
+
+
+class Hash
+  def symbolize_keys
+    dup.symbolize_keys!
+  end
+
+  def symbolize_keys!
+    self.keys.each do |key|
+      self[(key.to_s.to_sym rescue key)] ||= self.delete(key)
+    end
+    self
   end
 end
 
