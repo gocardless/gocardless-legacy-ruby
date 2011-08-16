@@ -315,6 +315,7 @@ module GoCardless
       url = URI.parse("#{self.class.base_url}/connect/#{type}s/new")
 
       limit_params[:merchant_id] = merchant_id
+      redirect_uri = limit_params.delete(:redirect_uri)
 
       params = {
         :nonce       => generate_nonce,
@@ -322,6 +323,7 @@ module GoCardless
         :client_id   => @app_id,
         type         => limit_params,
       }
+      params[:redirect_uri] = redirect_uri unless redirect_uri.nil?
 
       sign_params(params)
 
