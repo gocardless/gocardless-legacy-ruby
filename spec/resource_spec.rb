@@ -275,7 +275,7 @@ describe GoCardless::Resource do
     end
 
     bill = test_resource.new(nil, {
-      :amount => 10,
+      :amount => '10',
       :when => DateTime.now,
       :person_id => 15
     })

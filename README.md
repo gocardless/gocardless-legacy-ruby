@@ -119,10 +119,11 @@ care of this security, so you simply need to provide the relevant attributes;
 
     url = client.new_subscription_url(:frequency_unit   => :week,
                                       :frequency_length => 1,
-                                      :amount           => 3000,
+                                      :amount           => "30.00",
                                       :description      => 'Premium membership')
 
-Note: The amount should be provided in PENCE
+Note: The amount should be provided as a string in pounds and pence (e.g.
+`'29.50'` for £29.50).
 
 Redirecting a user to `url` will take them to a page where they can authorize a
 subscription of £30 every week. Once they have authorized the subscription,
@@ -175,9 +176,9 @@ The GoCardless API may also be used to create and modify bills under an
 existing PreAuthorization. To create a bill, use the
 {GoCardless::PreAuthorization#create_bill create\_bill} method on
 {GoCardless::PreAuthorization PreAuthorization} objects, providing the amount
-in pence as the only argument:
+in pounds and pence as the only argument:
 
-    bill = pre_authorization.create_bill(:amount => 1500)
+    bill = pre_authorization.create_bill(:amount => "15.00")
     bill  # => <GoCardless::Bill ...>
 
 
@@ -288,7 +289,7 @@ This process can be carried out in an IRB shell for testing
     # generate the appropriate URL:
     url = client.new_subscription_url(:frequency_unit   => :week,
                                       :frequency_length => 6,
-                                      :amount           => 3000,
+                                      :amount           => "30.00",
                                       :description      => 'Premium membership')
 
     # The client allows you to look up most resources by their id
