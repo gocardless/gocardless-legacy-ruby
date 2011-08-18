@@ -356,6 +356,14 @@ describe GoCardless::Resource do
       r.bills
     end
 
+    it "adds provided params to query string params" do
+      client = mock()
+      params = { 'merchant_id' => '1', :amount => '10.00' }
+      client.expects(:api_get).with(anything, params).returns([])
+      r = @test_resource.new(client, @attrs)
+      r.bills(:amount => '10.00')
+    end
+
     it "return instances of the correct resource class" do
       client = stub(:api_get => [{:id => 1}])
       r = @test_resource.new(client, @attrs)

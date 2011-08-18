@@ -13,7 +13,7 @@ module GoCardless
           uri = URI.parse(uri)
 
           # Convert the query string to a hash
-          query = if uri.query.nil? || uri.query == ''
+          default_query = if uri.query.nil? || uri.query == ''
             nil
           else
             Hash[CGI.parse(uri.query).map { |k,v| [k,v.first] }]
@@ -24,11 +24,13 @@ module GoCardless
 
           # Modify the instance's metaclass to add the method
           metaclass = class << self; self; end
-          metaclass.send(:define_method, name) do
+          metaclass.send(:define_method, name) do |*args|
             # 'name' will be something like 'bills', convert it to Bill and
             # look up the resource class with that name
             klass = GoCardless.const_get(name.to_s.singularize.camelize)
             # Convert the results to instances of the looked-up class
+            params = args.first || {}
+            query = default_query.nil? ? nil : default_query.merge(params)
             client.api_get(path, query).map do |attrs|
               klass.new(client, attrs)
             end
