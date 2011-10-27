@@ -4,7 +4,7 @@ describe GoCardless::Merchant do
   before :each do
     @app_id = 'abc'
     @app_secret = 'xyz'
-    @client = GoCardless::Client.new(@app_id, @app_secret)
+    @client = GoCardless::Client.new(:app_id => @app_id, :app_secret => @app_secret)
     @client.access_token = 'TOKEN123 manage_merchant:123'
     @redirect_uri = 'http://test.com/cb'
   end

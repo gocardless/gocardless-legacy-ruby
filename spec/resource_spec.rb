@@ -16,8 +16,8 @@ describe GoCardless::Resource do
         date_writer :created_at, :modified_at
       end
 
-      test_resource.instance_methods.should include 'created_at='
-      test_resource.instance_methods.should include 'modified_at='
+      test_resource.instance_methods.map(&:to_s).should include 'created_at='
+      test_resource.instance_methods.map(&:to_s).should include 'modified_at='
     end
 
     it "date writers work properly" do
@@ -40,10 +40,10 @@ describe GoCardless::Resource do
         date_accessor :created_at, :modified_at
       end
 
-      test_resource.instance_methods.should include 'created_at='
-      test_resource.instance_methods.should include 'created_at'
-      test_resource.instance_methods.should include 'modified_at='
-      test_resource.instance_methods.should include 'modified_at'
+      test_resource.instance_methods.map(&:to_s).should include 'created_at='
+      test_resource.instance_methods.map(&:to_s).should include 'created_at'
+      test_resource.instance_methods.map(&:to_s).should include 'modified_at='
+      test_resource.instance_methods.map(&:to_s).should include 'modified_at'
     end
 
     it "date readers work properly" do
@@ -77,10 +77,10 @@ describe GoCardless::Resource do
         reference_writer :merchant_id, :user_id
       end
 
-      test_resource.instance_methods.should include 'merchant='
-      test_resource.instance_methods.should include 'merchant_id='
-      test_resource.instance_methods.should include 'user='
-      test_resource.instance_methods.should include 'user_id='
+      test_resource.instance_methods.map(&:to_s).should include 'merchant='
+      test_resource.instance_methods.map(&:to_s).should include 'merchant_id='
+      test_resource.instance_methods.map(&:to_s).should include 'user='
+      test_resource.instance_methods.map(&:to_s).should include 'user_id='
     end
 
     it "direct assignment methods work properly" do
@@ -115,7 +115,7 @@ describe GoCardless::Resource do
     before :each do
       @app_id = 'abc'
       @app_secret = 'xyz'
-      @client = GoCardless::Client.new(@app_id, @app_secret)
+      @client = GoCardless::Client.new(:app_id => @app_id, :app_secret => @app_secret)
       @redirect_uri = 'http://test.com/cb'
     end
 
@@ -124,10 +124,10 @@ describe GoCardless::Resource do
         reference_reader :merchant_id, :user_id
       end
 
-      test_resource.instance_methods.should include 'merchant'
-      test_resource.instance_methods.should include 'merchant_id'
-      test_resource.instance_methods.should include 'user'
-      test_resource.instance_methods.should include 'user_id'
+      test_resource.instance_methods.map(&:to_s).should include 'merchant'
+      test_resource.instance_methods.map(&:to_s).should include 'merchant_id'
+      test_resource.instance_methods.map(&:to_s).should include 'user'
+      test_resource.instance_methods.map(&:to_s).should include 'user_id'
     end
 
     it "lookup methods work properly" do
@@ -159,14 +159,14 @@ describe GoCardless::Resource do
         reference_accessor :merchant_id, :user_id
       end
 
-      test_resource.instance_methods.should include 'merchant'
-      test_resource.instance_methods.should include 'merchant_id'
-      test_resource.instance_methods.should include 'user'
-      test_resource.instance_methods.should include 'user_id'
-      test_resource.instance_methods.should include 'merchant='
-      test_resource.instance_methods.should include 'merchant_id='
-      test_resource.instance_methods.should include 'user='
-      test_resource.instance_methods.should include 'user_id='
+      test_resource.instance_methods.map(&:to_s).should include 'merchant'
+      test_resource.instance_methods.map(&:to_s).should include 'merchant_id'
+      test_resource.instance_methods.map(&:to_s).should include 'user'
+      test_resource.instance_methods.map(&:to_s).should include 'user_id'
+      test_resource.instance_methods.map(&:to_s).should include 'merchant='
+      test_resource.instance_methods.map(&:to_s).should include 'merchant_id='
+      test_resource.instance_methods.map(&:to_s).should include 'user='
+      test_resource.instance_methods.map(&:to_s).should include 'user_id='
     end
   end
 

@@ -39,7 +39,7 @@ module GoCardless
       end
 
       # Set resource attribute values
-      hash.each { |key,val| send("#{key}=", val) }
+      hash.each { |key,val| send("#{key}=", val) if respond_to?("#{key}=") }
     end
 
     class << self
@@ -167,7 +167,7 @@ module GoCardless
       end
       path = self.class.endpoint.gsub(':id', id.to_s)
       response = @client.send("api_#{method}", path, data)
-      response.each { |key,val| send("#{key}=", val) } if response.is_a? Hash
+      response.each { |key,val| send("#{key}=", val) if respond_to?("#{key}=") } if response.is_a? Hash
     end
   end
 end

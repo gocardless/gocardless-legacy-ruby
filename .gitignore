@@ -3,3 +3,5 @@ lib/seed.rb
 lib/example.rb
 doc/
 .yardoc
+Gemfile
+Gemfile.lock

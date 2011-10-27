@@ -7,7 +7,7 @@ require 'cgi'
 
 module GoCardless
   class Client
-    DEFAULT_BASE_URL = 'https://www.gocardless.com'
+    DEFAULT_BASE_URL = 'https://gocardless.com'
     API_PATH = '/api/v1'
 
     class << self
@@ -24,13 +24,18 @@ module GoCardless
       end
     end
 
-    def initialize(app_id, app_secret, token = nil)
-      @app_id = app_id
-      @app_secret = app_secret
-      @oauth_client = OAuth2::Client.new(app_id, app_secret,
+    def initialize(args = {})
+      args.symbolize_keys!
+      @app_id = args[:app_id]
+      @app_secret = args[:app_secret]
+      raise ClientError.new("You must provide an app_id") unless @app_id
+      raise ClientError.new("You must provide an app_secret") unless @app_secret
+
+      @oauth_client = OAuth2::Client.new(@app_id, @app_secret,
                                          :site => self.class.base_url,
                                          :token_url => '/oauth/access_token')
-      self.access_token = token if token
+
+      self.access_token = args[:token] if args[:token]
     end
 
     # Generate the OAuth authorize url

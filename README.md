@@ -28,7 +28,7 @@ are both required to access the API.
 To start with, you'll need to create an instance of the {GoCardless::Client}
 class, providing your app id and app secret as arguments to the constructor:
 
-    client = GoCardless::Client.new(APP_ID, APP_SECRET)
+    client = GoCardless::Client.new(:app_id => APP_ID, :app_secret => APP_SECRET)
 
 
 ## <a name="link-merchant-account">Linking a Merchant Account with the App</a>
@@ -43,7 +43,7 @@ accounts, but you must create a new instance of GoCardless::Client for each
 merchant.
 
 To authorize an app, the merchant must be redirected to the GoCardless servers,
-where they will be presented with a page that allows them to link their account
+where thecy will be presented with a page that allows them to link their account
 with the app. The URL to which the the merchant is sent contains information
 about the app, as well as the URL (`redirect_uri`) where the merchant should be
 sent back to once they've completed the process. The Ruby client library takes
@@ -117,7 +117,7 @@ request must also contain a `timestamp`, `nonce` (randomly-generated value),
 `merchant_id` and a `signature`. The {GoCardless::Client client} object takes
 care of this security, so you simply need to provide the relevant attributes;
 
-    url = client.new_subscription_url(:interval_unit    => :week,
+    url = client.new_subscription_url(:interval_unit    => "week",
                                       :interval_length  => 1,
                                       :amount           => "30.00",
                                       :description      => 'Premium membership')
@@ -128,7 +128,7 @@ Note: The amount should be provided as a string in pounds and pence (e.g.
 Redirecting a user to `url` will take them to a page where they can authorize a
 subscription of £30 every week. Once they have authorized the subscription,
 they will be taken back to the `redirect_uri` specified on the app in the
-Developer Panel. Optionally, you may provide a different `redirect_uri`,
+Developer Panel. Optionally, you may provide a different `redirect_uri` as an argument,
 although the host must match your app `redirect_uri`.
 
 After the user has authorized the subscription, he will be sent back to
@@ -149,7 +149,7 @@ http://mysite.com/confirm?resource_id=35&resource_type=subscription&resource_uri
 
 The params are:
 
-    params = {
+    params = {.create
       :resource_id    => 35,
       :resource_type  => "subscription",
       :resource_uri   => "https://www.gocardless.com/api/v1/subscroptions/35"
@@ -265,7 +265,7 @@ This process can be carried out in an IRB shell for testing
     # look like:
     #
     #   redirect_to url
-    #
+    #exit
     # They will be presented with a screen where they confirm the link between
     # their merchant account and the app. Once they are done, they will be
     # redirected back to the 'redirect_uri' provided.
@@ -287,7 +287,7 @@ This process can be carried out in an IRB shell for testing
 
     # To create a new subscription (or pre_authorization or one-off bill),
     # generate the appropriate URL:
-    url = client.new_subscription_url(:interval_unit    => :week,
+    url = client.new_subscription_url(:interval_unit    => "week",
                                       :interval_length  => 6,
                                       :amount           => "30.00",
                                       :description      => 'Premium membership')

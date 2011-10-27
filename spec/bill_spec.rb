@@ -4,7 +4,7 @@ describe GoCardless::Bill do
   before :each do
     @app_id = 'abc'
     @app_secret = 'xyz'
-    @client = GoCardless::Client.new(@app_id, @app_secret)
+    @client = GoCardless::Client.new(:app_id => @app_id, :app_secret => @app_secret)
   end
 
   it "source getter works" do
