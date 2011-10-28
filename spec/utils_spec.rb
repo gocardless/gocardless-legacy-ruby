@@ -40,6 +40,17 @@ describe Hash do
       hash.symbolize_keys
       hash.keys.should == ['string']
     end
+
+    it "doesn't overwrite existing symbol keys" do
+      hash = {'x' => 1, :x => 2}
+      hash.symbolize_keys.should == hash
+    end
+
+    it "works with sinatra params' default proc" do
+      hash = Hash.new {|hash,key| hash[key.to_s] if Symbol === key }
+      hash['x'] = 1
+      hash.symbolize_keys.should == {:x => 1}
+    end
   end
 
   describe "#symbolize_keys!" do

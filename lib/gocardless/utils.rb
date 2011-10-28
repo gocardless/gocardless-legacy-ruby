@@ -22,7 +22,8 @@ class Hash
 
   def symbolize_keys!
     self.keys.each do |key|
-      self[(key.to_s.to_sym rescue key)] ||= self.delete(key)
+      sym_key = key.to_s.to_sym rescue key
+      self[sym_key] = self.delete(key) unless self.key?(sym_key)
     end
     self
   end
