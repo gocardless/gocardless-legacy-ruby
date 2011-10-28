@@ -337,7 +337,7 @@ describe GoCardless::Client do
     # How do we simulate PDT time?
     pending "should include a timestamp" do
       # Time.now returning Pacific time
-      time = Time.local(0, 0, 0, 1, 1, 2011, 0, 0, false, 'PDT')
+      time = Time.parse('Sat Jan 01 00:00:00 -0800')
       Time.expects(:now).returns time
       params = get_params(@client.send(:new_limit_url, :subscription, :x => 1))
       # Check that timezone is ISO formatted UTC

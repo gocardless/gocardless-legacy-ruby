@@ -6,6 +6,8 @@ Gem::Specification.new do |gem|
 
   gem.add_development_dependency 'rspec', '~> 2.6'
   gem.add_development_dependency 'mocha', '~> 0.9.12'
+  gem.add_development_dependency 'yard'
+  gem.add_development_dependency 'redcarpet'
 
   gem.authors = ["Harry Marr"]
   gem.description = %q{A Ruby wrapper for the GoCardless API}

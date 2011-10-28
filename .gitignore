@@ -1,7 +1,9 @@
-lib/irb_seed.rb
-lib/seed.rb
+lib/*seed*.rb
 lib/example.rb
+lib/*test*.rb
 doc/
+Gemfile.lock
+gocardless*.gem
 .yardoc
 Gemfile
 Gemfile.lock

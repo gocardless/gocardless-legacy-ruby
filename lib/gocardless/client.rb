@@ -1,8 +1,10 @@
+require 'rubygems'
 require 'json'
 require 'oauth2'
 require 'openssl'
 require 'uri'
 require 'cgi'
+require 'time'
 
 module GoCardless
   class Client
