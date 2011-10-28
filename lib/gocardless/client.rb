@@ -1,4 +1,3 @@
- 'rubygems'
 require 'json'
 require 'oauth2'
 require 'openssl'
