@@ -30,7 +30,9 @@ are both required to access the API.
 To start with, you'll need to create an instance of the {GoCardless::Client}
 class, providing your app id and app secret as arguments to the constructor:
 
-    client = GoCardless::Client.new(:app_id => APP_ID, :app_secret => APP_SECRET)
+    AUTH_DETAILS = {:app_id => "YOUR APP ID", :app_secret => "YOUR APP SECRET"}
+
+    client = GoCardless::Client.new(AUTH_DETAILS)
 
 
 ## <a name="link-merchant-account">Linking a Merchant Account with the App</a>
