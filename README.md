@@ -14,7 +14,7 @@ the [API overview](http://docs.gocardless.com/api/index.html).
 ### Using the API Sandbox
 
 By default, the {GoCardless::Client client} will use
-`https://www.gocardless.com` as the base URL. To use the API sandbox, you need
+`https://gocardless.com` as the base URL. To use the API sandbox, you need
 to set the base URL to `https://sandbox.gocardless.com`:
 
     GoCardless::Client.base_url = 'https://sandbox.gocardless.com'
