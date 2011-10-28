@@ -1,6 +1,6 @@
 # GoCardless Ruby Client
 
-* WARNING * - this gem is pre-release, and is likely to change dramatically
+*WARNING* - this gem is pre-release, and is likely to change dramatically
 in future. We recommend you do not use it! Contact developers@gocardless.com
 for details of release date.
 
