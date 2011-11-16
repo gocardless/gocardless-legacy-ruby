@@ -21,7 +21,8 @@ describe GoCardless::Merchant do
       merchant.send(method).should be_a Array
       merchant.send(method).length.should == 2
       merchant.send(method).zip(data).each do |obj,attrs|
-        obj.class.to_s.should == "GoCardless::#{method.to_s.camelize.sub(/s$/, '')}"
+        class_name = GoCardless::Utils.camelize(method.to_s).sub(/s$/, '')
+        obj.class.to_s.should == "GoCardless::#{class_name}"
         attrs.each { |k,v| obj.send(k).should == v }
       end
     end

@@ -26,7 +26,7 @@ module GoCardless
     end
 
     def initialize(args = {})
-      args.symbolize_keys!
+      Utils.symbolize_keys! args
       @app_id = args[:app_id]
       @app_secret = args[:app_secret]
       raise ClientError.new("You must provide an app_id") unless @app_id
@@ -210,7 +210,7 @@ module GoCardless
     # @param [Hash] params the response parameters returned by the API server
     # @return [Resource] the confirmed resource object
     def confirm_resource(params)
-      params = params.symbolize_keys
+      params = Utils.symbolize_keys(params)
       # Only pull out the relevant parameters, other won't be included in the
       # signature so will cause false negatives
       keys = [:resource_id, :resource_type, :resource_uri, :state, :signature]
@@ -234,7 +234,7 @@ module GoCardless
                                                         :headers => headers)
 
         # Initialize the correct class according to the resource's type
-        klass = GoCardless.const_get(params[:resource_type].camelize)
+        klass = GoCardless.const_get(Utils.camelize(params[:resource_type]))
         klass.find(self, params[:resource_id])
       else
         raise SignatureError, 'An invalid signature was detected'

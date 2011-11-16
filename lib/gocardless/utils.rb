@@ -1,31 +1,36 @@
 
-class String
-  def camelize
-    self.split('_').map(&:capitalize).join
-  end
+module GoCardless
+  module Utils
+    class << self
 
-  def underscore
-    self.gsub(/(.)([A-Z])/) { "#{$1}_#{$2.downcase}" }.downcase
-  end
+      # String Helpers
+      def camelize(str)
+        str.split('_').map(&:capitalize).join
+      end
 
-  def singularize
-    # This should probably be a bit more robust
-    self.sub(/s$/, '').sub(/i$/, 'us')
-  end
-end
+      def underscore(str)
+        str.gsub(/(.)([A-Z])/) { "#{$1}_#{$2.downcase}" }.downcase
+      end
 
+      def singularize(str)
+        # This should probably be a bit more robust
+        str.sub(/s$/, '').sub(/i$/, 'us')
+      end
 
-class Hash
-  def symbolize_keys
-    dup.symbolize_keys!
-  end
+      # Hash Helpers
+      def symbolize_keys(hash)
+        symbolize_keys! hash.dup
+      end
 
-  def symbolize_keys!
-    self.keys.each do |key|
-      sym_key = key.to_s.to_sym rescue key
-      self[sym_key] = self.delete(key) unless self.key?(sym_key)
+      def symbolize_keys!(hash)
+        hash.keys.each do |key|
+          sym_key = key.to_s.to_sym rescue key
+          hash[sym_key] = hash.delete(key) unless hash.key?(sym_key)
+        end
+        hash
+      end
+
     end
-    self
   end
 end
 

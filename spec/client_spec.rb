@@ -168,11 +168,11 @@ describe GoCardless::Client do
 
   %w{subscription pre_authorization user bill payment}.each do |resource|
     describe "##{resource}" do
-      it "returns the correct #{resource.camelize} object" do
+      it "returns the correct #{GoCardless::Utils.camelize(resource)} object" do
         @client.access_token = 'TOKEN manage_merchant:123'
         stub_get(@client, {:id => 123})
         obj = @client.send(resource, 123)
-        obj.should be_a GoCardless.const_get(resource.camelize)
+        obj.should be_a GoCardless.const_get(GoCardless::Utils.camelize(resource))
         obj.id.should == 123
       end
     end

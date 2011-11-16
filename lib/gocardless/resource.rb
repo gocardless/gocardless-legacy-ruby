@@ -27,7 +27,8 @@ module GoCardless
           metaclass.send(:define_method, name) do |*args|
             # 'name' will be something like 'bills', convert it to Bill and
             # look up the resource class with that name
-            klass = GoCardless.const_get(name.to_s.singularize.camelize)
+            class_name = Utils.camelize(Utils.singularize(name.to_s))
+            klass = GoCardless.const_get(class_name)
             # Convert the results to instances of the looked-up class
             params = args.first || {}
             query = default_query.nil? ? nil : default_query.merge(params)
@@ -76,7 +77,7 @@ module GoCardless
           name = attr.to_s.sub(/_id$/, '')
           define_method(name.to_sym) do
             obj_id = instance_variable_get("@#{attr}")
-            klass = GoCardless.const_get(name.camelize)
+            klass = GoCardless.const_get(Utils.camelize(name))
             klass.find(@client, obj_id)
           end
         end
@@ -92,7 +93,7 @@ module GoCardless
 
           name = attr.to_s.sub(/_id$/, '')
           define_method("#{name}=".to_sym) do |obj|
-            klass = GoCardless.const_get(name.camelize)
+            klass = GoCardless.const_get(Utils.camelize(name))
             if !obj.is_a?(klass)
               raise ArgumentError, "Object must be an instance of #{klass}"
             end
