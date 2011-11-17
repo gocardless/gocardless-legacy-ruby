@@ -119,42 +119,42 @@ module GoCardless
     # @return [Merchant] the merchant associated with the client's access token
     def merchant
       raise ClientError, 'Access token missing' unless @access_token
-      Merchant.new(self, api_get("/merchants/#{merchant_id}"))
+      Merchant.new_with_client(self, api_get("/merchants/#{merchant_id}"))
     end
 
     # @method subscripton(id)
     # @param [String] id of the subscription
     # @return [Subscription] the subscription matching the id requested
     def subscription(id)
-      Subscription.find(self, id)
+      Subscription.find_with_client(self, id)
     end
 
     # @method pre_authorization(id)
     # @param [String] id of the pre_authorization
     # @return [PreAuthorization] the pre_authorization matching the id requested
     def pre_authorization(id)
-      PreAuthorization.find(self, id)
+      PreAuthorization.find_with_client(self, id)
     end
 
     # @method user(id)
     # @param [String] id of the user
     # @return [User] the User matching the id requested
     def user(id)
-      User.find(self, id)
+      User.find_with_client(self, id)
     end
 
     # @method bill(id)
     # @param [String] id of the bill
     # @return [Bill] the Bill matching the id requested
     def bill(id)
-      Bill.find(self, id)
+      Bill.find_with_client(self, id)
     end
 
     # @method payment(id)
     # @param [String] id of the payment
     # @return [Payment] the payment matching the id requested
     def payment(id)
-      Payment.find(self, id)
+      Payment.find_with_client(self, id)
     end
 
     # Create a new bill under a given pre-authorization
@@ -163,7 +163,7 @@ module GoCardless
     # @param [Hash] attrs must include +:pre_authorization_id+ and +:amount+
     # @return [Bill] the created bill object
     def create_bill(attrs)
-      Bill.new(self, attrs).save
+      Bill.new_with_client(self, attrs).save
     end
 
     # Generate the URL for creating a new subscription. The parameters passed
@@ -235,7 +235,7 @@ module GoCardless
 
         # Initialize the correct class according to the resource's type
         klass = GoCardless.const_get(Utils.camelize(params[:resource_type]))
-        klass.find(self, params[:resource_id])
+        klass.find_with_client(self, params[:resource_id])
       else
         raise SignatureError, 'An invalid signature was detected'
       end

@@ -13,7 +13,7 @@ describe GoCardless::Merchant do
 
   index_methods.each do |method|
     it "##{method} works correctly" do
-      merchant = GoCardless::Merchant.new(@client)
+      merchant = GoCardless::Merchant.new_with_client(@client)
 
       data = [{:id => 1}, {:id => 2}]
       stub_get(@client, data)

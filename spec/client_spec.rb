@@ -146,7 +146,7 @@ describe GoCardless::Client do
       merchant_url = '/api/v1/merchants/123'
       token.expects(:get).with { |p,o| p == merchant_url }.returns response
 
-      GoCardless::Merchant.stubs(:new)
+      GoCardless::Merchant.stubs(:new_with_client)
 
       @client.merchant
     end
@@ -254,8 +254,8 @@ describe GoCardless::Client do
 
     it "returns the correct object when the signature is valid" do
       @client.stubs(:request).returns(stub(:parsed => {}))
-      subscription = GoCardless::Subscription.new @client
-      GoCardless::Subscription.expects(:find).returns subscription
+      subscription = GoCardless::Subscription.new_with_client @client
+      GoCardless::Subscription.expects(:find_with_client).returns subscription
 
       # confirm_resource should use the Subcription class because
       # the :response_type is set to subscription
@@ -264,7 +264,7 @@ describe GoCardless::Client do
     end
 
     it "includes valid http basic credentials" do
-      GoCardless::Subscription.stubs(:find)
+      GoCardless::Subscription.stubs(:find_with_client)
       auth = 'Basic YWJjOnh5eg=='
       @client.expects(:request).once.with do |type, path, opts|
         opts.should include :headers
@@ -276,7 +276,7 @@ describe GoCardless::Client do
 
     it "works with string params" do
       @client.stubs(:request)
-      GoCardless::Subscription.stubs(:find)
+      GoCardless::Subscription.stubs(:find_with_client)
       params = Hash[@params.dup.map { |k,v| [k.to_s, v] }]
       params.keys.each { |p| p.should be_a String }
       # No ArgumentErrors should be raised

@@ -6,7 +6,7 @@ describe GoCardless::Resource do
       attr_accessor :id, :name, :uri
     end
     props = {:id => 1, :name => 'test', :uri => 'http://test'}
-    resource = test_resource.new(mock, props)
+    resource = test_resource.new(props)
     props.each { |k,v| resource.send(k).should == v }
   end
 
@@ -25,7 +25,7 @@ describe GoCardless::Resource do
         date_writer :created_at
       end
 
-      resource = test_resource.new(nil)
+      resource = test_resource.new
       time = '2011-12-12T12:00:00Z'
       resource.created_at = time
       date_time = resource.instance_variable_get(:@created_at)
@@ -51,21 +51,21 @@ describe GoCardless::Resource do
         date_accessor :created_at
       end
 
-      resource = test_resource.new(nil)
+      resource = test_resource.new
       date = DateTime.now
       resource.instance_variable_set(:@created_at, date)
       resource.created_at.should == date
     end
   end
 
-  describe "#find" do
+  describe "#find_with_client" do
     it "instantiates the correct object" do
       test_resource = Class.new(GoCardless::Resource) do
         self.endpoint = '/test/:id'
       end
       mock_client = mock
       mock_client.expects(:api_get).returns({:id => 123})
-      resource = test_resource.find(mock_client, 123)
+      resource = test_resource.find_with_client(mock_client, 123)
       resource.should be_a test_resource
       resource.id.should == 123
     end
@@ -88,8 +88,8 @@ describe GoCardless::Resource do
         reference_writer :user_id
       end
 
-      resource = test_resource.new(nil)
-      resource.user = GoCardless::User.new(nil, :id => 123)
+      resource = test_resource.new
+      resource.user = GoCardless::User.new(:id => 123)
       resource.instance_variable_get(:@user_id).should == 123
     end
 
@@ -106,7 +106,7 @@ describe GoCardless::Resource do
         reference_writer :user_id
       end
       expect do
-        test_resource.new(nil).user = 'asdf'
+        test_resource.new.user = 'asdf'
       end.to raise_exception ArgumentError
     end
   end
@@ -135,7 +135,7 @@ describe GoCardless::Resource do
         reference_reader :user_id
       end
 
-      resource = test_resource.new(@client)
+      resource = test_resource.new_with_client(@client)
       resource.instance_variable_set(:@user_id, 123)
       @client.access_token = 'TOKEN manage_merchant:123'
       stub_get(@client, {:id => 123})
@@ -171,8 +171,8 @@ describe GoCardless::Resource do
   end
 
   it "#persisted? works" do
-    GoCardless::Resource.new(nil).persisted?.should be_false
-    GoCardless::Resource.new(nil, :id => 1).persisted?.should be_true
+    GoCardless::Resource.new.persisted?.should be_false
+    GoCardless::Resource.new(:id => 1).persisted?.should be_true
   end
 
   describe "#save" do
@@ -193,28 +193,28 @@ describe GoCardless::Resource do
       it "sends the correct data parameters" do
         client = mock
         data = {:x => 1, :y => 2}
-        resource = @test_resource.new(client, data)
+        resource = @test_resource.new_with_client(client, data)
         client.expects(:api_post).with(anything, data)
         resource.save
       end
 
       it "sends the correct path" do
         client = mock
-        resource = @test_resource.new(client)
+        resource = @test_resource.new_with_client(client)
         client.expects(:api_post).with('/test', anything)
         resource.save
       end
 
       it "POSTs when not persisted" do
         client = mock
-        resource = @test_resource.new(client)
+        resource = @test_resource.new_with_client(client)
         client.expects(:api_post)
         resource.save
       end
 
       it "PUTs when already persisted" do
         client = mock
-        resource = @test_resource.new(client, :id => 1)
+        resource = @test_resource.new_with_client(client, :id => 1)
         client.expects(:api_put)
         resource.save
       end
@@ -227,7 +227,7 @@ describe GoCardless::Resource do
       end
 
       client = mock('client') { stubs :api_post }
-      test_resource.new(client).save
+      test_resource.new_with_client(client).save
     end
 
     it "succeeds when persisted and update allowed" do
@@ -237,7 +237,7 @@ describe GoCardless::Resource do
       end
 
       client = mock('client') { stubs :api_put }
-      test_resource.new(client, :id => 1).save
+      test_resource.new_with_client(client, :id => 1).save
     end
 
     it "fails when not persisted and create not allowed" do
@@ -245,7 +245,7 @@ describe GoCardless::Resource do
         updatable
       end
 
-      expect { test_resource.new(mock).save }.to raise_error
+      expect { test_resource.new.save }.to raise_error
     end
 
     it "fails when persisted and update not allowed" do
@@ -253,7 +253,7 @@ describe GoCardless::Resource do
         creatable
       end
 
-      expect { test_resource.new(mock, :id => 1).save }.to raise_error
+      expect { test_resource.new(:id => 1).save }.to raise_error
     end
   end
 
@@ -263,7 +263,7 @@ describe GoCardless::Resource do
     end
 
     attrs = {:id => 1, :uri => 'http:', :x => 'y'}
-    resource = test_resource.new('CLIENT', attrs)
+    resource = test_resource.new_with_client(mock, attrs)
     resource.to_hash.should == attrs
   end
 
@@ -274,7 +274,7 @@ describe GoCardless::Resource do
       reference_accessor :person_id
     end
 
-    bill = test_resource.new(nil, {
+    bill = test_resource.new({
       :amount => '10',
       :when => DateTime.now,
       :person_id => 15
@@ -324,20 +324,20 @@ describe GoCardless::Resource do
     end
 
     it "are defined on instances" do
-      r = @test_resource.new(stub, @attrs)
+      r = @test_resource.new(@attrs)
       r.should respond_to :bills
     end
 
     it "aren't defined for other instances of the class" do
-      @test_resource.new(stub, @attrs)
-      resource = @test_resource.new stub
+      @test_resource.new(@attrs)
+      resource = @test_resource.new
       resource.should_not respond_to :bills
     end
 
     it "use the correct uri path" do
       client = mock()
       client.expects(:api_get).with('/api/bills/', anything).returns([])
-      r = @test_resource.new(client, @attrs)
+      r = @test_resource.new_with_client(client, @attrs)
       r.bills
     end
 
@@ -345,14 +345,14 @@ describe GoCardless::Resource do
       client = mock()
       client.expects(:api_get).with('/bills/', anything).returns([])
       uris = {'bills' => 'https://test.com/api/v123/bills/'}
-      r = @test_resource.new(client, 'sub_resource_uris' => uris)
+      r = @test_resource.new_with_client(client, 'sub_resource_uris' => uris)
       r.bills
     end
 
     it "use the correct query string params" do
       client = mock()
       client.expects(:api_get).with(anything, 'merchant_id' => '1').returns([])
-      r = @test_resource.new(client, @attrs)
+      r = @test_resource.new_with_client(client, @attrs)
       r.bills
     end
 
@@ -360,13 +360,13 @@ describe GoCardless::Resource do
       client = mock()
       params = { 'merchant_id' => '1', :amount => '10.00' }
       client.expects(:api_get).with(anything, params).returns([])
-      r = @test_resource.new(client, @attrs)
+      r = @test_resource.new_with_client(client, @attrs)
       r.bills(:amount => '10.00')
     end
 
     it "return instances of the correct resource class" do
       client = stub(:api_get => [{:id => 1}])
-      r = @test_resource.new(client, @attrs)
+      r = @test_resource.new_with_client(client, @attrs)
       ret = r.bills
       ret.should be_a Array
       ret.first.should be_a GoCardless::Bill

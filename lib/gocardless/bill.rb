@@ -17,7 +17,7 @@ module GoCardless
 
     def source
       klass = GoCardless.const_get(Utils.camelize(source_type.to_s))
-      klass.find(@client, @source_id)
+      klass.find_with_client(client, @source_id)
     end
 
     def source=(obj)
