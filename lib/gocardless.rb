@@ -11,7 +11,7 @@ module GoCardless
   require 'gocardless/client'
 
   class << self
-    attr_reader :account_details
+    attr_reader :account_details, :client
 
     def account_details=(details)
       raise ClientError.new("You must provide a token") unless details[:token]

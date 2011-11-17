@@ -5,7 +5,6 @@ doc/
 Gemfile.lock
 gocardless*.gem
 .yardoc
-Gemfile
-Gemfile.lock
+.yardopts
 gocardless-*.gem
 gocardless-ruby.zip
