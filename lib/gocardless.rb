@@ -11,6 +11,7 @@ module GoCardless
   require 'gocardless/client'
 
   class << self
+    attr_accessor :environment
     attr_reader :account_details, :client
 
     def account_details=(details)

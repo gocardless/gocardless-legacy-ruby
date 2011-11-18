@@ -8,7 +8,10 @@ require 'time'
 
 module GoCardless
   class Client
-    DEFAULT_BASE_URL = 'https://gocardless.com'
+    BASE_URLS = {
+      :production => 'https://gocardless.com',
+      :sandbox    => 'https://sandbox.gocardless.com',
+    }
     API_PATH = '/api/v1'
 
     class << self
@@ -17,7 +20,7 @@ module GoCardless
       end
 
       def base_url
-        @base_url || DEFAULT_BASE_URL
+        @base_url || BASE_URLS[GoCardless.environment || :production]
       end
 
       def api_url

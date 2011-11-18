@@ -7,6 +7,23 @@ describe GoCardless::Client do
     @redirect_uri = 'http://test.com/cb'
   end
 
+  describe ".base_url" do
+    it "returns the correct url for the production environment" do
+      GoCardless.environment = :production
+      GoCardless::Client.base_url.should == 'https://gocardless.com'
+    end
+
+    it "returns the correct url for the sandbox environment" do
+      GoCardless.environment = :sandbox
+      GoCardless::Client.base_url.should == 'https://sandbox.gocardless.com'
+    end
+
+    it "returns the correct url when it's set manually" do
+      GoCardless::Client.base_url = 'https://abc.gocardless.com'
+      GoCardless::Client.base_url.should == 'https://abc.gocardless.com'
+    end
+  end
+
   describe "#new" do
     it "without an app id should raise an error" do
       lambda do
