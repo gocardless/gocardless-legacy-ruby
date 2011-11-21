@@ -58,7 +58,7 @@ describe GoCardless::Resource do
     end
   end
 
-  describe "#find_with_client" do
+  describe ".find_with_client" do
     it "instantiates the correct object" do
       test_resource = Class.new(GoCardless::Resource) do
         self.endpoint = '/test/:id'
@@ -68,6 +68,25 @@ describe GoCardless::Resource do
       resource = test_resource.find_with_client(mock_client, 123)
       resource.should be_a test_resource
       resource.id.should == 123
+    end
+  end
+
+  describe ".find" do
+    it "calls find with the default client" do
+      test_resource = Class.new(GoCardless::Resource) do
+        self.endpoint = '/test/:id'
+      end
+      GoCardless.stubs(:client => mock)
+      test_resource.expects(:find_with_client).with(GoCardless.client, 1)
+      test_resource.find(1)
+      unset_ivar GoCardless, :client
+    end
+
+    it "raises a helpful error when there is no default client" do
+      test_resource = Class.new(GoCardless::Resource) do
+        self.endpoint = '/test/:id'
+      end
+      expect { test_resource.find(1) }.to raise_error
     end
   end
 

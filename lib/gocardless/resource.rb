@@ -59,7 +59,9 @@ module GoCardless
       end
 
       def find(id)
-        self.find_with_client(client, id)
+        message = "Merchant details not found, set GoCardless.account_details"
+        raise Error, message unless GoCardless.client
+        self.find_with_client(GoCardless.client, id)
       end
 
       def date_writer(*args)
