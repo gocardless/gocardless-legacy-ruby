@@ -329,6 +329,18 @@ describe GoCardless::Client do
       end
     end
 
+    it "should include the state in the URL query" do
+      params = { 'a' => '1', 'b' => '2', :state => "blah" }
+      url = @client.send(:new_limit_url, :subscription, params)
+      get_params(url)["state"].should == "blah"
+    end
+
+    it "should include the redirect_uri in the URL query" do
+        params = { 'a' => '1', 'b' => '2', :redirect_uri => "http://www.google.com" }
+        url = @client.send(:new_limit_url, :subscription, params)
+        get_params(url)["redirect_uri"].should == "http://www.google.com"
+      end
+
     it "should add merchant_id to the limit" do
       url = @client.send(:new_limit_url, :subscription, {})
       get_params(url)['subscription[merchant_id]'].should == @merchant_id
