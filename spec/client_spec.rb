@@ -4,8 +4,41 @@ describe GoCardless::Client do
   before :each do
     @app_id = 'abc'
     @app_secret = 'xyz'
-    @client = GoCardless::Client.new(@app_id, @app_secret)
     @redirect_uri = 'http://test.com/cb'
+  end
+
+  describe ".base_url" do
+    it "returns the correct url for the production environment" do
+      GoCardless.environment = :production
+      GoCardless::Client.base_url.should == 'https://gocardless.com'
+    end
+
+    it "returns the correct url for the sandbox environment" do
+      GoCardless.environment = :sandbox
+      GoCardless::Client.base_url.should == 'https://sandbox.gocardless.com'
+    end
+
+    it "returns the correct url when it's set manually" do
+      GoCardless::Client.base_url = 'https://abc.gocardless.com'
+      GoCardless::Client.base_url.should == 'https://abc.gocardless.com'
+    end
+  end
+
+  describe "#new" do
+    it "without an app id should raise an error" do
+      lambda do
+        GoCardless::Client.new({:app_secret => @app_secret})
+      end.should raise_exception(GoCardless::ClientError)
+    end
+    it "without an app_secret should raise an error" do
+      lambda do
+        GoCardless::Client.new({:app_id => @app_id})
+      end.should raise_exception(GoCardless::ClientError)
+    end
+  end
+
+  before do
+    @client = GoCardless::Client.new({:app_id => @app_id, :app_secret => @app_secret})
   end
 
   describe "#authorize_url" do
@@ -130,7 +163,7 @@ describe GoCardless::Client do
       merchant_url = '/api/v1/merchants/123'
       token.expects(:get).with { |p,o| p == merchant_url }.returns response
 
-      GoCardless::Merchant.stubs(:new)
+      GoCardless::Merchant.stubs(:new_with_client)
 
       @client.merchant
     end
@@ -152,11 +185,11 @@ describe GoCardless::Client do
 
   %w{subscription pre_authorization user bill payment}.each do |resource|
     describe "##{resource}" do
-      it "returns the correct #{resource.camelize} object" do
+      it "returns the correct #{GoCardless::Utils.camelize(resource)} object" do
         @client.access_token = 'TOKEN manage_merchant:123'
         stub_get(@client, {:id => 123})
         obj = @client.send(resource, 123)
-        obj.should be_a GoCardless.const_get(resource.camelize)
+        obj.should be_a GoCardless.const_get(GoCardless::Utils.camelize(resource))
         obj.id.should == 123
       end
     end
@@ -238,8 +271,8 @@ describe GoCardless::Client do
 
     it "returns the correct object when the signature is valid" do
       @client.stubs(:request).returns(stub(:parsed => {}))
-      subscription = GoCardless::Subscription.new @client
-      GoCardless::Subscription.expects(:find).returns subscription
+      subscription = GoCardless::Subscription.new_with_client @client
+      GoCardless::Subscription.expects(:find_with_client).returns subscription
 
       # confirm_resource should use the Subcription class because
       # the :response_type is set to subscription
@@ -248,7 +281,7 @@ describe GoCardless::Client do
     end
 
     it "includes valid http basic credentials" do
-      GoCardless::Subscription.stubs(:find)
+      GoCardless::Subscription.stubs(:find_with_client)
       auth = 'Basic YWJjOnh5eg=='
       @client.expects(:request).once.with do |type, path, opts|
         opts.should include :headers
@@ -260,7 +293,7 @@ describe GoCardless::Client do
 
     it "works with string params" do
       @client.stubs(:request)
-      GoCardless::Subscription.stubs(:find)
+      GoCardless::Subscription.stubs(:find_with_client)
       params = Hash[@params.dup.map { |k,v| [k.to_s, v] }]
       params.keys.each { |p| p.should be_a String }
       # No ArgumentErrors should be raised
@@ -332,7 +365,7 @@ describe GoCardless::Client do
 
     it "should include a timestamp" do
       # Time.now returning Pacific time
-      time = Time.local(0, 0, 0, 1, 1, 2011, 0, 0, false, 'PDT')
+      time = Time.parse('Sat Jan 01 00:00:00 -0800')
       Time.expects(:now).returns time
       params = get_params(@client.send(:new_limit_url, :subscription, :x => 1))
       # Check that timezone is ISO formatted UTC

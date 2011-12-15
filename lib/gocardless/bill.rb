@@ -16,8 +16,8 @@ module GoCardless
     date_accessor :created_at
 
     def source
-      klass = GoCardless.const_get(source_type.to_s.camelize)
-      klass.find(@client, @source_id)
+      klass = GoCardless.const_get(Utils.camelize(source_type.to_s))
+      klass.find_with_client(client, @source_id)
     end
 
     def source=(obj)
@@ -27,7 +27,7 @@ module GoCardless
                               "PreAuthorization")
       end
       @source_id = obj.id
-      @source_type = klass.underscore
+      @source_type = Utils.underscore(klass)
     end
 
     def save

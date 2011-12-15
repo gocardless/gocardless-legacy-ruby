@@ -14,3 +14,7 @@ def stub_get(client, data)
   token.stubs(:get).returns response
 end
 
+def unset_ivar(obj, var)
+  obj.instance_variable_set "@#{var}", nil if obj.instance_variable_get "@#{var}"
+end
+

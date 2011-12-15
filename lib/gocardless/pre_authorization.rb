@@ -14,7 +14,7 @@ module GoCardless
     # @option attrs [amount] amount the bill amount in pence
     # @return [Bill] the created bill object
     def create_bill(attrs)
-      Bill.new(@client, attrs.merge(:source => self)).save
+      Bill.new_with_client(client, attrs.merge(:source => self)).save
     end
   end
 end

@@ -1,13 +1,17 @@
- 'rubygems'
+require 'rubygems'
 require 'json'
 require 'oauth2'
 require 'openssl'
 require 'uri'
 require 'cgi'
+require 'time'
 
 module GoCardless
   class Client
-    DEFAULT_BASE_URL = 'https://www.gocardless.com'
+    BASE_URLS = {
+      :production => 'https://gocardless.com',
+      :sandbox    => 'https://sandbox.gocardless.com',
+    }
     API_PATH = '/api/v1'
 
     class << self
@@ -16,7 +20,7 @@ module GoCardless
       end
 
       def base_url
-        @base_url || DEFAULT_BASE_URL
+        @base_url || BASE_URLS[GoCardless.environment || :production]
       end
 
       def api_url
@@ -24,13 +28,18 @@ module GoCardless
       end
     end
 
-    def initialize(app_id, app_secret, token = nil)
-      @app_id = app_id
-      @app_secret = app_secret
-      @oauth_client = OAuth2::Client.new(app_id, app_secret,
+    def initialize(args = {})
+      Utils.symbolize_keys! args
+      @app_id = args[:app_id]
+      @app_secret = args[:app_secret]
+      raise ClientError.new("You must provide an app_id") unless @app_id
+      raise ClientError.new("You must provide an app_secret") unless @app_secret
+
+      @oauth_client = OAuth2::Client.new(@app_id, @app_secret,
                                          :site => self.class.base_url,
                                          :token_url => '/oauth/access_token')
-      self.access_token = token if token
+
+      self.access_token = args[:token] if args[:token]
     end
 
     # Generate the OAuth authorize url
@@ -113,42 +122,42 @@ module GoCardless
     # @return [Merchant] the merchant associated with the client's access token
     def merchant
       raise ClientError, 'Access token missing' unless @access_token
-      Merchant.new(self, api_get("/merchants/#{merchant_id}"))
+      Merchant.new_with_client(self, api_get("/merchants/#{merchant_id}"))
     end
 
     # @method subscripton(id)
     # @param [String] id of the subscription
     # @return [Subscription] the subscription matching the id requested
     def subscription(id)
-      Subscription.find(self, id)
+      Subscription.find_with_client(self, id)
     end
 
     # @method pre_authorization(id)
     # @param [String] id of the pre_authorization
     # @return [PreAuthorization] the pre_authorization matching the id requested
     def pre_authorization(id)
-      PreAuthorization.find(self, id)
+      PreAuthorization.find_with_client(self, id)
     end
 
     # @method user(id)
     # @param [String] id of the user
     # @return [User] the User matching the id requested
     def user(id)
-      User.find(self, id)
+      User.find_with_client(self, id)
     end
 
     # @method bill(id)
     # @param [String] id of the bill
     # @return [Bill] the Bill matching the id requested
     def bill(id)
-      Bill.find(self, id)
+      Bill.find_with_client(self, id)
     end
 
     # @method payment(id)
     # @param [String] id of the payment
     # @return [Payment] the payment matching the id requested
     def payment(id)
-      Payment.find(self, id)
+      Payment.find_with_client(self, id)
     end
 
     # Create a new bill under a given pre-authorization
@@ -157,7 +166,7 @@ module GoCardless
     # @param [Hash] attrs must include +:pre_authorization_id+ and +:amount+
     # @return [Bill] the created bill object
     def create_bill(attrs)
-      Bill.new(self, attrs).save
+      Bill.new_with_client(self, attrs).save
     end
 
     # Generate the URL for creating a new subscription. The parameters passed
@@ -204,7 +213,7 @@ module GoCardless
     # @param [Hash] params the response parameters returned by the API server
     # @return [Resource] the confirmed resource object
     def confirm_resource(params)
-      params = params.symbolize_keys
+      params = Utils.symbolize_keys(params)
       # Only pull out the relevant parameters, other won't be included in the
       # signature so will cause false negatives
       keys = [:resource_id, :resource_type, :resource_uri, :state, :signature]
@@ -228,8 +237,8 @@ module GoCardless
                                                         :headers => headers)
 
         # Initialize the correct class according to the resource's type
-        klass = GoCardless.const_get(params[:resource_type].camelize)
-        klass.find(self, params[:resource_id])
+        klass = GoCardless.const_get(Utils.camelize(params[:resource_type]))
+        klass.find_with_client(self, params[:resource_id])
       else
         raise SignatureError, 'An invalid signature was detected'
       end

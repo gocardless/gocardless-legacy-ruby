@@ -2,9 +2,7 @@ require 'date'
 
 module GoCardless
   class Resource
-    def initialize(client, hash = {})
-      @client = client
-
+    def initialize(hash = {})
       # Handle sub resources
       sub_resource_uris = hash.delete('sub_resource_uris')
       unless sub_resource_uris.nil?
@@ -27,28 +25,43 @@ module GoCardless
           metaclass.send(:define_method, name) do |*args|
             # 'name' will be something like 'bills', convert it to Bill and
             # look up the resource class with that name
-            klass = GoCardless.const_get(name.to_s.singularize.camelize)
+            class_name = Utils.camelize(Utils.singularize(name.to_s))
+            klass = GoCardless.const_get(class_name)
             # Convert the results to instances of the looked-up class
             params = args.first || {}
             query = default_query.nil? ? nil : default_query.merge(params)
             client.api_get(path, query).map do |attrs|
-              klass.new(client, attrs)
+              klass.new(attrs).tap { |m| m.client = client }
             end
           end
         end
       end
 
       # Set resource attribute values
-      hash.each { |key,val| send("#{key}=", val) }
+      hash.each { |key,val| send("#{key}=", val) if respond_to?("#{key}=") }
     end
+
+    attr_writer :client
 
     class << self
       attr_accessor :endpoint
 
-      def find(client, id)
+      def new_with_client(client, attrs = {})
+        self.new(attrs).tap { |obj| obj.client = client }
+      end
+
+      def find_with_client(client_obj, id)
         path = endpoint.gsub(':id', id.to_s)
-        data = client.api_get(path)
-        self.new(client, data)
+        data = client_obj.api_get(path)
+        obj = self.new(data)
+        obj.client = client_obj
+        obj
+      end
+
+      def find(id)
+        message = "Merchant details not found, set GoCardless.account_details"
+        raise Error, message unless GoCardless.client
+        self.find_with_client(GoCardless.client, id)
       end
 
       def date_writer(*args)
@@ -76,8 +89,8 @@ module GoCardless
           name = attr.to_s.sub(/_id$/, '')
           define_method(name.to_sym) do
             obj_id = instance_variable_get("@#{attr}")
-            klass = GoCardless.const_get(name.camelize)
-            klass.find(@client, obj_id)
+            klass = GoCardless.const_get(Utils.camelize(name))
+            klass.find_with_client(client, obj_id)
           end
         end
       end
@@ -92,7 +105,7 @@ module GoCardless
 
           name = attr.to_s.sub(/_id$/, '')
           define_method("#{name}=".to_sym) do |obj|
-            klass = GoCardless.const_get(name.camelize)
+            klass = GoCardless.const_get(Utils.camelize(name))
             if !obj.is_a?(klass)
               raise ArgumentError, "Object must be an instance of #{klass}"
             end
@@ -132,6 +145,7 @@ module GoCardless
 
     def to_hash
       attrs = instance_variables.map { |v| v.to_s.sub(/^@/, '') }
+      attrs.delete 'client'
       Hash[attrs.select { |v| respond_to? v }.map { |v| [v.to_sym, send(v)] }]
     end
 
@@ -157,6 +171,10 @@ module GoCardless
 
   protected
 
+    def client
+      @client || GoCardless.client
+    end
+
     def save_data(data)
       method = if self.persisted?
         raise "#{self.class} cannot be updated" unless self.class.updatable?
@@ -166,8 +184,8 @@ module GoCardless
         'post'
       end
       path = self.class.endpoint.gsub(':id', id.to_s)
-      response = @client.send("api_#{method}", path, data)
-      response.each { |key,val| send("#{key}=", val) } if response.is_a? Hash
+      response = client.send("api_#{method}", path, data)
+      response.each { |key,val| send("#{key}=", val) if respond_to?("#{key}=") } if response.is_a? Hash
     end
   end
 end
