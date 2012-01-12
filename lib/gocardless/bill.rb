@@ -7,6 +7,7 @@ module GoCardless
     attr_accessor :amount
     attr_accessor :source_type
     attr_accessor :description
+    attr_accessor :name
 
     # @attribute source_id
     # @return [Integer] the ID of the bill's source (eg subscription, pre_authorization)
