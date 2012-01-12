@@ -36,6 +36,7 @@ module GoCardless
         :bill => {
           :pre_authorization_id => self.source_id,
           :amount => self.amount,
+          :name => self.name,
           :description => self.description,
         }
       })
