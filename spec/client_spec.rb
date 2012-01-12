@@ -365,7 +365,7 @@ describe GoCardless::Client do
 
     it "should include a timestamp" do
       # Time.now returning Pacific time
-      time = Time.parse('Sat Jan 01 00:00:00 -0800')
+      time = Time.parse('Sat Jan 01 2011 00:00:00 -0800')
       Time.expects(:now).returns time
       params = get_params(@client.send(:new_limit_url, :subscription, :x => 1))
       # Check that timezone is ISO formatted UTC
