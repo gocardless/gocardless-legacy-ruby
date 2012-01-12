@@ -9,9 +9,9 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "yard", "~> 0.7.3"
   gem.add_development_dependency "redcarpet", "~> 1.17.2"
 
-  gem.authors = ["Harry Marr"]
+  gem.authors = ["Harry Marr, Tom Blomfield"]
   gem.description = %q{A Ruby wrapper for the GoCardless API}
-  gem.email = ['harry@gocardless.com']
+  gem.email = ['developers@gocardless.com']
   gem.files = `git ls-files`.split("\n")
   gem.homepage = 'https://github.com/gocardless/gocardless-ruby'
   gem.name = 'gocardless'
