@@ -213,7 +213,9 @@ module GoCardless
     # @param [Hash] params the response parameters returned by the API server
     # @return [Resource] the confirmed resource object
     def confirm_resource(params)
-      params = Utils.symbolize_keys(params)
+      # Create a new hash in case is a HashWithIndifferentAccess (keys are
+      # always a String)
+      params = Utils.symbolize_keys(Hash[params])
       # Only pull out the relevant parameters, other won't be included in the
       # signature so will cause false negatives
       keys = [:resource_id, :resource_type, :resource_uri, :state, :signature]
