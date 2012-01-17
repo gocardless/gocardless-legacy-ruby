@@ -261,6 +261,12 @@ describe GoCardless::Client do
       expect { @client.confirm_resource params_indifferent_access }.to_not raise_exception ArgumentError
     end
 
+    it "rejects other params not required for the signature" do
+      # Once for confirm, once to fetch result
+      @client.expects(:request).twice.returns(stub(:parsed => {}))
+      @client.confirm_resource(@client.send(:sign_params, @params).merge('foo' => 'bar'))
+    end
+
     it "doesn't confirm the resource when the signature is invalid" do
       @client.expects(:request).never
       @client.confirm_resource({:signature => 'xxx'}.merge(@params)) rescue nil
