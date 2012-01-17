@@ -262,8 +262,11 @@ describe GoCardless::Client do
     end
 
     it "rejects other params not required for the signature" do
-      # Once for confirm, once to fetch result
-      @client.expects(:request).twice.returns(stub(:parsed => {}))
+      @client.stubs(:request).returns(stub(:parsed => {}))
+      @client.expects(:signature_valid?).returns(true).with(hash) do |hash|
+        !hash.keys.include?(:foo) && !hash.keys.include?('foo')
+      end
+
       @client.confirm_resource(@client.send(:sign_params, @params).merge('foo' => 'bar'))
     end
 
