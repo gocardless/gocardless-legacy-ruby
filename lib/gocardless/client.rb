@@ -217,7 +217,10 @@ module GoCardless
       # Only pull out the relevant parameters, other won't be included in the
       # signature so will cause false negatives
       keys = [:resource_id, :resource_type, :resource_uri, :state, :signature]
-      params = Hash[params.select { |k,v| keys.include? k }]
+      params = Hash[params.select { |k,v| params.key? k }]
+      # Need to symbolize keys again because the select will return a hash
+      # with String keys if original params was HashWithIndiffirentAccess
+      params = Utils.symbolize_keys(params)
       (keys - [:state]).each do |key|
         raise ArgumentError, "Parameters missing #{key}" if !params.key?(key)
       end

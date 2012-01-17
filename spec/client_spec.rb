@@ -252,6 +252,15 @@ describe GoCardless::Client do
       end
     end
 
+    it "does not fail when keys are strings in a HashWithIndiferentAccess" do
+      params = {'resource_id' => 1,
+                'resource_uri' => 'a',
+                'resource_type' => 'subscription',
+                'signature' => 'foo'}
+      params_indifferent_access = HashWithIndifferentAccess.new(params)
+      expect { @client.confirm_resource params_indifferent_access }.to_not raise_exception ArgumentError
+    end
+
     it "doesn't confirm the resource when the signature is invalid" do
       @client.expects(:request).never
       @client.confirm_resource({:signature => 'xxx'}.merge(@params)) rescue nil
