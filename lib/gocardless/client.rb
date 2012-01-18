@@ -344,7 +344,9 @@ module GoCardless
     end
 
     def merchant_id
+      puts @access_token.inspect
       raise ClientError, 'Access token missing' unless @access_token
+      raise ClientError, 'Access token does contain manage_merchant:' if @access_token.token.include? 'bearer'
       scope = @access_token.params['scope'].split
       perm = scope.select {|p| p.start_with?('manage_merchant:') }.first
       perm.split(':')[1]

@@ -384,5 +384,12 @@ describe GoCardless::Client do
         @client.send(:merchant_id)
       end.to raise_exception GoCardless::ClientError
     end
+    
+    it "fails if the access token does not contains bearer" do
+      lambda do
+        @client.access_token = 'bearer TOKEN'
+        @client.send(:merchant_id)
+      end.should raise_exception GoCardless::ClientError
+    end
   end
 end
