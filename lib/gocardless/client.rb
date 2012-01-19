@@ -79,7 +79,7 @@ module GoCardless
     # @param [String] token a string with format <code>"#{token} #{scope}"</code>
     #   (as returned by {#access_token})
     def access_token=(token)
-      token, scope = token.split(' ', 2)
+      token, scope = token.sub(/^bearer\s+/i, '').split(' ', 2)
       if scope.nil?
         raise ArgumentError, ('Access token missing scope. Use format '
                               '<token> <scope>')

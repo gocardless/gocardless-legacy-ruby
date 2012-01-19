@@ -117,6 +117,13 @@ describe GoCardless::Client do
       token.params['scope'].should == 'a:1 b:2'
     end
 
+    it "ignores 'bearer' if it is present at the start of the string" do
+      @client.access_token = 'Bearer TOKEN manage_merchant:123'
+      token = @client.instance_variable_get(:@access_token)
+      token.token.should == 'TOKEN'
+      token.params['scope'].should == 'manage_merchant:123'
+    end
+
     it "handles invalid values correctly" do
       token = 'TOKEN123'  # missing scope
       expect { @client.access_token = token }.to raise_exception ArgumentError
