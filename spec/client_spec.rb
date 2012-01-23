@@ -410,4 +410,17 @@ describe GoCardless::Client do
       end.to raise_exception GoCardless::ClientError
     end
   end
+
+  describe "#webhook_valid?" do
+    it "returns false when the webhook signature is invalid" do
+      @client.webhook_valid?({:some => 'stuff', :signature => 'invalid'}).
+        should be_false
+    end
+
+    it "returns true when the webhook signature is valid" do
+      valid_signature = '175e814f0f64e5e86d41fb8fe06a857cedda715a96d3dc3d885e6d97dbeb7e49'
+      @client.webhook_valid?({:some => 'stuff', :signature => valid_signature}).
+        should be_true
+    end
+  end
 end

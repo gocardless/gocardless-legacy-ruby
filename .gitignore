@@ -8,3 +8,4 @@ gocardless*.gem
 .yardopts
 gocardless-*.gem
 gocardless-ruby.zip
+.rvmrc

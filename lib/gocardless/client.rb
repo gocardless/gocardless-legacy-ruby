@@ -246,6 +246,15 @@ module GoCardless
       end
     end
 
+
+    # Validates the payload contents of a webhook request.
+    #
+    # @param [Hash] params the contents of payload of the webhook
+    # @return [boolean] true when valid, false otherwise
+    def webhook_valid?(params)
+      signature_valid?(params)
+    end
+
   private
 
     # Convert a hash into query-string style parameters
