@@ -247,7 +247,7 @@ module GoCardless
     end
 
 
-    # Validates the contents of the payload a webhook request.
+    # Validates the payload contents of a webhook request.
     #
     # @param [Hash] params the contents of payload of the webhook
     # @return [boolean] true when valid, false otherwise
