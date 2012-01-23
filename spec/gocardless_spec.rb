@@ -22,7 +22,7 @@ describe GoCardless do
 
 
   describe "delegated methods" do
-    %w(new_subscription_url new_pre_authorization_url new_bill_url confirm_resource).each do |name|
+    %w(new_subscription_url new_pre_authorization_url new_bill_url confirm_resource webhook_valid?).each do |name|
       it "#{name} delegates to @client" do
         subject.account_details = @details
         subject.instance_variable_get(:@client).expects(name.to_sym)
