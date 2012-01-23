@@ -246,6 +246,10 @@ module GoCardless
       end
     end
 
+    def webhook_valid?(params)
+      signature_valid?(params)
+    end
+
   private
 
     # Convert a hash into query-string style parameters
