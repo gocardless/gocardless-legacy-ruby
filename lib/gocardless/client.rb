@@ -257,21 +257,6 @@ module GoCardless
 
   private
 
-    # Convert a hash into query-string style parameters
-    def encode_params(params, ns = nil)
-      params.map do |key,val|
-        key = ns ? "#{ns}[#{key.is_a?(Integer) ? '' : key.to_s}]" : key.to_s
-        case val
-        when Hash
-          encode_params(val, key)
-        when Array
-          encode_params(Hash[(1..val.length).zip(val)], key)
-        else
-          "#{CGI.escape(key)}=#{CGI.escape(val.to_s)}"
-        end
-      end.sort * '&'
-    end
-
     # Send a request to the GoCardless API servers
     #
     # @param [Symbol] method the HTTP method to use (e.g. +:get+, +:post+)
@@ -303,7 +288,7 @@ module GoCardless
     # @param [Hash] params the parameters to sign
     # @return [Hash] the parameters with the new +:signature+ key
     def sign_params(params)
-      msg = encode_params(params)
+      msg = Utils.normalize_params(params)
       digest = OpenSSL::Digest::Digest.new('sha256')
       params[:signature] = OpenSSL::HMAC.hexdigest(digest, @app_secret, msg)
       params
@@ -350,7 +335,7 @@ module GoCardless
 
       sign_params(params)
 
-      url.query = encode_params(params)
+      url.query = Utils.normalize_params(params)
       url.to_s
     end
 

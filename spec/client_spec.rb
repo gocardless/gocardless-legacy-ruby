@@ -202,26 +202,6 @@ describe GoCardless::Client do
     end
   end
 
-  describe "#encode_params" do
-    it "correctly encodes hashes" do
-      params = {:a => {:b => :c}, :x => :y}
-      result = 'a%5Bb%5D=c&x=y'
-      @client.send(:encode_params, params).should == result
-    end
-
-    it "correctly encodes arrays" do
-      params = {:a => [1,2]}
-      result = 'a%5B%5D=1&a%5B%5D=2'
-      @client.send(:encode_params, params).should == result
-    end
-
-    it "sorts params by key" do
-      params = {:b => 1, :a => 2}
-      result = 'a=2&b=1'
-      @client.send(:encode_params, params).should == result
-    end
-  end
-
   it "#sign_params signs pararmeter hashes correctly" do
     @client.instance_variable_set(:@app_secret, 'testsecret')
     params = {:test => true}
