@@ -34,7 +34,7 @@ module GoCardless
     # Percent encode a string according to RFC 5849 (section 3.6)
     #
     # @param [String] str the string to encode
-    # @returns [String] str the encoded string
+    # @return [String] str the encoded string
     def percent_encode(str)
       URI.encode(str, /[^a-zA-Z0-9\-\.\_\~]/)
     end
@@ -54,7 +54,7 @@ module GoCardless
     #   # => [['a[b]', 'c']]
     #
     # @param [Hash] obj the hash to flatten
-    # @returns [Array] an array of key-value pairs (arrays of two strings)
+    # @return [Array] an array of key-value pairs (arrays of two strings)
     def flatten_params(obj, ns=nil)
       case obj
       when Hash
