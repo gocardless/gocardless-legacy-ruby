@@ -129,7 +129,10 @@ describe GoCardless::Utils do
       end
 
       it "includes all array values separately" do
-        subject['a' => ['b', 'c']].should == [['a[]', 'b'], ['a[]', 'c']]
+        result = subject['a' => ['b', 'c']]
+        result.should include ['a[]', 'b']
+        result.should include ['a[]', 'c']
+        result.length.should == 2
       end
 
       it "flattens nested arrays" do
@@ -141,8 +144,10 @@ describe GoCardless::Utils do
       end
 
       it "includes all hash k/v pairs separately" do
-        hash = {'a' => {'b' => 'c', 'd' => 'e'}}
-        subject[hash].should == [['a[b]', 'c'], ['a[d]', 'e']]
+        result = subject['a' => {'b' => 'c', 'd' => 'e'}]
+        result.should include ['a[b]', 'c']
+        result.should include ['a[d]', 'e']
+        result.length.should == 2
       end
 
       it "flattens nested hashes" do
