@@ -105,6 +105,18 @@ describe GoCardless::Utils do
       end
     end
 
+    describe ".iso_format_time" do
+      it "should work with a Time object" do
+        d = GoCardless::Utils.iso_format_time(Time.parse("1st January 2012"))
+        d.should == "2012-01-01T00:00:00Z"
+      end
+
+      it "should leave a string untouched" do
+        date = "1st January 2012"
+        GoCardless::Utils.iso_format_time(date).should == date
+      end
+    end
+
     describe ".flatten_params" do
       subject { GoCardless::Utils.method(:flatten_params) }
 
@@ -118,6 +130,11 @@ describe GoCardless::Utils do
 
       it "works with integer keys and values" do
         subject[123 => 456].should == [['123', '456']]
+      end
+
+      it "converts DateTime objects to ISO8601-fomatted strings" do
+        date = '2001-02-03T12:23:45Z'
+        subject[:date => Time.parse(date)][0][1].should == date
       end
 
       it "works with symbol keys and values" do
