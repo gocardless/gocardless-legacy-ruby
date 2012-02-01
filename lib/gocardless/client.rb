@@ -288,9 +288,7 @@ module GoCardless
     # @param [Hash] params the parameters to sign
     # @return [Hash] the parameters with the new +:signature+ key
     def sign_params(params)
-      msg = Utils.normalize_params(params)
-      digest = OpenSSL::Digest::Digest.new('sha256')
-      params[:signature] = OpenSSL::HMAC.hexdigest(digest, @app_secret, msg)
+      params[:signature] = Utils.sign_params(params, @app_secret)
       params
     end
 

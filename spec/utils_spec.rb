@@ -171,6 +171,15 @@ describe GoCardless::Utils do
         subject['a' => 'b', 'c' => 'd'].should == 'a=b&c=d'
       end
     end
+
+    describe ".sign_params" do
+      it "produces the correct hash for the given params and key" do
+        key = 'testsecret'
+        params = {:test => true}
+        sig = '6e4613b729ce15c288f70e72463739feeb05fc0b89b55d248d7f259b5367148b'
+        GoCardless::Utils.sign_params(params, key).should == sig
+      end
+    end
   end
 
 end

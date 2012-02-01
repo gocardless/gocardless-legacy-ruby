@@ -31,10 +31,30 @@ module GoCardless
       hash
     end
 
+    # Percent encode a string according to RFC 5849 (section 3.6)
+    #
+    # @param [String] str the string to encode
+    # @returns [String] str the encoded string
     def percent_encode(str)
       URI.encode(str, /[^a-zA-Z0-9\-\.\_\~]/)
     end
 
+    # Flatten a hash containing nested hashes and arrays to a non-nested array
+    # of key-value pairs.
+    #
+    # Examples:
+    #
+    #   flatten_params(a: 'b')
+    #   # => [['a', 'b']]
+    #
+    #   flatten_params(a: ['b', 'c'])
+    #   # => [['a[]', 'b'], ['a[]', 'c']]
+    #
+    #   flatten_params(a: {b: 'c'})
+    #   # => [['a[b]', 'c']]
+    #
+    # @param [Hash] obj the hash to flatten
+    # @returns [Array] an array of key-value pairs (arrays of two strings)
     def flatten_params(obj, ns=nil)
       case obj
       when Hash
@@ -47,10 +67,29 @@ module GoCardless
       end
     end
 
+    # Generate a percent-encoded query string from an object. The object may
+    # have nested arrays and objects as values. Ordinary top-level key-value
+    # pairs will be of the form "name=Bob", arrays will result in
+    # "cars[]=BMW&cars[]=Fiat", and nested objects will look like
+    # "user[name]=Bob&user[age]=50". All keys and values will be
+    # percent-encoded according to RFC5849 §3.6 and parameters will be
+    # normalised according to RFC5849 §3.4.1.3.2.
     def normalize_params(params)
       flatten_params(params).map do |pair|
         pair.map { |item| percent_encode(item) } * '='
       end.sort * '&'
+    end
+
+    # Given a Hash of parameters, normalize then (flatten and convert to a
+    # string), then generate the HMAC-SHA-256 signature using the provided key.
+    #
+    # @param [Hash] params the parameters to sign
+    # @param [String] key the key to sign the params with
+    # @return [String] the resulting signature
+    def sign_params(params, key)
+      msg = Utils.normalize_params(params)
+      digest = OpenSSL::Digest::Digest.new('sha256')
+      OpenSSL::HMAC.hexdigest(digest, key, msg)
     end
   end
 end
