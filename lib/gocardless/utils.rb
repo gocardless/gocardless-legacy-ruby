@@ -38,7 +38,8 @@ module GoCardless
     def flatten_params(obj, ns=nil)
       case obj
       when Hash
-        obj.map { |k,v| flatten_params(v, ns ? "#{ns}[#{k}]" : k) }.inject(&:+)
+        pairs = obj.map { |k,v| flatten_params(v, ns ? "#{ns}[#{k}]" : k) }
+        pairs.empty? ? [] : pairs.inject(&:+)
       when Array
         obj.map { |v| flatten_params(v, "#{ns}[]") }.inject(&:+)
       else
