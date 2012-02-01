@@ -12,5 +12,5 @@ rvm:
 notifications:
   email:
     recipients:
-      - harry@gocardless.com
+      - developers@gocardless.com
 
