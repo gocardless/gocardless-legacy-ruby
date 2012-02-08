@@ -250,7 +250,7 @@ module GoCardless
     # Validates the payload contents of a webhook request.
     #
     # @param [Hash] params the contents of payload of the webhook
-    # @return [boolean] true when valid, false otherwise
+    # @return [Boolean] true when valid, false otherwise
     def webhook_valid?(params)
       signature_valid?(params)
     end
@@ -261,7 +261,6 @@ module GoCardless
     #
     # @param [Symbol] method the HTTP method to use (e.g. +:get+, +:post+)
     # @param [String] path the path fragment of the URL
-    # @option [String] body the request body
     # @option [Hash] params query string parameters
     def request(method, path, opts = {})
       raise ClientError, 'Access token missing' unless @access_token
