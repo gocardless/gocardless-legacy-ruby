@@ -261,7 +261,7 @@ module GoCardless
     #
     # @param [Symbol] method the HTTP method to use (e.g. +:get+, +:post+)
     # @param [String] path the path fragment of the URL
-    # @option [Hash] params query string parameters
+    # @option [Hash] opts query string parameters
     def request(method, path, opts = {})
       raise ClientError, 'Access token missing' unless @access_token
       opts[:headers] = {} if opts[:headers].nil?
