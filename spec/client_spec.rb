@@ -341,10 +341,10 @@ describe GoCardless::Client do
     end
 
     it "should include the redirect_uri in the URL query" do
-        params = { 'a' => '1', 'b' => '2', :redirect_uri => "http://www.google.com" }
-        url = @client.send(:new_limit_url, :subscription, params)
-        get_params(url)["redirect_uri"].should == "http://www.google.com"
-      end
+      params = { 'a' => '1', 'b' => '2', :redirect_uri => "http://www.google.com" }
+      url = @client.send(:new_limit_url, :subscription, params)
+      get_params(url)["redirect_uri"].should == "http://www.google.com"
+    end
 
     it "should add merchant_id to the limit" do
       url = @client.send(:new_limit_url, :subscription, {})
