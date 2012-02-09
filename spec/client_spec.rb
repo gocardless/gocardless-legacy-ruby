@@ -227,12 +227,11 @@ describe GoCardless::Client do
     before :each do
       @params = {
         :resource_id   => '1',
-        :resource_uri  => 'a',
         :resource_type => 'subscription',
       }
     end
 
-    [:resource_id, :resource_uri, :resource_type].each do |param|
+    [:resource_id, :resource_type].each do |param|
       it "fails when :#{param} is missing" do
         p = @params.tap { |d| d.delete(param) }
         expect { @client.confirm_resource p }.to raise_exception ArgumentError
@@ -241,7 +240,6 @@ describe GoCardless::Client do
 
     it "does not fail when keys are strings in a HashWithIndiferentAccess" do
       params = {'resource_id' => 1,
-                'resource_uri' => 'a',
                 'resource_type' => 'subscription',
                 'signature' => 'foo'}
       params_indifferent_access = HashWithIndifferentAccess.new(params)
