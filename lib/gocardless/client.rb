@@ -264,10 +264,15 @@ module GoCardless
     # @option [Hash] opts query string parameters
     def request(method, path, opts = {})
       raise ClientError, 'Access token missing' unless @access_token
+
       opts[:headers] = {} if opts[:headers].nil?
       opts[:headers]['Accept'] = 'application/json'
       opts[:headers]['Content-Type'] = 'application/json' unless method == :get
       opts[:body] = JSON.generate(opts[:data]) if !opts[:data].nil?
+
+      # Reset the URL in case the environment / base URL has been changed.
+      @oauth_client.site = self.class.base_url
+
       header_keys = opts[:headers].keys.map(&:to_s)
       if header_keys.map(&:downcase).include?('authorization')
         @oauth_client.request(method, path, opts)
