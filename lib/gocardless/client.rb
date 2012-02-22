@@ -53,6 +53,8 @@ module GoCardless
         :response_type => 'code',
         :scope => 'manage_merchant'
       }
+      # Faraday doesn't flatten params in this case (Faraday issue #115)
+      options = Hash[Utils.flatten_params(options)]
       @oauth_client.authorize_url(params.merge(options))
     end
     alias :new_merchant_url :authorize_url

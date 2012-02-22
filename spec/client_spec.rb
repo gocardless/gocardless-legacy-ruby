@@ -53,6 +53,13 @@ describe GoCardless::Client do
       query['redirect_uri'].first.should == @redirect_uri
       query['client_id'].first.should == @app_id
     end
+
+    it "encodes prefilling parameters correctly" do
+      params = {:merchant => {:user => {:email => "a@b.com"}}}
+      url = @client.authorize_url(params.merge(:redirect_uri => @redirect_uri))
+      encoded_key = GoCardless::Utils.percent_encode('merchant[user][email]')
+      URI.parse(url).query.should match /#{encoded_key}=a%40b\.com/
+    end
   end
 
   describe "#fetch_access_token" do
