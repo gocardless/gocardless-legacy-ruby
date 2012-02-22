@@ -3,7 +3,8 @@ require 'rspec/core/rake_task'
 
 desc "Generate YARD documentation"
 YARD::Rake::YardocTask.new do |t|
-  t.files = ['lib/**/*.rb'].reject { |f| f.match(/seed|example/) }
+  files = ['lib/**/*.rb', '-', 'CHANGELOG.md', 'LICENSE']
+  t.files = files.reject { |f| f =~ /seed|example/ }
 end
 
 desc "Run the specs"
