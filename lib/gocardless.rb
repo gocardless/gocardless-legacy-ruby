@@ -1,4 +1,5 @@
 module GoCardless
+  require 'gocardless/version'
   require 'gocardless/errors'
   require 'gocardless/utils'
   require 'gocardless/resource'
