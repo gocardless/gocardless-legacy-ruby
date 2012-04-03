@@ -12,11 +12,11 @@ Gem::Specification.new do |gem|
   gem.authors = ['Harry Marr', 'Tom Blomfield']
   gem.description = %q{A Ruby wrapper for the GoCardless API}
   gem.email = ['developers@gocardless.com']
-  gem.files = `git ls-files`.split('\n')
+  gem.files = `git ls-files`.split("\n")
   gem.homepage = 'https://github.com/gocardless/gocardless-ruby'
   gem.name = 'gocardless'
   gem.require_paths = ['lib']
   gem.summary = %q{Ruby wrapper for the GoCardless API}
-  gem.test_files = `git ls-files -- {test,spec,features}/*`.split('\n')
+  gem.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
   gem.version = GoCardless::VERSION.dup
 end

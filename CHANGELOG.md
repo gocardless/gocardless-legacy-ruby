@@ -1,3 +1,10 @@
+## 0.2.0 - April 3, 2012
+
+- Add `cancel!` method to `Subscription`
+- Depend on multi_json rather than json
+- Include the API version in the user agent header
+
+
 ## 0.1.3 - February 22, 2012
 
 - Fix parameter encoding in `Client#new_merchant_url` (related to Faraday issue
