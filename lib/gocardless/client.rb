@@ -1,5 +1,5 @@
 require 'rubygems'
-require 'json'
+require 'multi_json'
 require 'oauth2'
 require 'openssl'
 require 'uri'
@@ -271,7 +271,7 @@ module GoCardless
       opts[:headers]['Accept'] = 'application/json'
       opts[:headers]['Content-Type'] = 'application/json' unless method == :get
       opts[:headers]['User-Agent'] = "gocardless-ruby-v#{GoCardless::VERSION}"
-      opts[:body] = JSON.generate(opts[:data]) if !opts[:data].nil?
+      opts[:body] = MultiJson.encode(opts[:data]) if !opts[:data].nil?
 
       # Reset the URL in case the environment / base URL has been changed.
       @oauth_client.site = self.class.base_url

@@ -1,5 +1,5 @@
 require 'rubygems'
-require 'json'
+require 'multi_json'
 
 module GoCardless
   class Error < StandardError
@@ -11,7 +11,7 @@ module GoCardless
     def initialize(response)
       @response = response
       @code = response.status
-      body = JSON.parse(response.body) rescue nil
+      body = MultiJson.decode(response.body) rescue nil
       if body.is_a? Hash
         @description = body["error"] || response.body.strip || "Unknown error"
       end

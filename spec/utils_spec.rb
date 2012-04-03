@@ -105,18 +105,6 @@ describe GoCardless::Utils do
       end
     end
 
-    describe ".iso_format_time" do
-      it "should work with a Time object" do
-        d = GoCardless::Utils.iso_format_time(Time.parse("1st January 2012"))
-        d.should == "2012-01-01T00:00:00Z"
-      end
-
-      it "should leave a string untouched" do
-        date = "1st January 2012"
-        GoCardless::Utils.iso_format_time(date).should == date
-      end
-    end
-
     describe ".flatten_params" do
       subject { GoCardless::Utils.method(:flatten_params) }
 
@@ -202,6 +190,47 @@ describe GoCardless::Utils do
         params = {:test => true}
         sig = '6e4613b729ce15c288f70e72463739feeb05fc0b89b55d248d7f259b5367148b'
         GoCardless::Utils.sign_params(params, key).should == sig
+      end
+    end
+  end
+
+  describe "date and time helpers" do
+    describe ".iso_format_time" do
+      it "should work with a Time object" do
+        d = GoCardless::Utils.iso_format_time(Time.parse("1st January 2012"))
+        d.should == "2012-01-01T00:00:00Z"
+      end
+
+      it "should work with a DateTime object" do
+        d = GoCardless::Utils.iso_format_time(DateTime.parse("1st January 2012"))
+        d.should == "2012-01-01T00:00:00Z"
+      end
+
+      it "should work with a Date object" do
+        d = GoCardless::Utils.iso_format_time(Date.parse("1st January 2012"))
+        d.should == "2012-01-01T00:00:00Z"
+      end
+
+      it "should leave a string untouched" do
+        date = "1st January 2012"
+        GoCardless::Utils.iso_format_time(date).should == date
+      end
+    end
+
+    describe ".stringify_times" do
+      it "stringifies time objects" do
+        d = GoCardless::Utils.stringify_times(Time.parse("1st Jan 2012"))
+        d.should == "2012-01-01T00:00:00Z"
+      end
+
+      it "stringifies time values in hashes" do
+        d = GoCardless::Utils.stringify_times(:t => Time.parse("1st Jan 2012"))
+        d.should == { :t => "2012-01-01T00:00:00Z" }
+      end
+
+      it "stringifies time values in arrays" do
+        d = GoCardless::Utils.stringify_times([Time.parse("1st Jan 2012")])
+        d.should == ["2012-01-01T00:00:00Z"]
       end
     end
   end

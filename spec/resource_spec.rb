@@ -293,15 +293,16 @@ describe GoCardless::Resource do
       reference_accessor :person_id
     end
 
+    time_str = '2012-01-01T00:00:00Z'
     bill = test_resource.new({
       :amount => '10',
-      :when => DateTime.now,
+      :when => Time.parse(time_str),
       :person_id => 15
     })
 
-    result = JSON.parse(bill.to_json)
+    result = MultiJson.decode(bill.to_json)
     result['amount'].should == bill.amount
-    result['when'].should == bill.when.to_s
+    result['when'].should == time_str
     result['person_id'].should == 15
   end
 

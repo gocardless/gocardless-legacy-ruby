@@ -150,7 +150,7 @@ module GoCardless
     end
 
     def to_json
-      to_hash.to_json
+      MultiJson.encode(Utils.stringify_times(to_hash))
     end
 
     def inspect
