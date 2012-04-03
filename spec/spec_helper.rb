@@ -1,5 +1,4 @@
 require 'mocha'
-require 'json'
 require 'active_support/hash_with_indifferent_access'
 require 'gocardless'
 
