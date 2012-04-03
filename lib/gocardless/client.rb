@@ -270,6 +270,7 @@ module GoCardless
       opts[:headers] = {} if opts[:headers].nil?
       opts[:headers]['Accept'] = 'application/json'
       opts[:headers]['Content-Type'] = 'application/json' unless method == :get
+      opts[:headers]['User-Agent'] = "gocardless-ruby-v#{GoCardless::VERSION}"
       opts[:body] = JSON.generate(opts[:data]) if !opts[:data].nil?
 
       # Reset the URL in case the environment / base URL has been changed.
