@@ -13,5 +13,5 @@ you want to support multiple merchant accounts, see the
 The full API reference is available at on
 [rubydoc.info](http://rubydoc.info/github/gocardless/gocardless-ruby/master/frames).
 
-[![Build Status](https://secure.travis-ci.org/gocardless/gocardless-ruby.png)](http://travis-ci.org/gocardless/gocardless-ruby)
+[![Build Status](https://secure.travis-ci.org/gocardless/gocardless-ruby.png?branch=master)](http://travis-ci.org/gocardless/gocardless-ruby)
 
