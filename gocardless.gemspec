@@ -2,7 +2,7 @@ require File.expand_path('../lib/gocardless/version', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'oauth2', '~> 0.5.0.rc1'
-  gem.add_runtime_dependency 'multi_json', '~> 1.2'
+  gem.add_runtime_dependency 'multi_json', '~> 1.0'
 
   gem.add_development_dependency 'rspec', '~> 2.6'
   gem.add_development_dependency 'mocha', '~> 0.9.12'
