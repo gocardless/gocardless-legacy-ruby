@@ -4,13 +4,14 @@ module GoCardless
 
     creatable
 
-    attr_accessor :amount
-    attr_accessor :source_type
-    attr_accessor :description
-    attr_accessor :name
+    attr_accessor :amount,
+                  :source_type,
+                  :description,
+                  :name,
+                  :plan_id
 
     # @attribute source_id
-    # @return [Integer] the ID of the bill's source (eg subscription, pre_authorization)
+    # @return [String] the ID of the bill's source (eg subscription, pre_authorization)
     attr_accessor :source_id
 
     reference_accessor :merchant_id, :user_id, :payment_id
