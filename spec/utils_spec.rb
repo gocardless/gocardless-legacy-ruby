@@ -182,6 +182,10 @@ describe GoCardless::Utils do
       it "joins pairs by '&' signs" do
         subject['a' => 'b', 'c' => 'd'].should == 'a=b&c=d'
       end
+
+      it "sorts pairs by name then value" do
+        subject['a0' => 'b', 'a' => 'c'].should == 'a=c&a0=b'
+      end
     end
 
     describe ".sign_params" do

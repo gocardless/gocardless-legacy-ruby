@@ -77,9 +77,9 @@ module GoCardless
     # percent-encoded according to RFC5849 §3.6 and parameters will be
     # normalised according to RFC5849 §3.4.1.3.2.
     def normalize_params(params)
-      flatten_params(params).map do |pair|
+      flatten_params(params).sort.map do |pair|
         pair.map { |item| percent_encode(item) } * '='
-      end.sort * '&'
+      end * '&'
     end
 
     # Given a Hash of parameters, normalize then (flatten and convert to a
