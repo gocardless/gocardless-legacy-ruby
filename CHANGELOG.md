@@ -1,3 +1,14 @@
+## 1.0.0 - April 24, 2012
+
+- Add plan_id to selected resources
+- Remove deprecated resource attributes
+- Fix sorting issue in Utils.normalize_params
+- Add rake console task
+- Add rake version:bump tasks
+- Fix user agent formatting
+- Relax multi_json dependency
+
+
 ## 0.2.0 - April 3, 2012
 
 - Add `cancel!` method to `Subscription`
