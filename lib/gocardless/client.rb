@@ -5,6 +5,7 @@ require 'openssl'
 require 'uri'
 require 'cgi'
 require 'time'
+require 'base64'
 
 module GoCardless
   class Client
