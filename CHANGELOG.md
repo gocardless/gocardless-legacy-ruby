@@ -1,3 +1,8 @@
+## 1.0.1 - May 14, 2012
+
+- Update oauth2 dependency version, fixes installation issue
+
+
 ## 1.0.0 - April 24, 2012
 
 - Add plan_id to selected resources
