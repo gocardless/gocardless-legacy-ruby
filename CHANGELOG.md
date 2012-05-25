@@ -1,3 +1,8 @@
+## 1.1.0 - May 25, 2012
+
+- Accept merchant_id as a client constructor param
+
+
 ## 1.0.1 - May 14, 2012
 
 - Update oauth2 dependency version, fixes installation issue
