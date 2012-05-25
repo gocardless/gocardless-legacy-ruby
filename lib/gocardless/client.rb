@@ -41,6 +41,7 @@ module GoCardless
                                          :token_url => '/oauth/access_token')
 
       self.access_token = args[:token] if args[:token]
+      @merchant_id = args[:merchant_id] if args[:merchant_id]
     end
 
     # Generate the OAuth authorize url
@@ -83,12 +84,15 @@ module GoCardless
     #   (as returned by {#access_token})
     def access_token=(token)
       token, scope = token.sub(/^bearer\s+/i, '').split(' ', 2)
-      if scope.nil?
-        raise ArgumentError, ('Access token missing scope. Use format '
-                              '<token> <scope>')
-      end
+      scope ||= ''
+
       @access_token = OAuth2::AccessToken.new(@oauth_client, token)
       @access_token.params['scope'] = scope
+
+      unless @merchant_id
+        perm = scope.split.select {|p| p.start_with?('manage_merchant:') }.first
+        @merchant_id = perm.split(':')[1] if perm
+      end
     end
 
     # Issue an GET request to the API server
@@ -260,6 +264,12 @@ module GoCardless
 
   private
 
+    # Return the merchant id, throwing a proper error if it's missing.
+    def merchant_id
+      raise ClientError, 'No merchant id set' unless @merchant_id
+      @merchant_id
+    end
+
     # Send a request to the GoCardless API servers
     #
     # @param [Symbol] method the HTTP method to use (e.g. +:get+, +:post+)
@@ -343,13 +353,6 @@ module GoCardless
 
       url.query = Utils.normalize_params(params)
       url.to_s
-    end
-
-    def merchant_id
-      raise ClientError, 'Access token missing' unless @access_token
-      scope = @access_token.params['scope'].split
-      perm = scope.select {|p| p.start_with?('manage_merchant:') }.first
-      perm.split(':')[1]
     end
   end
 end

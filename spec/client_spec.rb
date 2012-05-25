@@ -30,10 +30,20 @@ describe GoCardless::Client do
         GoCardless::Client.new({:app_secret => @app_secret})
       end.should raise_exception(GoCardless::ClientError)
     end
+
     it "without an app_secret should raise an error" do
       lambda do
         GoCardless::Client.new({:app_id => @app_id})
       end.should raise_exception(GoCardless::ClientError)
+    end
+
+    it "sets a merchant id if it's given" do
+      client = GoCardless::Client.new({
+        :app_id      => @app_id,
+        :app_secret  => @app_secret,
+        :merchant_id => 'xyz'
+      })
+      client.send('merchant_id').should == 'xyz'
     end
   end
 
@@ -124,16 +134,16 @@ describe GoCardless::Client do
       token.params['scope'].should == 'a:1 b:2'
     end
 
+    it "pulls out the merchant_id when present" do
+      @client.access_token = 'TOKEN123 manage_merchant:xyz'
+      @client.send('merchant_id').should == 'xyz'
+    end
+
     it "ignores 'bearer' if it is present at the start of the string" do
       @client.access_token = 'Bearer TOKEN manage_merchant:123'
       token = @client.instance_variable_get(:@access_token)
       token.token.should == 'TOKEN'
       token.params['scope'].should == 'manage_merchant:123'
-    end
-
-    it "handles invalid values correctly" do
-      token = 'TOKEN123'  # missing scope
-      expect { @client.access_token = token }.to raise_exception ArgumentError
     end
   end
 
