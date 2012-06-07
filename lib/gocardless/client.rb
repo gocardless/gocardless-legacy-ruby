@@ -338,6 +338,7 @@ module GoCardless
 
       limit_params[:merchant_id] = merchant_id
       redirect_uri = limit_params.delete(:redirect_uri)
+      cancel_uri = limit_params.delete(:cancel_uri)
       state = limit_params.delete(:state)
 
       params = {
@@ -347,6 +348,7 @@ module GoCardless
         type         => limit_params,
       }
       params[:redirect_uri] = redirect_uri unless redirect_uri.nil?
+      params[:cancel_uri] = cancel_uri unless cancel_uri.nil?
       params[:state] = state unless state.nil?
 
       sign_params(params)

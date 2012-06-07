@@ -64,6 +64,16 @@ describe GoCardless::Client do
       query['client_id'].first.should == @app_id
     end
 
+    it "includes the cancel uri if present" do
+      cancel_uri = 'http://test/cancel'
+      url = URI.parse(@client.authorize_url(
+        :redirect_uri => @redirect_uri,
+        :cancel_uri   => cancel_uri
+      ))
+      query = CGI.parse(url.query)
+      query['cancel_uri'].first.should == cancel_uri
+    end
+
     it "encodes prefilling parameters correctly" do
       params = {:merchant => {:user => {:email => "a@b.com"}}}
       url = @client.authorize_url(params.merge(:redirect_uri => @redirect_uri))
@@ -361,6 +371,12 @@ describe GoCardless::Client do
       params = { 'a' => '1', 'b' => '2', :redirect_uri => "http://www.google.com" }
       url = @client.send(:new_limit_url, :subscription, params)
       get_params(url)["redirect_uri"].should == "http://www.google.com"
+    end
+
+    it "should include the cancel_uri in the URL query" do
+      params = { 'a' => '1', 'b' => '2', :cancel_uri => "http://www.google.com" }
+      url = @client.send(:new_limit_url, :subscription, params)
+      get_params(url)["cancel_uri"].should == "http://www.google.com"
     end
 
     it "should add merchant_id to the limit" do
