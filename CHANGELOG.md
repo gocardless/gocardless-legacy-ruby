@@ -1,3 +1,8 @@
+## 1.1.1 - June 07, 2012
+
+- Fix handling of cancel_uri
+
+
 ## 1.1.0 - May 25, 2012
 
 - Accept merchant_id as a client constructor param
