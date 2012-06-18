@@ -220,16 +220,7 @@ module GoCardless
     # @param [Hash] params the response parameters returned by the API server
     # @return [Resource] the confirmed resource object
     def confirm_resource(params)
-      # Create a new hash in case is a HashWithIndifferentAccess (keys are
-      # always a String)
-      params = Utils.symbolize_keys(Hash[params])
-      # Only pull out the relevant parameters, other won't be included in the
-      # signature so will cause false negatives
-      keys = [:resource_id, :resource_type, :resource_uri, :state, :signature]
-      params = Hash[params.select { |k,v| keys.include? k }]
-      (keys - [:state]).each do |key|
-        raise ArgumentError, "Parameters missing #{key}" if !params.key?(key)
-      end
+      params = prepare_params(params)
 
       if signature_valid?(params)
         data = {
@@ -251,6 +242,17 @@ module GoCardless
       else
         raise SignatureError, 'An invalid signature was detected'
       end
+    end
+
+
+    # Check that resource response data includes a valid signature.
+    #
+    # @param [Hash] params the response parameters returned by the API server
+    # @return [Boolean] true when valid, false otherwise
+    def response_params_valid?(params)
+      params = prepare_params(params)
+
+      signature_valid?(params)
     end
 
 
@@ -307,6 +309,25 @@ module GoCardless
     # @return [Hash] the parameters with the new +:signature+ key
     def sign_params(params)
       params[:signature] = Utils.sign_params(params, @app_secret)
+      params
+    end
+
+    # Prepare a Hash of parameters for singing. Presence of required
+    # parameters is checked and the others are discarded.
+    #
+    # @param [Hash] params the parameters to be prepared for signing
+    # @return [Hash] the prepared parameters
+    def prepare_params(params)
+      # Create a new hash in case is a HashWithIndifferentAccess (keys are
+      # always a String)
+      params = Utils.symbolize_keys(Hash[params])
+      # Only pull out the relevant parameters, other won't be included in the
+      # signature so will cause false negatives
+      keys = [:resource_id, :resource_type, :resource_uri, :state, :signature]
+      params = Hash[params.select { |k,v| keys.include? k }]
+      (keys - [:state]).each do |key|
+        raise ArgumentError, "Parameters missing #{key}" if !params.key?(key)
+      end
       params
     end
 

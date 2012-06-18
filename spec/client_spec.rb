@@ -333,6 +333,48 @@ describe GoCardless::Client do
     end
   end
 
+  describe "#response_params_valid?" do
+    before :each do
+      @params = {
+        :resource_id   => '1',
+        :resource_uri  => 'a',
+        :resource_type => 'subscription',
+      }
+    end
+
+    [:resource_id, :resource_uri, :resource_type].each do |param|
+      it "fails when :#{param} is missing" do
+        p = @params.tap { |d| d.delete(param) }
+        expect { @client.response_params_valid? p }.to raise_exception ArgumentError
+      end
+    end
+
+    it "does not fail when keys are strings in a HashWithIndiferentAccess" do
+      params = {'resource_id' => 1,
+                'resource_uri' => 'a',
+                'resource_type' => 'subscription',
+                'signature' => 'foo'}
+      params_indifferent_access = HashWithIndifferentAccess.new(params)
+      expect { @client.response_params_valid? params_indifferent_access }.to_not raise_exception ArgumentError
+    end
+
+    it "rejects other params not required for the signature" do
+      @client.expects(:signature_valid?).returns(true).with(hash) do |hash|
+        !hash.keys.include?(:foo) && !hash.keys.include?('foo')
+      end
+
+      @client.response_params_valid?(@client.send(:sign_params, @params).merge('foo' => 'bar'))
+    end
+
+    it "returns false when the signature is invalid" do
+      @client.response_params_valid?({:signature => 'xxx'}.merge(@params)).should be_false
+    end
+
+    it "returns true when the signature is valid" do
+      @client.response_params_valid?(@client.send(:sign_params, @params)).should be_true
+    end
+  end
+
   it "#generate_nonce should generate a random string" do
     @client.send(:generate_nonce).should_not == @client.send(:generate_nonce)
   end
