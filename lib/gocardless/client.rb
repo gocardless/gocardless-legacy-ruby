@@ -312,7 +312,7 @@ module GoCardless
       params
     end
 
-    # Prepare a Hash of parameters for singing. Presence of required
+    # Prepare a Hash of parameters for signing. Presence of required
     # parameters is checked and the others are discarded.
     #
     # @param [Hash] params the parameters to be prepared for signing
