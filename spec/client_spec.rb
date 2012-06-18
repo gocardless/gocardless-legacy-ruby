@@ -259,31 +259,6 @@ describe GoCardless::Client do
       }
     end
 
-    [:resource_id, :resource_uri, :resource_type].each do |param|
-      it "fails when :#{param} is missing" do
-        p = @params.tap { |d| d.delete(param) }
-        expect { @client.confirm_resource p }.to raise_exception ArgumentError
-      end
-    end
-
-    it "does not fail when keys are strings in a HashWithIndiferentAccess" do
-      params = {'resource_id' => 1,
-                'resource_uri' => 'a',
-                'resource_type' => 'subscription',
-                'signature' => 'foo'}
-      params_indifferent_access = HashWithIndifferentAccess.new(params)
-      expect { @client.confirm_resource params_indifferent_access }.to_not raise_exception ArgumentError
-    end
-
-    it "rejects other params not required for the signature" do
-      @client.stubs(:request).returns(stub(:parsed => {}))
-      @client.expects(:signature_valid?).returns(true).with(hash) do |hash|
-        !hash.keys.include?(:foo) && !hash.keys.include?('foo')
-      end
-
-      @client.confirm_resource(@client.send(:sign_params, @params).merge('foo' => 'bar'))
-    end
-
     it "doesn't confirm the resource when the signature is invalid" do
       @client.expects(:request).never
       @client.confirm_resource({:signature => 'xxx'}.merge(@params)) rescue nil
