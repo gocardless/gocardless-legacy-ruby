@@ -319,8 +319,10 @@ describe GoCardless::Client do
 
     [:resource_id, :resource_uri, :resource_type].each do |param|
       it "fails when :#{param} is missing" do
-        p = @params.tap { |d| d.delete(param) }
-        expect { @client.response_params_valid? p }.to raise_exception ArgumentError
+        params = @params.tap { |d| d.delete(param) }
+        expect do
+          @client.response_params_valid? params
+        end.to raise_exception ArgumentError
       end
     end
 
@@ -330,7 +332,9 @@ describe GoCardless::Client do
                 'resource_type' => 'subscription',
                 'signature' => 'foo'}
       params_indifferent_access = HashWithIndifferentAccess.new(params)
-      expect { @client.response_params_valid? params_indifferent_access }.to_not raise_exception ArgumentError
+      expect do
+        @client.response_params_valid? params_indifferent_access
+      end.to_not raise_exception ArgumentError
     end
 
     it "rejects other params not required for the signature" do
@@ -338,15 +342,18 @@ describe GoCardless::Client do
         !hash.keys.include?(:foo) && !hash.keys.include?('foo')
       end
 
-      @client.response_params_valid?(@client.send(:sign_params, @params).merge('foo' => 'bar'))
+      params = @client.send(:sign_params, @params).merge('foo' => 'bar')
+      @client.response_params_valid?(params)
     end
 
     it "returns false when the signature is invalid" do
-      @client.response_params_valid?({:signature => 'xxx'}.merge(@params)).should be_false
+      params = {:signature => 'xxx'}.merge(@params)
+      @client.response_params_valid?(params).should be_false
     end
 
     it "returns true when the signature is valid" do
-      @client.response_params_valid?(@client.send(:sign_params, @params)).should be_true
+      params = @client.send(:sign_params, @params)
+      @client.response_params_valid?(params).should be_true
     end
   end
 

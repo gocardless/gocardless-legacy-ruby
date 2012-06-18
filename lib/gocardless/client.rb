@@ -220,7 +220,6 @@ module GoCardless
     # @param [Hash] params the response parameters returned by the API server
     # @return [Resource] the confirmed resource object
     def confirm_resource(params)
-      p 'conf re'
       params = prepare_params(params)
 
       if signature_valid?(params)
