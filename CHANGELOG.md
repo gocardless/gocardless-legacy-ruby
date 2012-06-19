@@ -1,3 +1,9 @@
+## 1.2.0 - June 19, 2012
+
+- Add some extra attributes to resources (e.g. status, merchant's balance, etc)
+- Add a response_params_valid? method to check that resource response data is
+  valid (including signature)
+
 ## 1.1.1 - June 07, 2012
 
 - Fix handling of cancel_uri
