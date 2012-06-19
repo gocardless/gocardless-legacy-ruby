@@ -2,12 +2,15 @@ module GoCardless
   class Merchant < Resource
     self.endpoint = '/merchants/:id'
 
-    attr_accessor :name
-    attr_accessor :description
-    attr_accessor :email
-    attr_accessor :first_name
-    attr_accessor :last_name
-    date_accessor :created_at
+    attr_accessor :name,
+                  :description,
+                  :email,
+                  :first_name,
+                  :last_name,
+                  :balance,
+                  :pending_balance,
+                  :next_payout_amount
+    date_accessor :created_at, :next_payout_date
 
     def subscriptions(params = {})
       path = "/merchants/#{self.id}/subscriptions"

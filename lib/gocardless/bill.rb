@@ -8,7 +8,8 @@ module GoCardless
                   :source_type,
                   :description,
                   :name,
-                  :plan_id
+                  :plan_id,
+                  :status
 
     # @attribute source_id
     # @return [String] the ID of the bill's source (eg subscription, pre_authorization)

@@ -10,7 +10,9 @@ module GoCardless
                   :name,
                   :description,
                   :plan_id,
-                  :status
+                  :status,
+                  :remaining_amount,
+                  :next_interval_start
 
     reference_accessor :merchant_id, :user_id
     date_accessor :expires_at, :created_at
