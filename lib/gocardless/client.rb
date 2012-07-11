@@ -45,6 +45,7 @@ module GoCardless
     end
 
     # Generate the OAuth authorize url
+    #
     # @param [Hash] options parameters to be included in the url.
     #   +:redirect_uri+ is required.
     # @return [String] the authorize url
@@ -61,12 +62,19 @@ module GoCardless
     end
     alias :new_merchant_url :authorize_url
 
-    # @method fetch_access_token(auth_code, options)
+    # Exchange the authorization code for an access token
+    #
     # @param [String] auth_code to exchange for the access_token
     # @return [String] the access_token required to make API calls to resources
     def fetch_access_token(auth_code, options)
       raise ArgumentError, ':redirect_uri required' unless options[:redirect_uri]
+      # Exchange the auth code for an access token
       @access_token = @oauth_client.auth_code.get_token(auth_code, options)
+
+      # Use the scope to figure out which merchant we're managing
+      scope = @access_token.params[:scope] || @access_token.params['scope']
+      set_merchant_id_from_scope(scope)
+
       self.access_token
     end
 
@@ -89,10 +97,7 @@ module GoCardless
       @access_token = OAuth2::AccessToken.new(@oauth_client, token)
       @access_token.params['scope'] = scope
 
-      unless @merchant_id
-        perm = scope.split.select {|p| p.start_with?('manage_merchant:') }.first
-        @merchant_id = perm.split(':')[1] if perm
-      end
+      set_merchant_id_from_scope(scope) unless @merchant_id
     end
 
     # Issue an GET request to the API server
@@ -270,6 +275,12 @@ module GoCardless
     def merchant_id
       raise ClientError, 'No merchant id set' unless @merchant_id
       @merchant_id
+    end
+
+    # Pull the merchant id out of the access scope
+    def set_merchant_id_from_scope(scope)
+      perm = scope.split.select {|p| p.start_with?('manage_merchant:') }.first
+      @merchant_id = perm.split(':')[1] if perm
     end
 
     # Send a request to the GoCardless API servers

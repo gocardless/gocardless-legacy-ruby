@@ -92,31 +92,33 @@ describe GoCardless::Client do
     end
 
     describe "with valid params" do
+      let(:oauth_client) { @client.instance_variable_get(:@oauth_client) }
+      let(:fake_token) do
+        stub(:params => {'scope' => 'manage_merchant:x'}, :token  => 'abc')
+      end
+
+      before { oauth_client.auth_code.stubs(:get_token).returns(fake_token) }
+
       it "calls correct method with correct args" do
         auth_code = 'fakecode'
-        access_token = mock
 
-        @client.instance_variable_get(:@access_token).should be_nil
-
-        oauth_client = @client.instance_variable_get(:@oauth_client)
         oauth_client.auth_code.expects(:get_token).with(
           auth_code, has_entry(:redirect_uri => @redirect_uri)
-        )
+        ).returns(fake_token)
 
         @client.fetch_access_token(auth_code, {:redirect_uri => @redirect_uri})
       end
 
       it "sets @access_token" do
-        access_token = mock
-        access_token.stubs(:params).returns('scope' => '')
-        access_token.stubs(:token).returns('')
-
-        oauth_client = @client.instance_variable_get(:@oauth_client)
-        oauth_client.auth_code.expects(:get_token).returns(access_token)
-
         @client.instance_variable_get(:@access_token).should be_nil
         @client.fetch_access_token('code', {:redirect_uri => @redirect_uri})
-        @client.instance_variable_get(:@access_token).should == access_token
+        @client.instance_variable_get(:@access_token).should == fake_token
+      end
+
+      it "sets @merchant_id" do
+        @client.instance_variable_get(:@merchant_id).should be_nil
+        @client.fetch_access_token('code', {:redirect_uri => @redirect_uri})
+        @client.instance_variable_get(:@merchant_id).should == 'x'
       end
     end
   end

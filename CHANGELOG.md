@@ -1,3 +1,8 @@
+## 1.2.1 - July 11, 2012
+
+- Fix bug which caused Client#merchant to fail after #fetch_access_token was
+  called during the merchant authorization flow (this only concerns partners).
+
 ## 1.2.0 - June 19, 2012
 
 - Add some extra attributes to resources (e.g. status, merchant's balance, etc)
