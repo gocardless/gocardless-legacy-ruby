@@ -16,7 +16,7 @@ module GoCardless
     attr_accessor :source_id
 
     reference_accessor :merchant_id, :user_id, :payment_id
-    date_accessor :created_at
+    date_accessor :created_at, :paid_at
 
     def source
       klass = GoCardless.const_get(Utils.camelize(source_type.to_s))
