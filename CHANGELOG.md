@@ -1,3 +1,8 @@
+## 1.3.0 - August 30, 2012
+
+- Add cancel! method to pre_authorization
+- Add paid_at accessor to the bill resource
+
 ## 1.2.1 - July 11, 2012
 
 - Fix bug which caused Client#merchant to fail after #fetch_access_token was
