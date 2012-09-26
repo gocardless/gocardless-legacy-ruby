@@ -1,3 +1,7 @@
+## 1.3.1 - September 26, 2012
+
+- Remove explicit rubygems requires
+
 ## 1.3.0 - August 30, 2012
 
 - Add cancel! method to pre_authorization
