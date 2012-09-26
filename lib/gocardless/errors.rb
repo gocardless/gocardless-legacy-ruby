@@ -1,4 +1,3 @@
-require 'rubygems'
 require 'multi_json'
 
 module GoCardless
