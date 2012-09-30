@@ -24,10 +24,10 @@ module GoCardless
           # look up the resource class with that name
           class_name = Utils.camelize(Utils.singularize(name.to_s))
           klass = GoCardless.const_get(class_name)
-          # Convert the results to instances of the looked-up class
           params = args.first || {}
           query = default_query.merge(params)
           client.api_get(path, query).map do |attrs|
+            # Convert the results to instances of the looked-up class
             klass.new(attrs).tap { |m| m.client = client }
           end
         end
