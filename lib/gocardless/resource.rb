@@ -8,7 +8,7 @@ module GoCardless
         uri = URI.parse(uri)
 
         # Convert the query string to a params hash
-        default_query = if uri.query.nil? || uri.query == ''
+        default_query = if uri.query.nil? || uri.query.empty?
           {}
         else
           Hash[CGI.parse(uri.query).map { |k,v| [k,v.first] }]
