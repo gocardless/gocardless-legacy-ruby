@@ -27,7 +27,7 @@ module GoCardless
           query = default_query.merge(args.first || {})
           client.api_get(path, query).map do |attrs|
             # Convert the results to instances of the looked-up class
-            klass.new(attrs).tap { |m| m.client = client }
+            klass.new_with_client(client, attrs)
           end
         end
       end
