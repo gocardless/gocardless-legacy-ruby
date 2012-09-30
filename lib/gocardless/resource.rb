@@ -7,9 +7,9 @@ module GoCardless
       hash.delete('sub_resource_uris') { [] }.each do |name, uri|
         uri = URI.parse(uri)
 
-        # Convert the query string to a hash
+        # Convert the query string to a params hash
         default_query = if uri.query.nil? || uri.query == ''
-          nil
+          {}
         else
           Hash[CGI.parse(uri.query).map { |k,v| [k,v.first] }]
         end
@@ -26,7 +26,7 @@ module GoCardless
           klass = GoCardless.const_get(class_name)
           # Convert the results to instances of the looked-up class
           params = args.first || {}
-          query = default_query.nil? ? nil : default_query.merge(params)
+          query = default_query.merge(params)
           client.api_get(path, query).map do |attrs|
             klass.new(attrs).tap { |m| m.client = client }
           end
