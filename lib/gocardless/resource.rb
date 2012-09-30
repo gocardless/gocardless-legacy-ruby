@@ -3,36 +3,32 @@ require 'date'
 module GoCardless
   class Resource
     def initialize(hash = {})
-      # Handle sub resources
-      sub_resource_uris = hash.delete('sub_resource_uris')
-      unless sub_resource_uris.nil?
-        # Need to define a method for each sub resource
-        sub_resource_uris.each do |name,uri|
-          uri = URI.parse(uri)
+      # Define an object singleton method for each sub resource
+      hash.delete('sub_resource_uris') { [] }.each do |name, uri|
+        uri = URI.parse(uri)
 
-          # Convert the query string to a hash
-          default_query = if uri.query.nil? || uri.query == ''
-            nil
-          else
-            Hash[CGI.parse(uri.query).map { |k,v| [k,v.first] }]
-          end
+        # Convert the query string to a hash
+        default_query = if uri.query.nil? || uri.query == ''
+          nil
+        else
+          Hash[CGI.parse(uri.query).map { |k,v| [k,v.first] }]
+        end
 
-          # Strip api prefix from path
-          path = uri.path.sub(%r{^/api/v\d+}, '')
+        # Strip api prefix from path
+        path = uri.path.sub(%r{^/api/v\d+}, '')
 
-          # Modify the instance's metaclass to add the method
-          metaclass = class << self; self; end
-          metaclass.send(:define_method, name) do |*args|
-            # 'name' will be something like 'bills', convert it to Bill and
-            # look up the resource class with that name
-            class_name = Utils.camelize(Utils.singularize(name.to_s))
-            klass = GoCardless.const_get(class_name)
-            # Convert the results to instances of the looked-up class
-            params = args.first || {}
-            query = default_query.nil? ? nil : default_query.merge(params)
-            client.api_get(path, query).map do |attrs|
-              klass.new(attrs).tap { |m| m.client = client }
-            end
+        # Modify the instance's metaclass to add the method
+        metaclass = class << self; self; end
+        metaclass.send(:define_method, name) do |*args|
+          # 'name' will be something like 'bills', convert it to Bill and
+          # look up the resource class with that name
+          class_name = Utils.camelize(Utils.singularize(name.to_s))
+          klass = GoCardless.const_get(class_name)
+          # Convert the results to instances of the looked-up class
+          params = args.first || {}
+          query = default_query.nil? ? nil : default_query.merge(params)
+          client.api_get(path, query).map do |attrs|
+            klass.new(attrs).tap { |m| m.client = client }
           end
         end
       end
