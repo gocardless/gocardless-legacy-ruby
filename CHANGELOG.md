@@ -1,3 +1,7 @@
+## 1.3.2 - October 01, 2012
+
+- Fix filtering on sub resource methods, e.g. `merchant.bills(source_id: 'x')`
+
 ## 1.3.1 - September 26, 2012
 
 - Remove explicit rubygems requires
