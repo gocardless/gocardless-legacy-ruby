@@ -1,3 +1,8 @@
+## 1.4.0 - October 29, 2012
+
+- Allow app id and secret to be set with environment variables
+- Relax the oauth dependency
+
 ## 1.3.2 - October 01, 2012
 
 - Fix filtering on sub resource methods, e.g. `merchant.bills(source_id: 'x')`
