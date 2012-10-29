@@ -37,6 +37,13 @@ describe GoCardless::Client do
       end.should raise_exception(GoCardless::ClientError)
     end
 
+    it "does not raise an error if the credentials are provided as environment variables" do
+      ENV.expects(:[]).with('GOCARDLESS_APP_ID').returns(@app_id)
+      ENV.expects(:[]).with('GOCARDLESS_APP_SECRET').returns(@app_secret)
+
+      GoCardless::Client.new
+    end
+
     it "sets a merchant id if it's given" do
       client = GoCardless::Client.new({
         :app_id      => @app_id,
