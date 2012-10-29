@@ -1,3 +1,7 @@
+## 1.5.0 - October 29, 2012
+
+- Use date_accessor to define next_interval_start methods
+
 ## 1.4.0 - October 29, 2012
 
 - Allow app id and secret to be set with environment variables
