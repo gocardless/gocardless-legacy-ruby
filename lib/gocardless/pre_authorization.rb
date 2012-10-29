@@ -11,11 +11,11 @@ module GoCardless
                   :description,
                   :plan_id,
                   :status,
-                  :remaining_amount,
-                  :next_interval_start
+                  :remaining_amount
 
     reference_accessor :merchant_id, :user_id
-    date_accessor :expires_at, :created_at
+
+    date_accessor :expires_at, :created_at, :next_interval_start
 
     # Create a new bill under this pre-authorization. Similar to
     # {Client#create_bill}, but only requires the amount to be specified.
