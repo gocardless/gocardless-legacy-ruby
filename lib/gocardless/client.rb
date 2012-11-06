@@ -268,6 +268,21 @@ module GoCardless
       signature_valid?(params)
     end
 
+    # Set the base URL for this client instance. Overrides all other settings
+    # (setting the environment globally, setting the Client class's base URL).
+    #
+    # @param [String] url the base URL to use
+    def base_url=(url)
+      @base_url = url
+    end
+
+    # Get the base URL for the client. If set manually for the instance, that
+    # URL will be returned. Otherwise, it will be deferred to
+    # +Client.base_url+.
+    def base_url
+      @base_url || self.class.base_url
+    end
+
   private
 
     # Return the merchant id, throwing a proper error if it's missing.
