@@ -477,7 +477,7 @@ describe GoCardless::Client do
     end
 
     it "returns the default value when base_url is not set for the instance" do
-      GoCardless::Client.stubs(base_url: 'http://gc.com/')
+      GoCardless::Client.stubs(:base_url => 'http://gc.com/')
       @client.base_url.should == 'http://gc.com/'
     end
   end
