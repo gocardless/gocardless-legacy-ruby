@@ -1,3 +1,7 @@
+## 1.6.1 - November 06, 2012
+
+- Fix - update Client references to base_url so custom base_urls work
+
 ## 1.6.0 - November 06, 2012
 
 - Allow setting custom base_urls per-client
