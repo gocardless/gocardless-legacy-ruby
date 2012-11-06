@@ -1,3 +1,7 @@
+## 1.6.0 - November 06, 2012
+
+- Allow setting custom base_urls per-client
+
 ## 1.5.0 - October 29, 2012
 
 - Use date_accessor to define next_interval_start methods
