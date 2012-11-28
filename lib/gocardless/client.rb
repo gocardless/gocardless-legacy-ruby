@@ -22,21 +22,17 @@ module GoCardless
       def base_url
         @base_url || BASE_URLS[GoCardless.environment || :production]
       end
-
-      def api_url
-        "#{base_url}#{API_PATH}"
-      end
     end
 
     def initialize(args = {})
       Utils.symbolize_keys! args
-      @app_id = args[:app_id]
-      @app_secret = args[:app_secret]
+      @app_id = args.fetch(:app_id) { ENV['GOCARDLESS_APP_ID'] }
+      @app_secret = args.fetch(:app_secret) { ENV['GOCARDLESS_APP_SECRET'] }
       raise ClientError.new("You must provide an app_id") unless @app_id
       raise ClientError.new("You must provide an app_secret") unless @app_secret
 
       @oauth_client = OAuth2::Client.new(@app_id, @app_secret,
-                                         :site => self.class.base_url,
+                                         :site => self.base_url,
                                          :token_url => '/oauth/access_token')
 
       self.access_token = args[:token] if args[:token]
@@ -237,8 +233,8 @@ module GoCardless
         headers = {
           'Authorization' => "Basic #{credentials}"
         }
-        request(:post, "#{self.class.api_url}/confirm", :data => data,
-                                                        :headers => headers)
+        request(:post, "#{api_url}/confirm", :data => data,
+                                                  :headers => headers)
 
         # Initialize the correct class according to the resource's type
         klass = GoCardless.const_get(Utils.camelize(params[:resource_type]))
@@ -266,6 +262,25 @@ module GoCardless
     # @return [Boolean] true when valid, false otherwise
     def webhook_valid?(params)
       signature_valid?(params)
+    end
+
+    # Set the base URL for this client instance. Overrides all other settings
+    # (setting the environment globally, setting the Client class's base URL).
+    #
+    # @param [String] url the base URL to use
+    def base_url=(url)
+      @base_url = url
+    end
+
+    # Get the base URL for the client. If set manually for the instance, that
+    # URL will be returned. Otherwise, it will be deferred to
+    # +Client.base_url+.
+    def base_url
+      @base_url || self.class.base_url
+    end
+
+    def api_url
+      "#{base_url}#{API_PATH}"
     end
 
   private
@@ -297,7 +312,7 @@ module GoCardless
       opts[:body] = MultiJson.encode(opts[:data]) if !opts[:data].nil?
 
       # Reset the URL in case the environment / base URL has been changed.
-      @oauth_client.site = self.class.base_url
+      @oauth_client.site = base_url
 
       header_keys = opts[:headers].keys.map(&:to_s)
       if header_keys.map(&:downcase).include?('authorization')
@@ -365,7 +380,7 @@ module GoCardless
     # @param [Hash] params the bill parameters
     # @return [String] the generated URL
     def new_limit_url(type, limit_params)
-      url = URI.parse("#{self.class.base_url}/connect/#{type}s/new")
+      url = URI.parse("#{base_url}/connect/#{type}s/new")
 
       limit_params[:merchant_id] = merchant_id
       redirect_uri = limit_params.delete(:redirect_uri)

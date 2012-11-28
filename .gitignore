@@ -9,3 +9,5 @@ gocardless*.gem
 gocardless-*.gem
 gocardless-ruby.zip
 .rvmrc
+.rbx
+.bundle

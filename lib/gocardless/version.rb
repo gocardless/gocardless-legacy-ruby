@@ -1,3 +1,3 @@
 module GoCardless
-  VERSION = '1.3.3'.freeze
+  VERSION = '1.6.2'.freeze
 end

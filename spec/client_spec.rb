@@ -37,6 +37,13 @@ describe GoCardless::Client do
       end.should raise_exception(GoCardless::ClientError)
     end
 
+    it "does not raise an error if the credentials are provided as environment variables" do
+      ENV.expects(:[]).with('GOCARDLESS_APP_ID').returns(@app_id)
+      ENV.expects(:[]).with('GOCARDLESS_APP_SECRET').returns(@app_secret)
+
+      GoCardless::Client.new
+    end
+
     it "sets a merchant id if it's given" do
       client = GoCardless::Client.new({
         :app_id      => @app_id,
@@ -462,4 +469,17 @@ describe GoCardless::Client do
         should be_true
     end
   end
+
+  describe "base_url" do
+    it "returns a custom base URL when one has been set" do
+      @client.base_url = 'http://test.com/'
+      @client.base_url.should == 'http://test.com/'
+    end
+
+    it "returns the default value when base_url is not set for the instance" do
+      GoCardless::Client.stubs(:base_url => 'http://gc.com/')
+      @client.base_url.should == 'http://gc.com/'
+    end
+  end
 end
+

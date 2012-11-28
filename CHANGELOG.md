@@ -1,3 +1,20 @@
+## 1.6.1 - November 06, 2012
+
+- Fix - update Client references to base_url so custom base_urls work
+
+## 1.6.0 - November 06, 2012
+
+- Allow setting custom base_urls per-client
+
+## 1.5.0 - October 29, 2012
+
+- Use date_accessor to define next_interval_start methods
+
+## 1.4.0 - October 29, 2012
+
+- Allow app id and secret to be set with environment variables
+- Relax the oauth dependency
+
 ## 1.3.2 - October 01, 2012
 
 - Fix filtering on sub resource methods, e.g. `merchant.bills(source_id: 'x')`
