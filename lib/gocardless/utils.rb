@@ -1,4 +1,5 @@
 require 'uri'
+require 'time'
 
 module GoCardless
   module Utils
@@ -98,11 +99,10 @@ module GoCardless
     #
     # @param [Time] time the time object to format
     # @return [String] the ISO-formatted time
-    def iso_format_time(time)
-      return time unless time.is_a? Time or time.is_a? Date
-      time = time.getutc if time.is_a? Time
-      time = time.new_offset(0) if time.is_a? DateTime
-      time.strftime('%Y-%m-%dT%H:%M:%SZ')
+    def iso_format_time(object)
+      return object unless object.respond_to?(:to_time)
+
+      object.to_time.getutc.iso8601
     end
 
     # Recursively ISO format all time and date values.
