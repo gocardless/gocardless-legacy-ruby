@@ -1,3 +1,9 @@
+## 1.6.2 - January 25, 2013
+
+- Add fee accessors to Bill
+- Remove display_name attribute from User class
+- Add hide_variable_amount attribute to merchant
+
 ## 1.6.1 - November 06, 2012
 
 - Fix - update Client references to base_url so custom base_urls work
