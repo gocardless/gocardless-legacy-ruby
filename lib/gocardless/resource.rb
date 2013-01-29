@@ -33,8 +33,31 @@ module GoCardless
       end
 
       # Set resource attribute values
-      hash.each { |key,val| send("#{key}=", val) if respond_to?("#{key}=") }
+      hash.each { |key,val| send("#{key}=", val) }
     end
+
+    ##
+    # parses a method call passed to method_missing
+    class MethodCall
+      attr_accessor :attribute
+      def initialize(string)
+        all, @attribute, @assignment = *(/([^=]+)(=?)/.match string.to_s)
+      end
+
+      def assignment?
+        @assignment == "="
+      end
+    end
+
+    # sets or gets an instance variable for this resource
+    def method_missing(method, *args)
+      op = MethodCall.new(method)
+      if op.assignment?
+        instance_variable_set("@#{op.attribute}", args.first)
+      else
+        instance_variable_get("@#{op.attribute}")
+      end
+    end 
 
     attr_writer :client
 
