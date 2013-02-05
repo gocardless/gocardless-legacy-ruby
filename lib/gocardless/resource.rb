@@ -41,11 +41,15 @@ module GoCardless
     class MethodCall
       attr_accessor :attribute
       def initialize(string)
-        all, @attribute, @assignment = *(/([^=]+)(=?)/.match string.to_s)
+        all, @attribute, @operation = *(/([^=!\?]+)([=!\?]?)/.match string.to_s)
       end
 
       def assignment?
-        @assignment == "="
+        @operation == "="
+      end
+
+      def check?
+        @operation == "?"
       end
     end
 
@@ -54,10 +58,25 @@ module GoCardless
       op = MethodCall.new(method)
       if op.assignment?
         instance_variable_set("@#{op.attribute}", args.first)
+      elsif op.check?
+        check_attribute(op.attribute)
       else
-        instance_variable_get("@#{op.attribute}")
+        get_attribute(op.attribute)
       end
     end 
+
+    def valid_attribute?(attr)
+      instance_variables.include? "@#{attr}".to_sym
+    end
+
+    def get_attribute(attr)
+      raise NoMethodError unless valid_attribute?(attr)
+      instance_variable_get("@#{attr}")
+    end
+
+    def check_attribute(attr)
+      !get_attribute(attr).nil?
+    end
 
     attr_writer :client
 

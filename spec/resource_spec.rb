@@ -2,12 +2,29 @@ require 'spec_helper'
 
 describe GoCardless::Resource do
   it "initializes from hash" do
-    test_resource = Class.new(GoCardless::Resource) do
-      attr_accessor :id, :name, :uri
-    end
+    test_resource = Class.new(GoCardless::Resource) 
+
     props = {:id => 1, :name => 'test', :uri => 'http://test'}
     resource = test_resource.new(props)
     props.each { |k,v| resource.send(k).should == v }
+  end
+
+  describe "dynamic attribute accessors" do
+    it "raises NoMethodError on non-existing attributes" do
+      test_resource = Class.new(GoCardless::Resource)
+
+      props = { :id => 1, :name => 'test', :uri => 'http://test' }
+      resource = test_resource.new(props)
+      expect { resource.not_existing }.to raise_error(NoMethodError)
+    end
+
+    it "attribute! behaves like attribute" do
+      test_resource = Class.new(GoCardless::Resource)
+
+      props = { :id => 1, :name => 'test', :uri => 'http://test' }
+      resource = test_resource.new(props)
+      props.each { |k,v| resource.send("#{k}!").should == v }
+    end
   end
 
   describe "#date_writer" do
