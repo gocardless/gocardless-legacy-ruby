@@ -66,7 +66,7 @@ module GoCardless
     end 
 
     def valid_attribute?(attr)
-      instance_variables.include? "@#{attr}".to_sym
+      instance_variables.map(&:to_s).include? "@#{attr}"
     end
 
     def get_attribute(attr)
