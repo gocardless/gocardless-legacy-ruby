@@ -458,6 +458,11 @@ describe GoCardless::Client do
   end
 
   describe "#webhook_valid?" do
+    it "returns false when params are nil" do
+      @client.webhook_valid?(nil).
+        should be_false
+    end
+
     it "returns false when the webhook signature is invalid" do
       @client.webhook_valid?({:some => 'stuff', :signature => 'invalid'}).
         should be_false

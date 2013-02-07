@@ -261,7 +261,7 @@ module GoCardless
     # @param [Hash] params the contents of payload of the webhook
     # @return [Boolean] true when valid, false otherwise
     def webhook_valid?(params)
-      signature_valid?(params)
+      !params.nil? && signature_valid?(params)
     end
 
     # Set the base URL for this client instance. Overrides all other settings
