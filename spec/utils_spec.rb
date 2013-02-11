@@ -133,6 +133,10 @@ describe GoCardless::Utils do
         subject['a' => ['b']].should == [['a[]', 'b']]
       end
 
+      it "excludes values with empty arrays" do
+        subject['a' => []].should == []
+      end
+
       it "includes all array values separately" do
         result = subject['a' => ['b', 'c']]
         result.should include ['a[]', 'b']

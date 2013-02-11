@@ -1,3 +1,8 @@
+## 1.6.3 - February 11, 2013
+
+- Handle empty arrays in Utils#flatten_params
+
+
 ## 1.6.2 - January 25, 2013
 
 - Add fee accessors to Bill

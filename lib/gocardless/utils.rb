@@ -61,7 +61,7 @@ module GoCardless
         pairs = obj.map { |k,v| flatten_params(v, ns ? "#{ns}[#{k}]" : k) }
         pairs.empty? ? [] : pairs.inject(&:+)
       when Array
-        obj.map { |v| flatten_params(v, "#{ns}[]") }.inject(&:+)
+        obj.map { |v| flatten_params(v, "#{ns}[]") }.inject(&:+) || []
       when Time
         [[ns.to_s, iso_format_time(obj)]]
       else
