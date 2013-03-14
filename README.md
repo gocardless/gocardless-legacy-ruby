@@ -1,4 +1,4 @@
-![GoCardless Ruby Client Library](https://s3-eu-west-1.amazonaws.com/gocardless/images/client-lib-headers/ruby-lib-header.png)
+[![GoCardless Ruby Client Library](https://s3-eu-west-1.amazonaws.com/gocardless/images/client-lib-headers/ruby-lib-header.png)](https://gocardless.com/docs?language=ruby)
 
 The GoCardless Ruby client provides a simple Ruby interface to the GoCardless
 API.
