@@ -24,4 +24,11 @@ describe GoCardless::Bill do
     b.source_id.should == 123
     b.source_type.should.to_s == 'subscription'
   end
+
+  it "should be able to be retried" do
+    b = GoCardless::Bill.new(:id => 123)
+    @client.expects(:api_post).with('/bills/123/retry')
+    b.retry!
+  end
+
 end
