@@ -6,7 +6,7 @@ module GoCardless
     date_accessor :created_at
 
     def name
-      "#{first_name}#{' ' + last_name unless last_name.blank?}"
+      "#{first_name} #{last_name}".rstrip
     end
   end
 end
