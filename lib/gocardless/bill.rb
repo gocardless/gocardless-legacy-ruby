@@ -35,6 +35,11 @@ module GoCardless
       @source_type = Utils.underscore(klass)
     end
 
+    def retry!
+      path = self.class.endpoint.gsub(':id', id.to_s) + '/retry'
+      client.api_post(path)
+    end
+
     def save
       save_data({
         :bill => {

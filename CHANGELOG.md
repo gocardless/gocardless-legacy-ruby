@@ -1,3 +1,8 @@
+## 1.6.4 - April 16, 2013
+
+- Adds `retry!` method to Bill, allowing you to re-attempt collection where a
+bill has a status of `failed`
+
 ## 1.6.3 - February 11, 2013
 
 - Handle empty arrays in Utils#flatten_params
