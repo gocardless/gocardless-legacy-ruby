@@ -26,6 +26,12 @@ describe GoCardless::Bill do
     b.source_type.should.to_s == 'subscription'
   end
 
+  it "should be able to be retried" do
+    b = GoCardless::Bill.new(:id => 123)
+    @client.expects(:api_post).with('/bills/123/retry')
+    b.retry!
+  end
+
   describe "pending query method" do
     it "returns true when the subscription status is pending" do
       GoCardless::Bill.new(:status => 'pending').pending?.should be_true
