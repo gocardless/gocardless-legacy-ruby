@@ -83,17 +83,26 @@ module GoCardless
 
     # Set the client's access token
     #
-    # @param [String] token a string with format <code>"#{token} #{scope}"</code>
+    # @param [String] token a string with format <code>"#{token}"</code>
     #   (as returned by {#access_token})
     def access_token=(token)
       token, scope = token.sub(/^bearer\s+/i, '').split(' ', 2)
-      scope ||= ''
+      if scope
+        warn "[DEPRECATION] (gocardless-ruby) merchant_id is now a separate " +
+             "attribute, the manage_merchant scope should no longer be " +
+             "included in the 'token' attribute. See http://git.io/G9y37Q " +
+             "for more info."
+      else
+        scope = ''
+      end
 
       @access_token = OAuth2::AccessToken.new(@oauth_client, token)
       @access_token.params['scope'] = scope
 
       set_merchant_id_from_scope(scope) unless @merchant_id
     end
+
+    attr_writer :merchant_id
 
     # Issue an GET request to the API server
     #

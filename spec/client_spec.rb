@@ -146,6 +146,8 @@ describe GoCardless::Client do
   end
 
   describe "#access_token=" do
+    before { @client.stubs(:warn) }
+
     it "deserializes access token correctly" do
       @client.access_token = 'TOKEN123 a:1 b:2'
       token = @client.instance_variable_get(:@access_token)
@@ -158,6 +160,16 @@ describe GoCardless::Client do
       @client.send('merchant_id').should == 'xyz'
     end
 
+    it "issues a deprecation warning when the scope is present" do
+      @client.expects(:warn)
+      @client.access_token = 'TOKEN123 manage_merchant:xyz'
+    end
+
+    it "doesn't issue a deprecation warning when the scope is missing" do
+      @client.expects(:warn).never
+      @client.access_token = 'TOKEN123'
+    end
+
     it "ignores 'bearer' if it is present at the start of the string" do
       @client.access_token = 'Bearer TOKEN manage_merchant:123'
       token = @client.instance_variable_get(:@access_token)
@@ -168,7 +180,7 @@ describe GoCardless::Client do
 
   describe "#api_get" do
     it "uses the correct path prefix" do
-      @client.access_token = 'TOKEN123 a:1 b:2'
+      @client.access_token = 'TOKEN123'
       token = @client.instance_variable_get(:@access_token)
       r = mock
       r.stubs(:parsed)
@@ -183,7 +195,7 @@ describe GoCardless::Client do
 
   describe "#api_post" do
     it "encodes data to json" do
-      @client.access_token = 'TOKEN123 a:1 b:2'
+      @client.access_token = 'TOKEN123'
       token = @client.instance_variable_get(:@access_token)
       r = mock
       r.stubs(:parsed)
@@ -198,7 +210,8 @@ describe GoCardless::Client do
 
   describe "#merchant" do
     it "looks up the correct merchant" do
-      @client.access_token = 'TOKEN a manage_merchant:123 b'
+      @client.access_token = 'TOKEN'
+      @client.merchant_id = '123'
       response = mock
       response.expects(:parsed)
 
@@ -212,7 +225,8 @@ describe GoCardless::Client do
     end
 
     it "creates a Merchant object" do
-      @client.access_token = 'TOKEN manage_merchant:123'
+      @client.access_token = 'TOKEN'
+      @client.merchant_id = '123'
       response = mock
       response.expects(:parsed).returns({:name => 'test', :id => 123})
 
@@ -229,7 +243,8 @@ describe GoCardless::Client do
   %w{subscription pre_authorization user bill payment}.each do |resource|
     describe "##{resource}" do
       it "returns the correct #{GoCardless::Utils.camelize(resource)} object" do
-        @client.access_token = 'TOKEN manage_merchant:123'
+        @client.access_token = 'TOKEN'
+        @client.merchant_id = '123'
         stub_get(@client, {:id => 123})
         obj = @client.send(resource, 123)
         obj.should be_a GoCardless.const_get(GoCardless::Utils.camelize(resource))
@@ -373,7 +388,8 @@ describe GoCardless::Client do
   describe "#new_limit_url" do
     before(:each) do
       @merchant_id = '123'
-      @client.access_token = "TOKEN manage_merchant:#{@merchant_id}"
+      @client.access_token = "TOKEN"
+      @client.merchant_id  = @merchant_id
     end
 
     def get_params(url)
@@ -446,7 +462,7 @@ describe GoCardless::Client do
 
   describe "#merchant_id" do
     it "returns the merchant id when an access token is set" do
-      @client.access_token = 'TOKEN manage_merchant:123'
+      @client.merchant_id = '123'
       @client.send(:merchant_id).should == '123'
     end
 

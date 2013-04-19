@@ -25,6 +25,22 @@ module GoCardless
       client.api_put(path)
     end
 
+    def inactive?
+      status == 'inactive'
+    end
+
+    def active?
+      status == 'active'
+    end
+
+    def cancelled?
+      status == 'cancelled'
+    end
+
+    def expired?
+      status == 'expired'
+    end
+
   end
 end
 

@@ -51,5 +51,25 @@ module GoCardless
       })
       self
     end
+
+    def pending?
+      status == 'pending'
+    end
+
+    def paid?
+      status == 'paid'
+    end
+
+    def failed?
+      status == 'failed'
+    end
+
+    def withdrawn?
+      status == 'withdrawn'
+    end
+
+    def refunded?
+      status == 'refunded'
+    end
   end
 end
