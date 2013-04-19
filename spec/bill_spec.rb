@@ -24,4 +24,54 @@ describe GoCardless::Bill do
     b.source_id.should == 123
     b.source_type.should.to_s == 'subscription'
   end
+
+  describe "pending query method" do
+    it "returns true when the subscription status is pending" do
+      GoCardless::Bill.new(:status => 'pending').pending?.should be_true
+    end
+
+    it "returns false otherwise" do
+      GoCardless::Bill.new.pending?.should be_false
+    end
+  end
+
+  describe "paid query method" do
+    it "returns true when the subscription status is paid" do
+      GoCardless::Bill.new(:status => 'paid').paid?.should be_true
+    end
+
+    it "returns false otherwise" do
+      GoCardless::Bill.new.paid?.should be_false
+    end
+  end
+
+  describe "failed query method" do
+    it "returns true when the subscription status is failed" do
+      GoCardless::Bill.new(:status => 'failed').failed?.should be_true
+    end
+
+    it "returns false otherwise" do
+      GoCardless::Bill.new.failed?.should be_false
+    end
+  end
+
+  describe "withdrawn query method" do
+    it "returns true when the subscription status is withdrawn" do
+      GoCardless::Bill.new(:status => 'withdrawn').withdrawn?.should be_true
+    end
+
+    it "returns false otherwise" do
+      GoCardless::Bill.new.withdrawn?.should be_false
+    end
+  end
+
+  describe "refunded query method" do
+    it "returns true when the subscription status is refunded" do
+      GoCardless::Bill.new(:status => 'refunded').refunded?.should be_true
+    end
+
+    it "returns false otherwise" do
+      GoCardless::Bill.new.refunded?.should be_false
+    end
+  end
 end
