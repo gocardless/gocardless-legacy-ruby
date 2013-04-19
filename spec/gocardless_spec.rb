@@ -4,7 +4,8 @@ describe GoCardless do
   before do
     unset_ivar GoCardless, :client
     unset_ivar GoCardless, :account_details
-    @details = {:app_id => 'X', :app_secret => 'X', :token => 'X manage_merchant:1'}
+    @details = { :app_id => 'X', :app_secret => 'X',
+                 :token => 'X', :merchant_id => '1' }
   end
 
   describe ".account_details=" do

@@ -5,7 +5,7 @@ describe GoCardless::PreAuthorization do
     @app_id = 'abc'
     @app_secret = 'xyz'
     GoCardless.account_details = {:app_id => @app_id, :app_secret => @app_secret,
-                                  :token  => 'xxx manage_merchant:1'}
+                                  :token  => 'xxx', :merchant_id => '1'}
     @client = GoCardless.client
   end
 
