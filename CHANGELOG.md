@@ -1,12 +1,15 @@
-## 1.6.4 - April 16, 2013
+## 1.7.0 - April 19, 2013
 
 - Adds `retry!` method to Bill, allowing you to re-attempt collection where a
-bill has a status of `failed`
+  bill has a status of `failed`
+- Publicise Client#merchant_id
+- Deprecate old syntax for setting merchant id / scope
+- Add User#name method, for getting a user's full name
+- Add `?` methods for checking resource statuses (e.g. `Subscription#active?`)
 
 ## 1.6.3 - February 11, 2013
 
 - Handle empty arrays in Utils#flatten_params
-
 
 ## 1.6.2 - January 25, 2013
 
