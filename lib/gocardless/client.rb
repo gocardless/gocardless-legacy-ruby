@@ -102,6 +102,12 @@ module GoCardless
       set_merchant_id_from_scope(scope) unless @merchant_id
     end
 
+    # Return the merchant id, throwing a proper error if it's missing.
+    def merchant_id
+      raise ClientError, 'No merchant id set' unless @merchant_id
+      @merchant_id
+    end
+
     attr_writer :merchant_id
 
     # Issue an GET request to the API server
@@ -293,12 +299,6 @@ module GoCardless
     end
 
   private
-
-    # Return the merchant id, throwing a proper error if it's missing.
-    def merchant_id
-      raise ClientError, 'No merchant id set' unless @merchant_id
-      @merchant_id
-    end
 
     # Pull the merchant id out of the access scope
     def set_merchant_id_from_scope(scope)
