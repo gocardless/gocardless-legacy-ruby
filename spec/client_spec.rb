@@ -208,6 +208,21 @@ describe GoCardless::Client do
     end
   end
 
+  describe "#api_delete" do
+    it "encodes data to json" do
+      @client.access_token = 'TOKEN123'
+      token = @client.instance_variable_get(:@access_token)
+      r = mock
+      r.stubs(:parsed)
+      token.expects(:delete).with { |p,opts| opts[:body] == '{"a":1}' }.returns(r)
+      @client.api_delete('/test', {:a => 1})
+    end
+
+    it "fails without an access_token" do
+      expect { @client.api_get '/' }.to raise_exception GoCardless::ClientError
+    end
+  end
+
   describe "#merchant" do
     it "looks up the correct merchant" do
       @client.access_token = 'TOKEN'
