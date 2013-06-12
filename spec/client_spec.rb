@@ -204,7 +204,7 @@ describe GoCardless::Client do
     end
 
     it "fails without an access_token" do
-      expect { @client.api_get '/' }.to raise_exception GoCardless::ClientError
+      expect { @client.api_post '/' }.to raise_exception GoCardless::ClientError
     end
   end
 
@@ -219,7 +219,7 @@ describe GoCardless::Client do
     end
 
     it "fails without an access_token" do
-      expect { @client.api_get '/' }.to raise_exception GoCardless::ClientError
+      expect { @client.api_delete '/' }.to raise_exception GoCardless::ClientError
     end
   end
 
