@@ -1,3 +1,7 @@
+## 1.8.0 - June 12, 2013
+
+- Add Client#api_delete
+
 ## 1.7.0 - April 19, 2013
 
 - Adds `retry!` method to Bill, allowing you to re-attempt collection where a
