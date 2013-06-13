@@ -4,8 +4,7 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'oauth2', '~> 0.7'
   gem.add_runtime_dependency 'multi_json', '~> 1.0'
 
-  gem.add_development_dependency 'rspec', '~> 2.6'
-  gem.add_development_dependency 'mocha', '~> 0.9.12'
+  gem.add_development_dependency 'rspec', '~> 2.13'
   gem.add_development_dependency 'yard', '~> 0.7.3'
   gem.add_development_dependency 'activesupport', '~> 3.1'
   gem.add_development_dependency 'rake', '~> 10.0'
