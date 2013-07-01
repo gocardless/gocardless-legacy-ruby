@@ -5,7 +5,7 @@ describe GoCardless::Page do
   #let(:resource_class) { Class.new(GoCardless::Resource) { } }
   let(:resource_class) { GoCardless::Resource }
   let(:links) {{ "next" => 2, "last" => 2 }}
-  let(:data) {[ { id: 'a' }, { id: 'b' } ]}
+  let(:data) {[ { :id => 'a' }, { :id => 'b' } ]}
 
   let(:page) { GoCardless::Page.new(resource_class, data, links) }
 

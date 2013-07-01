@@ -31,7 +31,7 @@ module GoCardless
     # Fetch and return a single page.
     def load_page(page_num)
       params = @query.merge(pagination_params(page_num))
-      response = @client.api_request(:get, @path, params: params)
+      response = @client.api_request(:get, @path, :params => params)
 
       metadata = parse_metadata(response)
       @num_records, @num_pages = metadata['records'], metadata['pages']
@@ -73,7 +73,7 @@ module GoCardless
     private
 
     def pagination_params(page_num)
-      { page: page_num, per_page: @per_page }
+      { :page => page_num, :per_page => @per_page }
     end
 
     def parse_metadata(response)

@@ -4,19 +4,19 @@ require 'gocardless/paginator'
 describe GoCardless::Paginator do
   let(:resource_class) { GoCardless::Resource }
   let(:path) { '/test' }
-  let(:query) { { status: 'active' } }
+  let(:query) { { :status => 'active' } }
   let(:per_page) { 10 }
   let(:page_number) { 1 }
 
   let(:headers_p1) {{
     'X-Pagination' => '{"records":15,"pages":2,"links":{"next":2,"last":2}}'
   }}
-  let(:response_p1) { stub(headers: headers_p1, parsed: [{ id: 'a' }]) }
+  let(:response_p1) { stub(:headers => headers_p1, :parsed => [{:id => 'a'}]) }
 
   let(:headers_p2) {{
     'X-Pagination' => '{"records":15,"pages":2,"links":{"previous":1,"first":1}}'
   }}
-  let(:response_p2) { stub(headers: headers_p2, parsed: [{ id: 'b' }]) }
+  let(:response_p2) { stub(:headers => headers_p2, :parsed => [{:id => 'b'}]) }
 
   let(:client) { stub('client') }
   before { client.stub(:api_request).and_return(response_p1, response_p2,
@@ -54,7 +54,7 @@ describe GoCardless::Paginator do
     end
 
     it "passes the correct pagination parameters through" do
-      pagination_params = { page: page_number, per_page: per_page }
+      pagination_params = { :page => page_number, :per_page => per_page }
       client.should_receive(:api_request) do |_, _, opts|
         opts[:params].should include pagination_params
       end.and_return(response_p1)
