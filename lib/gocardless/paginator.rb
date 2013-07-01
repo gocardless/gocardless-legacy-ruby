@@ -58,11 +58,13 @@ module GoCardless
       end
     end
 
+    # Return the total number of records. May trigger an HTTP request.
     def count
       load_page(1) if @num_records.nil?  # load pagination metadata
       @num_records
     end
 
+    # Return the total number of pages. May trigger an HTTP request.
     def page_count
       load_page(1) if @num_records.nil?  # load pagination metadata
       @num_pages
