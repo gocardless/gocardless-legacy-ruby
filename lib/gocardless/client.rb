@@ -117,7 +117,7 @@ module GoCardless
     # @param [Hash] params query string parameters
     # @return [Hash] hash the parsed response data
     def api_get(path, params = {})
-      request(:get, "#{API_PATH}#{path}", :params => params).parsed
+      api_request(:get, path, :params => params).parsed
     end
 
     # Issue a POST request to the API server
@@ -127,7 +127,7 @@ module GoCardless
     # @param [Hash] data a hash of data that will be sent as the request body
     # @return [Hash] hash the parsed response data
     def api_post(path, data = {})
-      request(:post, "#{API_PATH}#{path}", :data => data).parsed
+      api_request(:post, path, :data => data).parsed
     end
 
     # Issue a PUT request to the API server
@@ -137,7 +137,7 @@ module GoCardless
     # @param [Hash] data a hash of data that will be sent as the request body
     # @return [Hash] hash the parsed response data
     def api_put(path, data = {})
-      request(:put, "#{API_PATH}#{path}", :data => data).parsed
+      api_request(:put, path, :data => data).parsed
     end
 
     # Issue a DELETE request to the API server
@@ -147,7 +147,18 @@ module GoCardless
     # @param [Hash] data a hash of data that will be sent as the request body
     # @return [Hash] hash the parsed response data
     def api_delete(path, data = {})
-      request(:delete, "#{API_PATH}#{path}", :data => data).parsed
+      api_request(:delete, path, :data => data).parsed
+    end
+
+
+    # Issue a request to the API server, returning the full response
+    #
+    # @note this method is for internal use
+    # @param [Symbol] method the HTTP method to use (e.g. +:get+, +:post+)
+    # @param [String] path the path that will be added to the API prefix
+    # @option [Hash] opts additional request options (e.g. form data, params)
+    def api_request(method, path, opts = {})
+      request(method, "#{API_PATH}#{path}", opts)
     end
 
     # @method merchant

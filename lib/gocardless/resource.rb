@@ -1,4 +1,5 @@
 require 'date'
+require 'gocardless/paginator'
 
 module GoCardless
   class Resource
