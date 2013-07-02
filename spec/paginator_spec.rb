@@ -32,9 +32,9 @@ describe GoCardless::Paginator do
     end
 
     context "given an argument" do
-      let(:new_per_page) { 60 }
-      subject { paginator.per_page(new_per_page) }
-      it { should == new_per_page }
+      it "is chainable" do
+        paginator.per_page(60).should == paginator
+      end
     end
 
     it "resets pagination metadata" do

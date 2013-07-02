@@ -21,13 +21,14 @@ module GoCardless
     # Set the number of records per page (page size), if an argument is
     # provided. Returns the current per_page value, whether an argument is
     # provided or not.
-    def per_page(n = nil)
-      unless n.nil?
+    def per_page(results_per_page = nil)
+      if results_per_page
         @num_records, @num_pages = nil, nil
-        @per_page = n
+        @per_page = results_per_page
+        self
+      else
+        @per_page
       end
-
-      @per_page
     end
 
     # Fetch and return a single page.
