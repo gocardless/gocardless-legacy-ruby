@@ -3,6 +3,8 @@ require 'gocardless/page'
 
 module GoCardless
   class Paginator
+    include Enumerable
+
     attr_reader :num_records
     attr_reader :num_pages
 
