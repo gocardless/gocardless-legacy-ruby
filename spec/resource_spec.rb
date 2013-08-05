@@ -246,7 +246,7 @@ describe GoCardless::Resource do
         creatable
       end
 
-      client = double('client', api_post: nil)
+      client = double('client', :api_post => nil)
       test_resource.new_with_client(client).save
     end
 
@@ -256,7 +256,7 @@ describe GoCardless::Resource do
         updatable
       end
 
-      client = double('client', api_put: nil)
+      client = double('client', :api_put => nil)
       test_resource.new_with_client(client, :id => 1).save
     end
 
