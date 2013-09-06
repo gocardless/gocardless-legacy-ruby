@@ -195,7 +195,8 @@ module GoCardless
     # Create a new bill under a given pre-authorization
     # @see PreAuthorization#create_bill
     #
-    # @param [Hash] attrs must include +:pre_authorization_id+ and +:amount+
+    # @param [Hash] attrs must include +:source_id+ (the id of the
+    # pre_authorization you want to bill from) and +:amount+
     # @return [Bill] the created bill object
     def create_bill(attrs)
       Bill.new_with_client(self, attrs).save
