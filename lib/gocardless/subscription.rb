@@ -19,16 +19,11 @@ module GoCardless
 
     date_accessor :start_at, :expires_at, :created_at, :next_interval_start
 
+    check_status :inactive, :active, :cancelled, :expired
 
     def cancel!
       path = self.class.endpoint.gsub(':id', id.to_s) + '/cancel'
       client.api_put(path)
-    end
-
-    %w[inactive active cancelled expired].each do |arg|
-      define_method "#{arg}?" do
-        status == arg
-      end
     end
 
   end

@@ -110,6 +110,17 @@ module GoCardless
         end
       end
 
+      def check_status(*args)
+        if defined? :status
+          args.each do |arg|
+            arg = arg.to_s if arg.is_a? Symbol
+            define_method "#{arg}?" do
+              status == arg
+            end
+          end
+        end
+      end
+
       def reference_accessor(*args)
         reference_reader *args
         reference_writer *args

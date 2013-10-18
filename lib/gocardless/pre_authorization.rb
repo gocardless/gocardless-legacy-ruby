@@ -17,6 +17,8 @@ module GoCardless
 
     date_accessor :expires_at, :created_at, :next_interval_start
 
+    check_status :inactive, :active, :cancelled, :expired
+
     # Create a new bill under this pre-authorization. Similar to
     # {Client#create_bill}, but only requires the amount to be specified.
     #
@@ -29,12 +31,6 @@ module GoCardless
     def cancel!
       path = self.class.endpoint.gsub(':id', id.to_s) + '/cancel'
       client.api_put(path)
-    end
-
-    %w[inactive active cancelled expired].each do |arg|
-      define_method "#{arg}?" do
-        status == arg
-      end
     end
 
   end
