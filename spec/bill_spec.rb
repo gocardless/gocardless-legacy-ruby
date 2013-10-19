@@ -9,12 +9,6 @@ describe GoCardless::Bill do
     @client = GoCardless.client
   end
 
-  it "response to defined methods" do
-    %w[pending paid failed withdrawn refunded].each do |message|
-      GoCardless::Bill.new.respond_to?("#{message}?").should be_true
-    end
-  end
-
   it "source getter works" do
     b = GoCardless::Bill.new(:source_type => :subscription, :source_id => 123)
     @client.access_token = 'TOKEN'

@@ -20,7 +20,7 @@ module GoCardless
     reference_accessor :merchant_id, :user_id, :payment_id
     date_accessor :created_at, :paid_at
 
-    check_status :pending, :paid, :failed, :withdrawn, :refunded
+    has_statuses :pending, :paid, :failed, :withdrawn, :refunded
 
     def source
       klass = GoCardless.const_get(Utils.camelize(source_type.to_s))

@@ -9,12 +9,6 @@ describe GoCardless::PreAuthorization do
     @client = GoCardless.client
   end
 
-  it "response to defined methods" do
-    %w[inactive active cancelled expired].each do |message|
-      GoCardless::PreAuthorization.new.respond_to?("#{message}?").should be_true
-    end
-  end
-
   it "should be cancellable" do
     s = GoCardless::PreAuthorization.new_with_client(@client, :id => '009988')
     @client.should_receive(:api_put).with('/pre_authorizations/009988/cancel')

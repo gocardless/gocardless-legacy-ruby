@@ -17,7 +17,7 @@ module GoCardless
 
     date_accessor :expires_at, :created_at, :next_interval_start
 
-    check_status :inactive, :active, :cancelled, :expired
+    has_statuses :inactive, :active, :cancelled, :expired
 
     # Create a new bill under this pre-authorization. Similar to
     # {Client#create_bill}, but only requires the amount to be specified.
