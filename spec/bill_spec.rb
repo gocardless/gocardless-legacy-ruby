@@ -32,6 +32,12 @@ describe GoCardless::Bill do
     b.retry!
   end
 
+  it "should be able to be cancelled" do
+    b = GoCardless::Bill.new(:id => 123)
+    @client.should_receive(:api_put).with('/bills/123/cancel')
+    b.cancel!
+  end
+
   describe "pending query method" do
     it "and_return true when the subscription status is pending" do
       GoCardless::Bill.new(:status => 'pending').pending?.should be_true
