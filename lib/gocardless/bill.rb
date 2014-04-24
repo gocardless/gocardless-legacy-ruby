@@ -45,6 +45,11 @@ module GoCardless
       client.api_put(path)
     end
 
+    def refund!
+      path = self.class.endpoint.gsub(':id', id.to_s) + '/refund'
+      client.api_post(path)
+    end
+
     def save
       save_data({
         :bill => {
