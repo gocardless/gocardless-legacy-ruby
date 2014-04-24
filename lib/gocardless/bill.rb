@@ -45,6 +45,10 @@ module GoCardless
       client.api_put(path)
     end
 
+    # The ability to refund a payment is disabled by default.
+    #
+    # Please contact help@gocardless.com if you require access to 
+    # the refunds API endpoint.
     def refund!
       path = self.class.endpoint.gsub(':id', id.to_s) + '/refund'
       client.api_post(path)
