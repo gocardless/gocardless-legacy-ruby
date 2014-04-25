@@ -140,6 +140,16 @@ module GoCardless
       request(:put, "#{API_PATH}#{path}", :data => data).parsed
     end
 
+    # Issue a DELETE request to the API server
+    #
+    # @note this method is for internal use
+    # @param [String] path the path that will be added to the API prefix
+    # @param [Hash] data a hash of data that will be sent as the request body
+    # @return [Hash] hash the parsed response data
+    def api_delete(path, data = {})
+      request(:delete, "#{API_PATH}#{path}", :data => data).parsed
+    end
+
     # @method merchant
     # @return [Merchant] the merchant associated with the client's access token
     def merchant
@@ -185,7 +195,8 @@ module GoCardless
     # Create a new bill under a given pre-authorization
     # @see PreAuthorization#create_bill
     #
-    # @param [Hash] attrs must include +:pre_authorization_id+ and +:amount+
+    # @param [Hash] attrs must include +:source_id+ (the id of the
+    # pre_authorization you want to bill from) and +:amount+
     # @return [Bill] the created bill object
     def create_bill(attrs)
       Bill.new_with_client(self, attrs).save

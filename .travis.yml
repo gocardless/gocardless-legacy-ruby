@@ -1,13 +1,13 @@
 script: "rake spec"
 rvm:
+  - 2.1.0
   - 2.0.0
   - 1.9.3
   - 1.9.2
   - 1.8.7
   - jruby-18mode
   - jruby-19mode
-  - rbx-18mode
-  - ruby-head
+  - rbx-2
   - ree
 notifications:
   email:

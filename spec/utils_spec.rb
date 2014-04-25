@@ -108,7 +108,7 @@ describe GoCardless::Utils do
     describe ".flatten_params" do
       subject { GoCardless::Utils.method(:flatten_params) }
 
-      it "returns an empty array when provided with an empty hash" do
+      it "and_return an empty array when provided with an empty hash" do
         subject[{}].should == []
       end
 

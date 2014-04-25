@@ -64,7 +64,7 @@ describe GoCardless::Resource do
         self.endpoint = '/test/:id'
       end
       mock_client = mock
-      mock_client.expects(:api_get).returns({:id => 123})
+      mock_client.should_receive(:api_get).and_return({:id => 123})
       resource = test_resource.find_with_client(mock_client, 123)
       resource.should be_a test_resource
       resource.id.should == 123
@@ -76,8 +76,8 @@ describe GoCardless::Resource do
       test_resource = Class.new(GoCardless::Resource) do
         self.endpoint = '/test/:id'
       end
-      GoCardless.stubs(:client => mock)
-      test_resource.expects(:find_with_client).with(GoCardless.client, 1)
+      GoCardless.stub(:client => mock)
+      test_resource.should_receive(:find_with_client).with(GoCardless.client, 1)
       test_resource.find(1)
       unset_ivar GoCardless, :client
     end
@@ -214,28 +214,28 @@ describe GoCardless::Resource do
         client = mock
         data = {:x => 1, :y => 2}
         resource = @test_resource.new_with_client(client, data)
-        client.expects(:api_post).with(anything, data)
+        client.should_receive(:api_post).with(anything, data)
         resource.save
       end
 
       it "sends the correct path" do
         client = mock
         resource = @test_resource.new_with_client(client)
-        client.expects(:api_post).with('/test', anything)
+        client.should_receive(:api_post).with('/test', anything)
         resource.save
       end
 
       it "POSTs when not persisted" do
         client = mock
         resource = @test_resource.new_with_client(client)
-        client.expects(:api_post)
+        client.should_receive(:api_post)
         resource.save
       end
 
       it "PUTs when already persisted" do
         client = mock
         resource = @test_resource.new_with_client(client, :id => 1)
-        client.expects(:api_put)
+        client.should_receive(:api_put)
         resource.save
       end
     end
@@ -246,7 +246,7 @@ describe GoCardless::Resource do
         creatable
       end
 
-      client = mock('client') { stubs :api_post }
+      client = double('client', :api_post => nil)
       test_resource.new_with_client(client).save
     end
 
@@ -256,7 +256,7 @@ describe GoCardless::Resource do
         updatable
       end
 
-      client = mock('client') { stubs :api_put }
+      client = double('client', :api_put => nil)
       test_resource.new_with_client(client, :id => 1).save
     end
 
@@ -357,14 +357,14 @@ describe GoCardless::Resource do
 
     it "use the correct uri path" do
       client = mock()
-      client.expects(:api_get).with('/api/bills/', anything).returns([])
+      client.should_receive(:api_get).with('/api/bills/', anything).and_return([])
       r = @test_resource.new_with_client(client, @attrs)
       r.bills
     end
 
     it "strips the api prefix from the path" do
       client = mock()
-      client.expects(:api_get).with('/bills/', anything).returns([])
+      client.should_receive(:api_get).with('/bills/', anything).and_return([])
       uris = {'bills' => 'https://test.com/api/v123/bills/'}
       r = @test_resource.new_with_client(client, 'sub_resource_uris' => uris)
       r.bills
@@ -372,7 +372,7 @@ describe GoCardless::Resource do
 
     it "use the correct query string params" do
       client = mock()
-      client.expects(:api_get).with(anything, 'merchant_id' => '1').returns([])
+      client.should_receive(:api_get).with(anything, 'merchant_id' => '1').and_return([])
       r = @test_resource.new_with_client(client, @attrs)
       r.bills
     end
@@ -380,7 +380,7 @@ describe GoCardless::Resource do
     it "adds provided params to existing query string params" do
       client = mock()
       params = { 'merchant_id' => '1', :amount => '10.00' }
-      client.expects(:api_get).with(anything, params).returns([])
+      client.should_receive(:api_get).with(anything, params).and_return([])
       r = @test_resource.new_with_client(client, @attrs)
       r.bills(:amount => '10.00')
     end
@@ -388,7 +388,7 @@ describe GoCardless::Resource do
     it "adds provided params when there are no existing query string params" do
       client = mock()
       params = { :source_id => 'xxx' }
-      client.expects(:api_get).with(anything, params).returns([])
+      client.should_receive(:api_get).with(anything, params).and_return([])
       r = @test_resource.new_with_client(client, {
         'sub_resource_uris' => {
           'bills' => 'https://test.com/merchants/1/bills'

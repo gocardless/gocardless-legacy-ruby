@@ -1,17 +1,12 @@
-require 'mocha'
 require 'active_support/hash_with_indifferent_access'
 require 'gocardless'
 
-RSpec.configure do |config|
-  config.mock_with :mocha
-end
-
 def stub_get(client, data)
   response = mock
-  response.stubs(:parsed).returns(data)
+  response.stub(:parsed).and_return(data)
 
   token = client.instance_variable_get(:@access_token)
-  token.stubs(:get).returns response
+  token.stub(:get).and_return response
 end
 
 def unset_ivar(obj, var)

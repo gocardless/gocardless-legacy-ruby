@@ -28,56 +28,68 @@ describe GoCardless::Bill do
 
   it "should be able to be retried" do
     b = GoCardless::Bill.new(:id => 123)
-    @client.expects(:api_post).with('/bills/123/retry')
+    @client.should_receive(:api_post).with('/bills/123/retry')
     b.retry!
   end
 
+  it "should be able to be cancelled" do
+    b = GoCardless::Bill.new(:id => 123)
+    @client.should_receive(:api_put).with('/bills/123/cancel')
+    b.cancel!
+  end
+
+  it "should be able to be refunded" do
+    b = GoCardless::Bill.new(:id => 123)
+    @client.should_receive(:api_post).with('/bills/123/refund')
+    b.refund!
+  end
+
   describe "pending query method" do
-    it "returns true when the subscription status is pending" do
+    it "and_return true when the subscription status is pending" do
       GoCardless::Bill.new(:status => 'pending').pending?.should be_true
     end
 
-    it "returns false otherwise" do
+    it "and_return false otherwise" do
       GoCardless::Bill.new.pending?.should be_false
     end
   end
 
   describe "paid query method" do
-    it "returns true when the subscription status is paid" do
+    it "and_return true when the subscription status is paid" do
       GoCardless::Bill.new(:status => 'paid').paid?.should be_true
     end
 
-    it "returns false otherwise" do
+    it "and_return false otherwise" do
       GoCardless::Bill.new.paid?.should be_false
     end
   end
 
   describe "failed query method" do
-    it "returns true when the subscription status is failed" do
+    it "and_return true when the subscription status is failed" do
       GoCardless::Bill.new(:status => 'failed').failed?.should be_true
     end
 
-    it "returns false otherwise" do
+    it "and_return false otherwise" do
       GoCardless::Bill.new.failed?.should be_false
     end
   end
 
   describe "withdrawn query method" do
-    it "returns true when the subscription status is withdrawn" do
+    it "and_return true when the subscription status is withdrawn" do
       GoCardless::Bill.new(:status => 'withdrawn').withdrawn?.should be_true
     end
 
-    it "returns false otherwise" do
+    it "and_return false otherwise" do
       GoCardless::Bill.new.withdrawn?.should be_false
     end
   end
 
   describe "refunded query method" do
-    it "returns true when the subscription status is refunded" do
+    it "and_return true when the subscription status is refunded" do
       GoCardless::Bill.new(:status => 'refunded').refunded?.should be_true
     end
 
-    it "returns false otherwise" do
+    it "and_return false otherwise" do
       GoCardless::Bill.new.refunded?.should be_false
     end
   end
