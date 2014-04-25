@@ -20,6 +20,8 @@ module GoCardless
     reference_accessor :merchant_id, :user_id, :payment_id, :payout_id
     date_accessor :created_at, :paid_at
 
+    has_statuses :pending, :paid, :failed, :withdrawn, :refunded
+
     def source
       klass = GoCardless.const_get(Utils.camelize(source_type.to_s))
       klass.find_with_client(client, @source_id)
@@ -66,24 +68,5 @@ module GoCardless
       self
     end
 
-    def pending?
-      status == 'pending'
-    end
-
-    def paid?
-      status == 'paid'
-    end
-
-    def failed?
-      status == 'failed'
-    end
-
-    def withdrawn?
-      status == 'withdrawn'
-    end
-
-    def refunded?
-      status == 'refunded'
-    end
   end
 end
