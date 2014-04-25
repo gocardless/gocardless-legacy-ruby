@@ -17,7 +17,7 @@ module GoCardless
     # @return [String] the ID of the bill's source (eg subscription, pre_authorization)
     attr_accessor :source_id
 
-    reference_accessor :merchant_id, :user_id, :payment_id
+    reference_accessor :merchant_id, :user_id, :payment_id, :payout_id
     date_accessor :created_at, :paid_at
 
     def source
@@ -37,6 +37,20 @@ module GoCardless
 
     def retry!
       path = self.class.endpoint.gsub(':id', id.to_s) + '/retry'
+      client.api_post(path)
+    end
+
+    def cancel!
+      path = self.class.endpoint.gsub(':id', id.to_s) + '/cancel'
+      client.api_put(path)
+    end
+
+    # The ability to refund a payment is disabled by default.
+    #
+    # Please contact help@gocardless.com if you require access to 
+    # the refunds API endpoint.
+    def refund!
+      path = self.class.endpoint.gsub(':id', id.to_s) + '/refund'
       client.api_post(path)
     end
 
