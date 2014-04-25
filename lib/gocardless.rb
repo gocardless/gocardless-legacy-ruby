@@ -10,6 +10,7 @@ module GoCardless
   require 'gocardless/payment'
   require 'gocardless/merchant'
   require 'gocardless/client'
+  require 'gocardless/payout'
 
   class << self
     attr_accessor :environment
