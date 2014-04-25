@@ -93,4 +93,16 @@ describe GoCardless::Bill do
       GoCardless::Bill.new.refunded?.should be_false
     end
   end
+
+  describe "can be retried query method" do
+    it "returns true when the can_be_refunded attribute is true" do
+      GoCardless::Bill.new(:can_be_retried => true).can_be_retried?.
+        should be_true
+    end
+
+    it "returns false otherwise" do
+      GoCardless::Bill.new.can_be_retried?.should be_false
+    end
+  end
+
 end
