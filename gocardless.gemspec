@@ -19,4 +19,5 @@ Gem::Specification.new do |gem|
   gem.summary = %q{Ruby wrapper for the GoCardless API}
   gem.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
   gem.version = GoCardless::VERSION.dup
+  gem.licenses = ['MIT']
 end
