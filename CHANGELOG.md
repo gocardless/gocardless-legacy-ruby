@@ -1,3 +1,10 @@
+## 1.9.0 - May 23, 2014
+
+- Add ability to refund bills
+- Add ability to cancel bills
+- Add Payout API support
+- Stop using the deprecated OpenSSL::Digest::Digest
+
 ## 1.8.0 - June 12, 2013
 
 - Add Client#api_delete
