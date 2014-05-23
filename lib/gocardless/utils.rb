@@ -90,7 +90,7 @@ module GoCardless
     # @return [String] the resulting signature
     def sign_params(params, key)
       msg = Utils.normalize_params(params)
-      digest = OpenSSL::Digest::Digest.new('sha256')
+      digest = OpenSSL::Digest.new('sha256')
       OpenSSL::HMAC.hexdigest(digest, key, msg)
     end
 
