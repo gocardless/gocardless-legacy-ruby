@@ -55,15 +55,17 @@ module GoCardless
     end
 
     def save
-      save_data({
-        :bill => {
-          :pre_authorization_id => self.source_id,
-          :amount => self.amount,
-          :name => self.name,
-          :description => self.description,
-          :charge_customer_at => self.charge_customer_at,
-        }
-      })
+      bill_params = {
+        :pre_authorization_id => self.source_id,
+        :amount => self.amount,
+        :name => self.name,
+        :description => self.description,
+        :charge_customer_at => self.charge_customer_at,
+      }
+
+      bill_params.delete_if { |_,v| v.nil? }
+
+      save_data({ :bill => bill_params })
       self
     end
 
