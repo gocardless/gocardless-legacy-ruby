@@ -5,7 +5,7 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'multi_json', '~> 1.0'
 
   gem.add_development_dependency 'rspec', '~> 2.13'
-  gem.add_development_dependency 'yard', '~> 0.7.3'
+  gem.add_development_dependency 'yard', '~> 0.7'
   gem.add_development_dependency 'activesupport', '~> 3.1'
   gem.add_development_dependency 'rake', '~> 10.0'
 
@@ -19,4 +19,5 @@ Gem::Specification.new do |gem|
   gem.summary = %q{Ruby wrapper for the GoCardless API}
   gem.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
   gem.version = GoCardless::VERSION.dup
+  gem.licenses = ['MIT']
 end
