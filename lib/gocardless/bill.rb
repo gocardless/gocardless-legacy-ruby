@@ -18,7 +18,7 @@ module GoCardless
     attr_accessor :source_id
 
     reference_accessor :merchant_id, :user_id, :payment_id, :payout_id
-    date_accessor :created_at, :paid_at
+    date_accessor :created_at, :paid_at, :charge_customer_at
 
     def source
       klass = GoCardless.const_get(Utils.camelize(source_type.to_s))
@@ -47,7 +47,7 @@ module GoCardless
 
     # The ability to refund a payment is disabled by default.
     #
-    # Please contact help@gocardless.com if you require access to 
+    # Please contact help@gocardless.com if you require access to
     # the refunds API endpoint.
     def refund!
       path = self.class.endpoint.gsub(':id', id.to_s) + '/refund'
@@ -61,6 +61,7 @@ module GoCardless
           :amount => self.amount,
           :name => self.name,
           :description => self.description,
+          :charge_customer_at => self.charge_customer_at,
         }
       })
       self
