@@ -7,7 +7,6 @@ module GoCardless
   require 'gocardless/pre_authorization'
   require 'gocardless/user'
   require 'gocardless/bill'
-  require 'gocardless/payment'
   require 'gocardless/merchant'
   require 'gocardless/client'
   require 'gocardless/payout'

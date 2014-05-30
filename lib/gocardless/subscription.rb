@@ -10,9 +10,7 @@ module GoCardless
                    :name,
                    :description,
                    :status,
-                   :setup_fee,
-                   :trial_length,
-                   :trial_unit
+                   :setup_fee
 
     reference_accessor :merchant_id, :user_id
 

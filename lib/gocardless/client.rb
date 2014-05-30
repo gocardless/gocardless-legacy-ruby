@@ -185,13 +185,6 @@ module GoCardless
       Bill.find_with_client(self, id)
     end
 
-    # @method payment(id)
-    # @param [String] id of the payment
-    # @return [Payment] the payment matching the id requested
-    def payment(id)
-      Payment.find_with_client(self, id)
-    end
-
     # Create a new bill under a given pre-authorization
     # @see PreAuthorization#create_bill
     #
@@ -239,7 +232,7 @@ module GoCardless
     end
 
     # Confirm a newly-created subscription, pre-authorzation or one-off
-    # payment. This method also checks that the resource response data includes
+    # bill. This method also checks that the resource response data includes
     # a valid signature and will raise a {SignatureError} if the signature is
     # invalid.
     #
