@@ -63,7 +63,7 @@ describe GoCardless::Resource do
       test_resource = Class.new(GoCardless::Resource) do
         self.endpoint = '/test/:id'
       end
-      mock_client = mock
+      mock_client = double
       mock_client.should_receive(:api_get).and_return({:id => 123})
       resource = test_resource.find_with_client(mock_client, 123)
       resource.should be_a test_resource
@@ -76,7 +76,7 @@ describe GoCardless::Resource do
       test_resource = Class.new(GoCardless::Resource) do
         self.endpoint = '/test/:id'
       end
-      GoCardless.stub(:client => mock)
+      GoCardless.stub(:client => double)
       test_resource.should_receive(:find_with_client).with(GoCardless.client, 1)
       test_resource.find(1)
       unset_ivar GoCardless, :client
@@ -211,7 +211,7 @@ describe GoCardless::Resource do
       end
 
       it "sends the correct data parameters" do
-        client = mock
+        client = double
         data = {:x => 1, :y => 2}
         resource = @test_resource.new_with_client(client, data)
         client.should_receive(:api_post).with(anything, data)
@@ -219,21 +219,21 @@ describe GoCardless::Resource do
       end
 
       it "sends the correct path" do
-        client = mock
+        client = double
         resource = @test_resource.new_with_client(client)
         client.should_receive(:api_post).with('/test', anything)
         resource.save
       end
 
       it "POSTs when not persisted" do
-        client = mock
+        client = double
         resource = @test_resource.new_with_client(client)
         client.should_receive(:api_post)
         resource.save
       end
 
       it "PUTs when already persisted" do
-        client = mock
+        client = double
         resource = @test_resource.new_with_client(client, :id => 1)
         client.should_receive(:api_put)
         resource.save
@@ -283,7 +283,7 @@ describe GoCardless::Resource do
     end
 
     attrs = {:id => 1, :uri => 'http:', :x => 'y'}
-    resource = test_resource.new_with_client(mock, attrs)
+    resource = test_resource.new_with_client(double, attrs)
     resource.to_hash.should == attrs
   end
 
@@ -356,14 +356,14 @@ describe GoCardless::Resource do
     end
 
     it "use the correct uri path" do
-      client = mock()
+      client = double()
       client.should_receive(:api_get).with('/api/bills/', anything).and_return([])
       r = @test_resource.new_with_client(client, @attrs)
       r.bills
     end
 
     it "strips the api prefix from the path" do
-      client = mock()
+      client = double()
       client.should_receive(:api_get).with('/bills/', anything).and_return([])
       uris = {'bills' => 'https://test.com/api/v123/bills/'}
       r = @test_resource.new_with_client(client, 'sub_resource_uris' => uris)
@@ -371,14 +371,14 @@ describe GoCardless::Resource do
     end
 
     it "use the correct query string params" do
-      client = mock()
+      client = double()
       client.should_receive(:api_get).with(anything, 'merchant_id' => '1').and_return([])
       r = @test_resource.new_with_client(client, @attrs)
       r.bills
     end
 
     it "adds provided params to existing query string params" do
-      client = mock()
+      client = double()
       params = { 'merchant_id' => '1', :amount => '10.00' }
       client.should_receive(:api_get).with(anything, params).and_return([])
       r = @test_resource.new_with_client(client, @attrs)
@@ -386,7 +386,7 @@ describe GoCardless::Resource do
     end
 
     it "adds provided params when there are no existing query string params" do
-      client = mock()
+      client = double()
       params = { :source_id => 'xxx' }
       client.should_receive(:api_get).with(anything, params).and_return([])
       r = @test_resource.new_with_client(client, {
@@ -398,7 +398,7 @@ describe GoCardless::Resource do
     end
 
     it "return instances of the correct resource class" do
-      client = stub(:api_get => [{:id => 1}])
+      client = double(:api_get => [{:id => 1}])
       r = @test_resource.new_with_client(client, @attrs)
       ret = r.bills
       ret.should be_a Array

@@ -2,7 +2,7 @@ require 'active_support/hash_with_indifferent_access'
 require 'gocardless'
 
 def stub_get(client, data)
-  response = mock
+  response = double
   response.stub(:parsed).and_return(data)
 
   token = client.instance_variable_get(:@access_token)
