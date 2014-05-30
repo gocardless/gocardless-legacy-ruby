@@ -8,7 +8,6 @@ module GoCardless
                   :source_type,
                   :description,
                   :name,
-                  :plan_id,
                   :status,
                   :gocardless_fees,
                   :partner_fees
@@ -17,7 +16,7 @@ module GoCardless
     # @return [String] the ID of the bill's source (eg subscription, pre_authorization)
     attr_accessor :source_id
 
-    reference_accessor :merchant_id, :user_id, :payment_id, :payout_id
+    reference_accessor :merchant_id, :user_id, :payout_id
     date_accessor :created_at, :paid_at, :charge_customer_at
 
     def source
