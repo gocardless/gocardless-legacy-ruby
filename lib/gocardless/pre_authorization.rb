@@ -9,7 +9,6 @@ module GoCardless
                   :interval_unit,
                   :name,
                   :description,
-                  :plan_id,
                   :status,
                   :remaining_amount
 

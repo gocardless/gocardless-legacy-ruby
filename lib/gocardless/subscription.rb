@@ -9,7 +9,6 @@ module GoCardless
                    :interval_unit,
                    :name,
                    :description,
-                   :plan_id,
                    :status,
                    :setup_fee,
                    :trial_length,
