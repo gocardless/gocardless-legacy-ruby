@@ -15,43 +15,8 @@ describe GoCardless::PreAuthorization do
     s.cancel!
   end
 
-  describe "inactive query method" do
-    it "and_return true when the subscription status is inactive" do
-      GoCardless::PreAuthorization.new(:status => 'inactive').inactive?.should be_true
-    end
-
-    it "and_return false otherwise" do
-      GoCardless::PreAuthorization.new.inactive?.should be_false
-    end
-  end
-
-  describe "active query method" do
-    it "and_return true when the subscription status is active" do
-      GoCardless::PreAuthorization.new(:status => 'active').active?.should be_true
-    end
-
-    it "and_return false otherwise" do
-      GoCardless::PreAuthorization.new.active?.should be_false
-    end
-  end
-
-  describe "cancelled query method" do
-    it "and_return true when the subscription status is cancelled" do
-      GoCardless::PreAuthorization.new(:status => 'cancelled').cancelled?.should be_true
-    end
-
-    it "and_return false otherwise" do
-      GoCardless::PreAuthorization.new.cancelled?.should be_false
-    end
-  end
-
-  describe "expired query method" do
-    it "and_return true when the subscription status is expired" do
-      GoCardless::PreAuthorization.new(:status => 'expired').expired?.should be_true
-    end
-
-    it "and_return false otherwise" do
-      GoCardless::PreAuthorization.new.expired?.should be_false
-    end
-  end
+  it_behaves_like "it has a query method for", "inactive"
+  it_behaves_like "it has a query method for", "active"
+  it_behaves_like "it has a query method for", "cancelled"
+  it_behaves_like "it has a query method for", "expired"
 end

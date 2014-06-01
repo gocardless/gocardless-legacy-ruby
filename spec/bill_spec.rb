@@ -44,53 +44,9 @@ describe GoCardless::Bill do
     b.refund!
   end
 
-  describe "pending query method" do
-    it "and_return true when the subscription status is pending" do
-      GoCardless::Bill.new(:status => 'pending').pending?.should be_true
-    end
-
-    it "and_return false otherwise" do
-      GoCardless::Bill.new.pending?.should be_false
-    end
-  end
-
-  describe "paid query method" do
-    it "and_return true when the subscription status is paid" do
-      GoCardless::Bill.new(:status => 'paid').paid?.should be_true
-    end
-
-    it "and_return false otherwise" do
-      GoCardless::Bill.new.paid?.should be_false
-    end
-  end
-
-  describe "failed query method" do
-    it "and_return true when the subscription status is failed" do
-      GoCardless::Bill.new(:status => 'failed').failed?.should be_true
-    end
-
-    it "and_return false otherwise" do
-      GoCardless::Bill.new.failed?.should be_false
-    end
-  end
-
-  describe "withdrawn query method" do
-    it "and_return true when the subscription status is withdrawn" do
-      GoCardless::Bill.new(:status => 'withdrawn').withdrawn?.should be_true
-    end
-
-    it "and_return false otherwise" do
-      GoCardless::Bill.new.withdrawn?.should be_false
-    end
-  end
-
-  describe "refunded query method" do
-    it "and_return true when the subscription status is refunded" do
-      GoCardless::Bill.new(:status => 'refunded').refunded?.should be_true
-    end
-
-    it "and_return false otherwise" do
-      GoCardless::Bill.new.refunded?.should be_false
-    end
-  end
+  it_behaves_like "it has a query method for", "pending"
+  it_behaves_like "it has a query method for", "paid"
+  it_behaves_like "it has a query method for", "failed"
+  it_behaves_like "it has a query method for", "withdrawn"
+  it_behaves_like "it has a query method for", "refunded"
 end
