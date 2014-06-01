@@ -11,23 +11,18 @@ describe GoCardless::Resource do
   end
 
   describe "#date_writer" do
-    it "creates date writers properly" do
-      test_resource = Class.new(GoCardless::Resource) do
-        date_writer :created_at, :modified_at
-      end
+    let(:test_resource) do
+      Class.new(GoCardless::Resource) { date_writer :created_at, :modified_at }
+    end
 
-      test_resource.instance_methods.map(&:to_s).should include 'created_at='
-      test_resource.instance_methods.map(&:to_s).should include 'modified_at='
+    describe "creates date writers" do
+      specify { test_resource.instance_methods.map(&:to_sym).should include :created_at= }
+      specify { test_resource.instance_methods.map(&:to_sym).should include :modified_at= }
     end
 
     it "date writers work properly" do
-      test_resource = Class.new(GoCardless::Resource) do
-        date_writer :created_at
-      end
-
-      resource = test_resource.new
       time = '2011-12-12T12:00:00Z'
-      resource.created_at = time
+      resource = test_resource.new(:created_at => time)
       date_time = resource.instance_variable_get(:@created_at)
       date_time.should be_instance_of DateTime
       date_time.strftime('%Y-%m-%dT%H:%M:%SZ').should == time
@@ -35,22 +30,18 @@ describe GoCardless::Resource do
   end
 
   describe "#date_accessor" do
-    it "creates date readers and writers properly" do
-      test_resource = Class.new(GoCardless::Resource) do
-        date_accessor :created_at, :modified_at
-      end
+    let(:test_resource) do
+      Class.new(GoCardless::Resource) { date_accessor :created_at, :modified_at }
+    end
 
-      test_resource.instance_methods.map(&:to_s).should include 'created_at='
-      test_resource.instance_methods.map(&:to_s).should include 'created_at'
-      test_resource.instance_methods.map(&:to_s).should include 'modified_at='
-      test_resource.instance_methods.map(&:to_s).should include 'modified_at'
+    describe "creates date readers and writers" do
+      specify { test_resource.instance_methods.map(&:to_sym).should include :created_at= }
+      specify { test_resource.instance_methods.map(&:to_sym).should include :created_at }
+      specify { test_resource.instance_methods.map(&:to_sym).should include :modified_at= }
+      specify { test_resource.instance_methods.map(&:to_sym).should include :modified_at }
     end
 
     it "date readers work properly" do
-      test_resource = Class.new(GoCardless::Resource) do
-        date_accessor :created_at
-      end
-
       resource = test_resource.new
       date = DateTime.now
       resource.instance_variable_set(:@created_at, date)
@@ -59,10 +50,11 @@ describe GoCardless::Resource do
   end
 
   describe ".find_with_client" do
+    let(:test_resource) do
+      Class.new(GoCardless::Resource) { self.endpoint = '/test/:id' }
+    end
+
     it "instantiates the correct object" do
-      test_resource = Class.new(GoCardless::Resource) do
-        self.endpoint = '/test/:id'
-      end
       mock_client = double
       mock_client.should_receive(:api_get).and_return({:id => 123})
       resource = test_resource.find_with_client(mock_client, 123)
@@ -72,10 +64,11 @@ describe GoCardless::Resource do
   end
 
   describe ".find" do
+    let(:test_resource) do
+      Class.new(GoCardless::Resource) { self.endpoint = '/test/:id' }
+    end
+
     it "calls find with the default client" do
-      test_resource = Class.new(GoCardless::Resource) do
-        self.endpoint = '/test/:id'
-      end
       GoCardless.stub(:client => double)
       test_resource.should_receive(:find_with_client).with(GoCardless.client, 1)
       test_resource.find(1)
@@ -83,30 +76,23 @@ describe GoCardless::Resource do
     end
 
     it "raises a helpful error when there is no default client" do
-      test_resource = Class.new(GoCardless::Resource) do
-        self.endpoint = '/test/:id'
-      end
       expect { test_resource.find(1) }.to raise_error
     end
   end
 
   describe "#reference_writer" do
-    it "creates reference writers properly" do
-      test_resource = Class.new(GoCardless::Resource) do
-        reference_writer :merchant_id, :user_id
-      end
+    let(:test_resource) do
+      Class.new(GoCardless::Resource) { reference_writer :merchant_id, :user_id }
+    end
 
-      test_resource.instance_methods.map(&:to_s).should include 'merchant='
-      test_resource.instance_methods.map(&:to_s).should include 'merchant_id='
-      test_resource.instance_methods.map(&:to_s).should include 'user='
-      test_resource.instance_methods.map(&:to_s).should include 'user_id='
+    describe "creates reference writers" do
+      specify { test_resource.instance_methods.map(&:to_sym).should include :merchant= }
+      specify { test_resource.instance_methods.map(&:to_sym).should include :merchant_id= }
+      specify { test_resource.instance_methods.map(&:to_sym).should include :user= }
+      specify { test_resource.instance_methods.map(&:to_sym).should include :user_id= }
     end
 
     it "direct assignment methods work properly" do
-      test_resource = Class.new(GoCardless::Resource) do
-        reference_writer :user_id
-      end
-
       resource = test_resource.new
       resource.user = GoCardless::User.new(:id => 123)
       resource.instance_variable_get(:@user_id).should == 123
@@ -121,12 +107,7 @@ describe GoCardless::Resource do
     end
 
     it "fails with the wrong object type" do
-      test_resource = Class.new(GoCardless::Resource) do
-        reference_writer :user_id
-      end
-      expect do
-        test_resource.new.user = 'asdf'
-      end.to raise_exception ArgumentError
+      expect { test_resource.new.user = 'asdf' }.to raise_exception ArgumentError
     end
   end
 
@@ -138,22 +119,18 @@ describe GoCardless::Resource do
       @redirect_uri = 'http://test.com/cb'
     end
 
-    it "creates reference writers properly" do
-      test_resource = Class.new(GoCardless::Resource) do
-        reference_reader :merchant_id, :user_id
-      end
+    let(:test_resource) do
+      Class.new(GoCardless::Resource) { reference_reader :merchant_id, :user_id }
+    end
 
-      test_resource.instance_methods.map(&:to_s).should include 'merchant'
-      test_resource.instance_methods.map(&:to_s).should include 'merchant_id'
-      test_resource.instance_methods.map(&:to_s).should include 'user'
-      test_resource.instance_methods.map(&:to_s).should include 'user_id'
+    describe "creates reference readers" do
+      specify { test_resource.instance_methods.map(&:to_sym).should include :merchant }
+      specify { test_resource.instance_methods.map(&:to_sym).should include :merchant_id }
+      specify { test_resource.instance_methods.map(&:to_sym).should include :user }
+      specify { test_resource.instance_methods.map(&:to_sym).should include :user_id }
     end
 
     it "lookup methods work properly" do
-      test_resource = Class.new(GoCardless::Resource) do
-        reference_reader :user_id
-      end
-
       resource = test_resource.new_with_client(@client)
       resource.instance_variable_set(:@user_id, 123)
       @client.access_token = 'TOKEN'
@@ -174,19 +151,21 @@ describe GoCardless::Resource do
   end
 
   describe "#reference_accessor" do
-    it "creates reference readers and writers" do
-      test_resource = Class.new(GoCardless::Resource) do
+    let(:test_resource) do
+      Class.new(GoCardless::Resource) do
         reference_accessor :merchant_id, :user_id
       end
+    end
 
-      test_resource.instance_methods.map(&:to_s).should include 'merchant'
-      test_resource.instance_methods.map(&:to_s).should include 'merchant_id'
-      test_resource.instance_methods.map(&:to_s).should include 'user'
-      test_resource.instance_methods.map(&:to_s).should include 'user_id'
-      test_resource.instance_methods.map(&:to_s).should include 'merchant='
-      test_resource.instance_methods.map(&:to_s).should include 'merchant_id='
-      test_resource.instance_methods.map(&:to_s).should include 'user='
-      test_resource.instance_methods.map(&:to_s).should include 'user_id='
+    describe "creates reference readers and writers" do
+      specify { test_resource.instance_methods.map(&:to_sym).should include :merchant }
+      specify { test_resource.instance_methods.map(&:to_sym).should include :merchant_id }
+      specify { test_resource.instance_methods.map(&:to_sym).should include :user }
+      specify { test_resource.instance_methods.map(&:to_sym).should include :user_id }
+      specify { test_resource.instance_methods.map(&:to_sym).should include :merchant= }
+      specify { test_resource.instance_methods.map(&:to_sym).should include :merchant_id= }
+      specify { test_resource.instance_methods.map(&:to_sym).should include :user= }
+      specify { test_resource.instance_methods.map(&:to_sym).should include :user_id= }
     end
   end
 
@@ -334,9 +313,8 @@ describe GoCardless::Resource do
   end
 
   describe "sub_resource_uri methods" do
+    let(:test_resource) { Class.new(GoCardless::Resource) }
     before :each do
-      @test_resource = Class.new(GoCardless::Resource) do
-      end
       @attrs = {
         'sub_resource_uris' => {
           'bills' => 'https://test.com/api/bills/?merchant_id=1'
@@ -345,20 +323,20 @@ describe GoCardless::Resource do
     end
 
     it "are defined on instances" do
-      r = @test_resource.new(@attrs)
+      r = test_resource.new(@attrs)
       r.should respond_to :bills
     end
 
     it "aren't defined for other instances of the class" do
-      @test_resource.new(@attrs)
-      resource = @test_resource.new
+      test_resource.new(@attrs)
+      resource = test_resource.new
       resource.should_not respond_to :bills
     end
 
     it "use the correct uri path" do
       client = double()
       client.should_receive(:api_get).with('/api/bills/', anything).and_return([])
-      r = @test_resource.new_with_client(client, @attrs)
+      r = test_resource.new_with_client(client, @attrs)
       r.bills
     end
 
@@ -366,14 +344,14 @@ describe GoCardless::Resource do
       client = double()
       client.should_receive(:api_get).with('/bills/', anything).and_return([])
       uris = {'bills' => 'https://test.com/api/v123/bills/'}
-      r = @test_resource.new_with_client(client, 'sub_resource_uris' => uris)
+      r = test_resource.new_with_client(client, 'sub_resource_uris' => uris)
       r.bills
     end
 
     it "use the correct query string params" do
       client = double()
       client.should_receive(:api_get).with(anything, 'merchant_id' => '1').and_return([])
-      r = @test_resource.new_with_client(client, @attrs)
+      r = test_resource.new_with_client(client, @attrs)
       r.bills
     end
 
@@ -381,7 +359,7 @@ describe GoCardless::Resource do
       client = double()
       params = { 'merchant_id' => '1', :amount => '10.00' }
       client.should_receive(:api_get).with(anything, params).and_return([])
-      r = @test_resource.new_with_client(client, @attrs)
+      r = test_resource.new_with_client(client, @attrs)
       r.bills(:amount => '10.00')
     end
 
@@ -389,7 +367,7 @@ describe GoCardless::Resource do
       client = double()
       params = { :source_id => 'xxx' }
       client.should_receive(:api_get).with(anything, params).and_return([])
-      r = @test_resource.new_with_client(client, {
+      r = test_resource.new_with_client(client, {
         'sub_resource_uris' => {
           'bills' => 'https://test.com/merchants/1/bills'
         }
@@ -399,7 +377,7 @@ describe GoCardless::Resource do
 
     it "return instances of the correct resource class" do
       client = double(:api_get => [{:id => 1}])
-      r = @test_resource.new_with_client(client, @attrs)
+      r = test_resource.new_with_client(client, @attrs)
       ret = r.bills
       ret.should be_a Array
       ret.first.should be_a GoCardless::Bill
