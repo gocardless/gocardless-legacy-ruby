@@ -11,14 +11,14 @@ describe GoCardless::Paginator do
   let(:headers_p1) {{
     'X-Pagination' => '{"records":15,"pages":2,"links":{"next":2,"last":2}}'
   }}
-  let(:response_p1) { stub(:headers => headers_p1, :parsed => [{:id => 'a'}]) }
+  let(:response_p1) { double(:headers => headers_p1, :parsed => [{:id => 'a'}]) }
 
   let(:headers_p2) {{
     'X-Pagination' => '{"records":15,"pages":2,"links":{"previous":1,"first":1}}'
   }}
-  let(:response_p2) { stub(:headers => headers_p2, :parsed => [{:id => 'b'}]) }
+  let(:response_p2) { double(:headers => headers_p2, :parsed => [{:id => 'b'}]) }
 
-  let(:client) { stub('client') }
+  let(:client) { double('client') }
   before { client.stub(:api_request).and_return(response_p1, response_p2,
                                                 response_p1, response_p2) }
 

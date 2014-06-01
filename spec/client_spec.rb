@@ -101,7 +101,7 @@ describe GoCardless::Client do
     describe "with valid params" do
       let(:oauth_client) { @client.instance_variable_get(:@oauth_client) }
       let(:fake_token) do
-        stub(:params => {'scope' => 'manage_merchant:x'}, :token  => 'abc')
+        double(:params => {'scope' => 'manage_merchant:x'}, :token  => 'abc')
       end
 
       before { oauth_client.auth_code.stub(:get_token).and_return(fake_token) }
@@ -182,7 +182,7 @@ describe GoCardless::Client do
     it "uses the correct path prefix" do
       @client.access_token = 'TOKEN123'
       token = @client.instance_variable_get(:@access_token)
-      r = mock
+      r = double
       r.stub(:parsed)
       token.should_receive(:get).with { |p,o| p =~ %r|/api/v1/test| }.and_return(r)
       @client.api_get('/test')
@@ -197,7 +197,7 @@ describe GoCardless::Client do
     it "encodes data to json" do
       @client.access_token = 'TOKEN123'
       token = @client.instance_variable_get(:@access_token)
-      r = mock
+      r = double
       r.stub(:parsed)
       token.should_receive(:post).with { |p,opts| opts[:body] == '{"a":1}' }.and_return(r)
       @client.api_post('/test', {:a => 1})
@@ -212,7 +212,7 @@ describe GoCardless::Client do
     it "encodes data to json" do
       @client.access_token = 'TOKEN123'
       token = @client.instance_variable_get(:@access_token)
-      r = mock
+      r = double
       r.stub(:parsed)
       token.should_receive(:delete).with { |p,opts| opts[:body] == '{"a":1}' }.and_return(r)
       @client.api_delete('/test', {:a => 1})
@@ -227,7 +227,7 @@ describe GoCardless::Client do
     it "looks up the correct merchant" do
       @client.access_token = 'TOKEN'
       @client.merchant_id = '123'
-      response = mock
+      response = double
       response.should_receive(:parsed)
 
       token = @client.instance_variable_get(:@access_token)
@@ -242,7 +242,7 @@ describe GoCardless::Client do
     it "creates a Merchant object" do
       @client.access_token = 'TOKEN'
       @client.merchant_id = '123'
-      response = mock
+      response = double
       response.should_receive(:parsed).and_return({:name => 'test', :id => 123})
 
       token = @client.instance_variable_get(:@access_token)
@@ -311,12 +311,12 @@ describe GoCardless::Client do
 
     it "confirms the resource when the signature is valid" do
       # Once for confirm, once to fetch result
-      @client.should_receive(:request).twice.and_return(stub(:parsed => {}))
+      @client.should_receive(:request).twice.and_return(double(:parsed => {}))
       @client.confirm_resource(@client.send(:sign_params, @params))
     end
 
     it "and_return the correct object when the signature is valid" do
-      @client.stub(:request).and_return(stub(:parsed => {}))
+      @client.stub(:request).and_return(double(:parsed => {}))
       subscription = GoCardless::Subscription.new_with_client @client
       GoCardless::Subscription.should_receive(:find_with_client).and_return subscription
 
@@ -373,7 +373,7 @@ describe GoCardless::Client do
       params_indifferent_access = HashWithIndifferentAccess.new(params)
       expect do
         @client.response_params_valid? params_indifferent_access
-      end.to_not raise_exception ArgumentError
+      end.to_not raise_exception
     end
 
     it "rejects other params not required for the signature" do
