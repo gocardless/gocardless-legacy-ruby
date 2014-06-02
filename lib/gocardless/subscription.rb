@@ -16,7 +16,6 @@ module GoCardless
 
     date_accessor :start_at, :expires_at, :created_at, :next_interval_start
 
-
     def cancel!
       path = self.class.endpoint.gsub(':id', id.to_s) + '/cancel'
       client.api_put(path)

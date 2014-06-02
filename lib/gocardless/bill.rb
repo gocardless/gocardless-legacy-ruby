@@ -24,6 +24,11 @@ module GoCardless
     reference_accessor :merchant_id, :user_id, :payout_id
     date_accessor :created_at, :paid_at, :charge_customer_at
 
+    # Alias getter methods
+    alias_method :is_setup_fee?, :is_setup_fee
+    alias_method :can_be_cancelled?, :can_be_cancelled
+    alias_method :can_be_retried?, :can_be_retried
+
     def source
       klass = GoCardless.const_get(Utils.camelize(source_type.to_s))
       klass.find_with_client(client, @source_id)
