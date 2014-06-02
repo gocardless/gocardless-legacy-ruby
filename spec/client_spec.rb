@@ -255,7 +255,7 @@ describe GoCardless::Client do
     end
   end
 
-  %w{subscription pre_authorization user bill payment}.each do |resource|
+  %w(subscription pre_authorization user bill).each do |resource|
     describe "##{resource}" do
       it "and_return the correct #{GoCardless::Utils.camelize(resource)} object" do
         @client.access_token = 'TOKEN'

@@ -10,7 +10,8 @@ module GoCardless
                   :name,
                   :description,
                   :status,
-                  :remaining_amount
+                  :remaining_amount,
+                  :setup_fee
 
     reference_accessor :merchant_id, :user_id
 

@@ -5,16 +5,21 @@ module GoCardless
     creatable
 
     attr_accessor :amount,
-                  :source_type,
+                  :currency,
                   :description,
                   :name,
                   :status,
                   :gocardless_fees,
-                  :partner_fees
+                  :partner_fees,
+                  :amount_minus_fees,
+                  :can_be_retried,
+                  :can_be_cancelled,
+                  :is_setup_fee
 
     # @attribute source_id
     # @return [String] the ID of the bill's source (eg subscription, pre_authorization)
     attr_accessor :source_id
+    attr_accessor :source_type
 
     reference_accessor :merchant_id, :user_id, :payout_id
     date_accessor :created_at, :paid_at, :charge_customer_at
