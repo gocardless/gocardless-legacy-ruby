@@ -1,4 +1,5 @@
 require 'date'
+require 'gocardless/paginator'
 
 module GoCardless
   class Resource
@@ -18,18 +19,7 @@ module GoCardless
         path = uri.path.sub(%r{^/api/v\d+}, '')
 
         # Modify the instance's metaclass to add the method
-        metaclass = class << self; self; end
-        metaclass.send(:define_method, name) do |*args|
-          # 'name' will be something like 'bills', convert it to Bill and
-          # look up the resource class with that name
-          class_name = Utils.camelize(Utils.singularize(name.to_s))
-          klass = GoCardless.const_get(class_name)
-          query = default_query.merge(args.first || {})
-          client.api_get(path, query).map do |attrs|
-            # Convert the results to instances of the looked-up class
-            klass.new_with_client(client, attrs)
-          end
-        end
+        define_paginated_resource_method(name, path, default_query)
       end
 
       # Set resource attribute values
@@ -181,6 +171,22 @@ module GoCardless
       path = self.class.endpoint.gsub(':id', id.to_s)
       response = client.send("api_#{method}", path, data)
       response.each { |key,val| send("#{key}=", val) if respond_to?("#{key}=") } if response.is_a? Hash
+    end
+
+    def define_paginated_resource_method(name, path, default_query)
+      metaclass = class << self; self; end
+      metaclass.send(:define_method, name) do |*args|
+        # 'name' will be something like 'bills', convert it to Bill and
+        # look up the resource class with that name
+        class_name = Utils.camelize(Utils.singularize(name.to_s))
+        klass = GoCardless.const_get(class_name)
+
+        # merge the default query, which may have been included in the
+        # sub_resource_uri, with the query params provided by the user
+        query = default_query.merge(args.first || {})
+
+        Paginator.new(client, self, path, query)
+      end
     end
   end
 end

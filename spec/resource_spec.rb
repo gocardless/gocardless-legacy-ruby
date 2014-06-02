@@ -334,40 +334,41 @@ describe GoCardless::Resource do
     end
 
     it "use the correct uri path" do
-      client = double()
-      client.should_receive(:api_get).with('/api/bills/', anything).and_return([])
-      r = test_resource.new_with_client(client, @attrs)
+      GoCardless::Paginator.should_receive(:new).
+                            with(anything, anything, '/api/bills/', anything)
+      r = test_resource.new_with_client(double, @attrs)
       r.bills
     end
 
     it "strips the api prefix from the path" do
-      client = double()
-      client.should_receive(:api_get).with('/bills/', anything).and_return([])
+      GoCardless::Paginator.should_receive(:new).
+                            with(anything, anything, '/bills/', anything)
       uris = {'bills' => 'https://test.com/api/v123/bills/'}
-      r = test_resource.new_with_client(client, 'sub_resource_uris' => uris)
+      r = test_resource.new_with_client(double, 'sub_resource_uris' => uris)
       r.bills
     end
 
     it "use the correct query string params" do
-      client = double()
-      client.should_receive(:api_get).with(anything, 'merchant_id' => '1').and_return([])
-      r = test_resource.new_with_client(client, @attrs)
+      query = { 'merchant_id' => '1' }
+      GoCardless::Paginator.should_receive(:new).
+                            with(anything, anything, anything, query)
+      r = test_resource.new_with_client(double, @attrs)
       r.bills
     end
 
     it "adds provided params to existing query string params" do
-      client = double()
       params = { 'merchant_id' => '1', :amount => '10.00' }
-      client.should_receive(:api_get).with(anything, params).and_return([])
-      r = test_resource.new_with_client(client, @attrs)
+      GoCardless::Paginator.should_receive(:new).
+                            with(anything, anything, anything, params)
+      r = test_resource.new_with_client(double, @attrs)
       r.bills(:amount => '10.00')
     end
 
     it "adds provided params when there are no existing query string params" do
-      client = double()
       params = { :source_id => 'xxx' }
-      client.should_receive(:api_get).with(anything, params).and_return([])
-      r = test_resource.new_with_client(client, {
+      GoCardless::Paginator.should_receive(:new).
+                            with(anything, anything, anything, params)
+      r = test_resource.new_with_client(double, {
         'sub_resource_uris' => {
           'bills' => 'https://test.com/merchants/1/bills'
         }
@@ -376,11 +377,8 @@ describe GoCardless::Resource do
     end
 
     it "return instances of the correct resource class" do
-      client = double(:api_get => [{:id => 1}])
-      r = test_resource.new_with_client(client, @attrs)
-      ret = r.bills
-      ret.should be_a Array
-      ret.first.should be_a GoCardless::Bill
+      r = test_resource.new_with_client(double, @attrs)
+      r.bills.should be_a GoCardless::Paginator
     end
   end
 end
