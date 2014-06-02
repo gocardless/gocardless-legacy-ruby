@@ -1,3 +1,13 @@
+## 1.10.0 - June 02, 2014
+
+- Add alias methods for boolean attributes
+- Update resources with new attributes
+- Remove any nil values before sending params to GC
+- Support charge_customer_at on bill creation
+- Make depedency specifier less strict
+- Add pagination
+
+
 ## 1.9.0 - May 23, 2014
 
 - Add ability to refund bills
