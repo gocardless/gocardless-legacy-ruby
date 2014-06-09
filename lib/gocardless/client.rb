@@ -319,8 +319,8 @@ module GoCardless
           gem_info = "gocardless-ruby/v#{GoCardless::VERSION}"
           ruby_engine = defined?(RUBY_ENGINE) ? RUBY_ENGINE : 'ruby'
           ruby_version = RUBY_VERSION
-          ruby_version += "p#{RUBY_PATCHLEVEL}" if defined?(RUBY_PATCHLEVEL)
-          comment = ["#{ruby_engine}/#{ruby_version}"]
+          ruby_version += " p#{RUBY_PATCHLEVEL}" if defined?(RUBY_PATCHLEVEL)
+          comment = ["#{ruby_engine} #{ruby_version}"]
           comment << RUBY_PLATFORM if defined?(RUBY_PLATFORM)
           "#{gem_info} (#{comment.join("; ")})"
         end
