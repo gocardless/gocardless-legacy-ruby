@@ -43,7 +43,7 @@ def update_version_file(new_version)
 end
 
 def bump_version(part)
-  last_version = `git tag -l | tail -1`.strip.sub(/^v/, '')
+  last_version = `git tag -l --sort=v:refname | tail -1`.strip.sub(/^v/, '')
   major, minor, patch = last_version.scan(/\d+/).map(&:to_i)
 
   case part
