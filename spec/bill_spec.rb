@@ -13,28 +13,28 @@ describe GoCardless::Bill do
     bill.source_type = :subscription
     stub_get(client, :id => 123)
     source = bill.source
-    source.should be_a GoCardless::Subscription
-    source.id.should == 123
+    expect(source).to be_a GoCardless::Subscription
+    expect(source.id).to eq(123)
   end
 
   it "source setter works" do
     bill.source = GoCardless::Subscription.new(:id => 123)
-    bill.source_id.should == 123
-    bill.source_type.should.to_s == 'subscription'
+    expect(bill.source_id).to eq(123)
+    expect(bill.source_type.to_s).to eq('subscription')
   end
 
   it "should be able to be retried" do
-    client.should_receive(:api_post).with('/bills/123/retry')
+    expect(client).to receive(:api_post).with('/bills/123/retry')
     bill.retry!
   end
 
   it "should be able to be cancelled" do
-    client.should_receive(:api_put).with('/bills/123/cancel')
+    expect(client).to receive(:api_put).with('/bills/123/cancel')
     bill.cancel!
   end
 
   it "should be able to be refunded" do
-    client.should_receive(:api_post).with('/bills/123/refund')
+    expect(client).to receive(:api_post).with('/bills/123/refund')
     bill.refund!
   end
 
