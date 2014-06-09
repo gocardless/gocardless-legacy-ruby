@@ -1,3 +1,8 @@
+## 1.10.1 - June 09, 2014
+
+- Use a more useful user agent header
+
+
 ## 1.10.0 - June 02, 2014
 
 - Add alias methods for boolean attributes
