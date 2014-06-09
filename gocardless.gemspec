@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
 
   gem.add_development_dependency 'rspec', '~> 3.0'
   gem.add_development_dependency 'yard', '~> 0.7'
-  gem.add_development_dependency 'activesupport', '~> 3.1'
+  gem.add_development_dependency 'activesupport', '~> 4.1'
   gem.add_development_dependency 'rake', '~> 10.0'
 
   gem.authors = ['Harry Marr', 'Tom Blomfield']
