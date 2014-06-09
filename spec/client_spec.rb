@@ -512,5 +512,27 @@ describe GoCardless::Client do
       @client.base_url.should == 'http://gc.com/'
     end
   end
+
+  describe "#user_agent" do
+    let(:user_agent) { @client.user_agent }
+
+    it "includes the gem name" do
+      expect(user_agent).to include("gocardless-ruby")
+    end
+
+    it "includes the gem version" do
+      expect(user_agent).to include("v#{GoCardless::VERSION}")
+    end
+
+    it "includes the ruby version" do
+      expect(user_agent).to include(RUBY_VERSION)
+    end
+
+    if defined?(RUBY_PLATFORM)
+      it "includes the ruby platform" do
+        expect(user_agent).to include(RUBY_PLATFORM)
+      end
+    end
+  end
 end
 

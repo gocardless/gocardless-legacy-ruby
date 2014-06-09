@@ -313,6 +313,19 @@ module GoCardless
       "#{base_url}#{API_PATH}"
     end
 
+    def user_agent
+      @user_agent ||=
+        begin
+          gem_info = "gocardless-ruby/v#{GoCardless::VERSION}"
+          ruby_engine = defined?(RUBY_ENGINE) ? RUBY_ENGINE : 'ruby'
+          ruby_version = RUBY_VERSION
+          ruby_version += "p#{RUBY_PATCHLEVEL}" if defined?(RUBY_PATCHLEVEL)
+          comment = ["#{ruby_engine}/#{ruby_version}"]
+          comment << RUBY_PLATFORM if defined?(RUBY_PLATFORM)
+          "#{gem_info} (#{comment.join("; ")})"
+        end
+    end
+
   private
 
     # Pull the merchant id out of the access scope
@@ -332,7 +345,7 @@ module GoCardless
       opts[:headers] = {} if opts[:headers].nil?
       opts[:headers]['Accept'] = 'application/json'
       opts[:headers]['Content-Type'] = 'application/json' unless method == :get
-      opts[:headers]['User-Agent'] = "gocardless-ruby/v#{GoCardless::VERSION}"
+      opts[:headers]['User-Agent'] = user_agent
       opts[:body] = MultiJson.encode(opts[:data]) if !opts[:data].nil?
 
       # Reset the URL in case the environment / base URL has been changed.
