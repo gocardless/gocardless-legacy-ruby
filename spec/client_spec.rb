@@ -130,7 +130,38 @@ describe GoCardless::Client do
     end
   end
 
+  describe "#scoped_access_token" do
+    it "serializes access token correctly" do
+      oauth_client = @client.instance_variable_get(:@oauth_client)
+      token = OAuth2::AccessToken.new(oauth_client, 'TOKEN123')
+      token.params['scope'] = 'a:1 b:2'
+      @client.instance_variable_set(:@access_token, token)
+
+      @client.scoped_access_token.should == 'TOKEN123 a:1 b:2'
+    end
+
+    it "and_return nil when there's no token" do
+      @client.scoped_access_token.should be_nil
+    end
+  end
+
+  describe "#unscoped_access_token" do
+    it "serializes access token correctly" do
+      oauth_client = @client.instance_variable_get(:@oauth_client)
+      token = OAuth2::AccessToken.new(oauth_client, 'TOKEN123')
+      token.params['scope'] = 'a:1 b:2'
+      @client.instance_variable_set(:@access_token, token)
+
+      @client.unscoped_access_token.should == 'TOKEN123'
+    end
+
+    it "and_return nil when there's no token" do
+      @client.unscoped_access_token.should be_nil
+    end
+  end
+
   describe "#access_token" do
+    before { @client.stub(:warn) }
     it "serializes access token correctly" do
       oauth_client = @client.instance_variable_get(:@oauth_client)
       token = OAuth2::AccessToken.new(oauth_client, 'TOKEN123')
@@ -142,6 +173,26 @@ describe GoCardless::Client do
 
     it "and_return nil when there's no token" do
       @client.access_token.should be_nil
+    end
+
+    it "issues a deprecation warning" do
+      @client.should_receive(:warn)
+      @client.access_token
+    end
+  end
+
+  describe "#scope" do
+    it "serializes the access token correctly" do
+      oauth_client = @client.instance_variable_get(:@oauth_client)
+      token = OAuth2::AccessToken.new(oauth_client, 'TOKEN123')
+      token.params['scope'] = 'a:1 b:2'
+      @client.instance_variable_set(:@access_token, token)
+
+      @client.scope.should == 'a:1 b:2'
+    end
+
+    it "and_return nil when there's no token" do
+      @client.scope.should be_nil
     end
   end
 

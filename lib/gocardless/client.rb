@@ -70,14 +70,31 @@ module GoCardless
       scope = @access_token.params[:scope] || @access_token.params['scope']
       set_merchant_id_from_scope(scope)
 
-      self.access_token
+      self.scoped_access_token
     end
 
     # @return [String] a serialized form of the access token with its scope
+    def scoped_access_token
+      "#{self.unscoped_access_token} #{self.scope}".strip if @access_token
+    end
+
     def access_token
+      warn "[DEPRECATION] (gocardless-ruby) the behaviour of " +
+           "Client#access_token is deprecated. In future releases it will " +
+           "return the unscoped access token. If you want the scoped access " +
+           "token, use 'scoped_access_token'"
+      self.scoped_access_token
+    end
+
+    # @return [String] a serialized form of the access token without its scope
+    def unscoped_access_token
+      @access_token.token if @access_token
+    end
+
+    # @return [String] the scope of the current access token
+    def scope
       if @access_token
-        scope = @access_token.params[:scope] || @access_token.params['scope']
-        "#{@access_token.token} #{scope}".strip
+        @access_token.params[:scope] || @access_token.params['scope']
       end
     end
 
