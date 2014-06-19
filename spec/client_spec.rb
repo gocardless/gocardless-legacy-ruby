@@ -518,7 +518,6 @@ describe GoCardless::Client do
 
     it "includes the gem name" do
       expect(user_agent).to include("gocardless-ruby")
-      puts(user_agent)
     end
 
     it "includes the gem version" do
