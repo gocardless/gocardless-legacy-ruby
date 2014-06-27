@@ -364,6 +364,7 @@ module GoCardless
       opts[:headers]['Content-Type'] = 'application/json' unless method == :get
       opts[:headers]['User-Agent'] = user_agent
       opts[:body] = MultiJson.encode(opts[:data]) if !opts[:data].nil?
+      path = URI.encode(path)
 
       # Reset the URL in case the environment / base URL has been changed.
       @oauth_client.site = base_url
