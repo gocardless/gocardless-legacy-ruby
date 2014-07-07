@@ -1,3 +1,9 @@
+## 1.11.0 - July 07, 2014
+
+- URI encode path before making requests
+- Deprecate Client#access_token
+
+
 ## 1.10.1 - June 09, 2014
 
 - Use a more useful user agent header
