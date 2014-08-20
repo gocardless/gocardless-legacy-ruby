@@ -185,7 +185,7 @@ module GoCardless
         # sub_resource_uri, with the query params provided by the user
         query = default_query.merge(args.first || {})
 
-        Paginator.new(client, self, path, query)
+        Paginator.new(client, klass, path, query)
       end
     end
   end
