@@ -1,3 +1,7 @@
+## 1.11.1 - August 22, 2014
+
+- Fix bug affecting paginated sub-resources
+
 ## 1.11.0 - July 07, 2014
 
 - URI encode path before making requests
