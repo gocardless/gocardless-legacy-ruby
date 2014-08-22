@@ -333,6 +333,13 @@ describe GoCardless::Resource do
       resource.should_not respond_to :bills
     end
 
+    it "use the correct resource" do
+      GoCardless::Paginator.should_receive(:new).
+                            with(anything, GoCardless::Bill, anything, anything)
+      r = test_resource.new_with_client(double, @attrs)
+      r.bills
+    end
+
     it "use the correct uri path" do
       GoCardless::Paginator.should_receive(:new).
                             with(anything, anything, '/api/bills/', anything)
