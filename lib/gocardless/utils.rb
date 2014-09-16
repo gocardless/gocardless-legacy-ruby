@@ -82,7 +82,7 @@ module GoCardless
       end * '&'
     end
 
-    # Given a Hash of parameters, normalize then (flatten and convert to a
+    # Given a Hash of parameters, normalize them (flatten and convert to a
     # string), then generate the HMAC-SHA-256 signature using the provided key.
     #
     # @param [Hash] params the parameters to sign
