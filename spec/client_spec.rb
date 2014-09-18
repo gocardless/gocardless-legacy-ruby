@@ -235,7 +235,9 @@ describe GoCardless::Client do
       token = @client.instance_variable_get(:@access_token)
       r = double
       r.stub(:parsed)
-      token.should_receive(:get).with { |p,o| p =~ %r|/api/v1/test| }.and_return(r)
+      token.should_receive(:get) do |p, o|
+        expect(p).to satisfy { |v| v =~ %r|/api/v1/test| }
+      end.and_return(r)
       @client.api_get('/test')
     end
 
@@ -250,7 +252,9 @@ describe GoCardless::Client do
       token = @client.instance_variable_get(:@access_token)
       r = double
       r.stub(:parsed)
-      token.should_receive(:post).with { |p,opts| opts[:body] == '{"a":1}' }.and_return(r)
+      token.should_receive(:post) do |p,opts|
+        expect(opts[:body]).to eq('{"a":1}')
+      end.and_return(r)
       @client.api_post('/test', {:a => 1})
     end
 
@@ -265,7 +269,9 @@ describe GoCardless::Client do
       token = @client.instance_variable_get(:@access_token)
       r = double
       r.stub(:parsed)
-      token.should_receive(:delete).with { |p,opts| opts[:body] == '{"a":1}' }.and_return(r)
+      token.should_receive(:delete) do |p,opts|
+        expect(opts[:body]).to eq('{"a":1}')
+      end.and_return(r)
       @client.api_delete('/test', {:a => 1})
     end
 
@@ -283,7 +289,9 @@ describe GoCardless::Client do
 
       token = @client.instance_variable_get(:@access_token)
       merchant_url = '/api/v1/merchants/123'
-      token.should_receive(:get).with { |p,o| p == merchant_url }.and_return response
+      token.should_receive(:get) do |p,o|
+        expect(p).to eq(merchant_url)
+      end.and_return response
 
       GoCardless::Merchant.stub(:new_with_client)
 
@@ -380,11 +388,11 @@ describe GoCardless::Client do
     it "includes valid http basic credentials" do
       GoCardless::Subscription.stub(:find_with_client)
       auth = 'Basic YWJjOnh5eg=='
-      @client.should_receive(:request).once.with do |type, path, opts|
+      @client.should_receive(:request) do |type, path, opts|
         opts.should include :headers
         opts[:headers].should include 'Authorization'
         opts[:headers]['Authorization'].should == auth
-      end
+      end.once
       @client.confirm_resource(@client.send(:sign_params, @params))
     end
 
