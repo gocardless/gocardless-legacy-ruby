@@ -331,12 +331,12 @@ describe GoCardless::Client do
 
     it "succeeds with a valid signature" do
       params = @client.send(:sign_params, @params)
-      @client.send(:signature_valid?, params).should be_true
+      @client.send(:signature_valid?, params).should be_truthy
     end
 
     it "fails with an invalid signature" do
       params = {:signature => 'invalid'}.merge(@params)
-      @client.send(:signature_valid?, params).should be_false
+      @client.send(:signature_valid?, params).should be_falsey
     end
   end
 
@@ -438,12 +438,12 @@ describe GoCardless::Client do
 
     it "and_return false when the signature is invalid" do
       params = {:signature => 'xxx'}.merge(@params)
-      @client.response_params_valid?(params).should be_false
+      @client.response_params_valid?(params).should be_falsey
     end
 
     it "and_return true when the signature is valid" do
       params = @client.send(:sign_params, @params)
-      @client.response_params_valid?(params).should be_true
+      @client.response_params_valid?(params).should be_truthy
     end
   end
 
@@ -501,7 +501,7 @@ describe GoCardless::Client do
 
     it "should include a valid signature" do
       params = get_params(@client.send(:new_limit_url, :subscription, :x => 1))
-      params.key?('signature').should be_true
+      params.key?('signature').should be_truthy
       sig = params.delete('signature')
       sig.should == @client.send(:sign_params, params.clone)[:signature]
     end
@@ -542,13 +542,13 @@ describe GoCardless::Client do
   describe "#webhook_valid?" do
     it "and_return false when the webhook signature is invalid" do
       @client.webhook_valid?({:some => 'stuff', :signature => 'invalid'}).
-        should be_false
+        should be_falsey
     end
 
     it "and_return true when the webhook signature is valid" do
       valid_signature = '175e814f0f64e5e86d41fb8fe06a857cedda715a96d3dc3d885e6d97dbeb7e49'
       @client.webhook_valid?({:some => 'stuff', :signature => valid_signature}).
-        should be_true
+        should be_truthy
     end
   end
 

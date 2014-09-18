@@ -14,12 +14,12 @@ describe GoCardless::Page do
 
     context "when there is next page available" do
       let(:links) {{ "next" => 2, "last" => 2 }}
-      it { should be_true }
+      it { should be_truthy }
     end
 
     context "when there is no next page" do
       let(:links) {{ "previous" => 1, "first" => 1 }}
-      it { should be_false }
+      it { should be_falsey }
     end
   end
 
