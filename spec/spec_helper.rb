@@ -3,10 +3,10 @@ require 'gocardless'
 
 def stub_get(client, data)
   response = double
-  response.stub(:parsed).and_return(data)
+  allow(response).to receive(:parsed).and_return(data)
 
   token = client.instance_variable_get(:@access_token)
-  token.stub(:get).and_return response
+  allow(token).to receive(:get).and_return response
 end
 
 def unset_ivar(obj, var)
@@ -17,12 +17,12 @@ shared_examples_for "it has a query method for" do |status|
   describe "##{status}?" do
     context "when #{status}" do
       let(:object) { described_class.new(:status => status) }
-      specify { object.send("#{status}?").should be_truthy }
+      specify { expect(object.send("#{status}?")).to be_truthy }
     end
 
     context "when not #{status}" do
       let(:object) { described_class.new }
-      specify { object.send("#{status}?").should be_falsey }
+      specify { expect(object.send("#{status}?")).to be_falsey }
     end
   end
 end

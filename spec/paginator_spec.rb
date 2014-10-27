@@ -19,7 +19,7 @@ describe GoCardless::Paginator do
   let(:response_p2) { double(:headers => headers_p2, :parsed => [{:id => 'b'}]) }
 
   let(:client) { double('client') }
-  before { client.stub(:api_request).and_return(response_p1, response_p2,
+  before { allow(client).to receive(:api_request).and_return(response_p1, response_p2,
                                                 response_p1, response_p2) }
 
   let(:paginator) { described_class.new(client, resource_class, path, query) }
@@ -28,17 +28,17 @@ describe GoCardless::Paginator do
   describe "#per_page" do
     context "given no arguments" do
       subject { paginator.per_page }
-      it { should == per_page }
+      it { is_expected.to eq(per_page) }
     end
 
     context "given an argument" do
       it "is chainable" do
-        paginator.per_page(60).should == paginator
+        expect(paginator.per_page(60)).to eq(paginator)
       end
     end
 
     it "resets pagination metadata" do
-      paginator.should_receive(:load_page).exactly(2).times
+      expect(paginator).to receive(:load_page).exactly(2).times
       paginator.count  # reset metadata, check that we have to reload it
       paginator.per_page(50)
       paginator.count
@@ -47,7 +47,7 @@ describe GoCardless::Paginator do
 
   describe "#load_page" do
     it "asks the client for the correct path" do
-      client.should_receive(:api_request).
+      expect(client).to receive(:api_request).
              with(:get, '/test', anything).
              and_return(response_p1)
       paginator.page(page_number)
@@ -55,9 +55,9 @@ describe GoCardless::Paginator do
 
     it "passes the correct pagination parameters through" do
       pagination_params = { :page => page_number, :per_page => per_page }
-      client.should_receive(:api_request) do |_, _, opts|
-        opts[:params].should include pagination_params
-      end.and_return(response_p1)
+      expect(client).to receive(:api_request) { |_, _, opts|
+        expect(opts[:params]).to include pagination_params
+      }.and_return(response_p1)
       paginator.page(page_number)
     end
   end
@@ -89,19 +89,19 @@ describe GoCardless::Paginator do
     context "when metadata is loaded" do
       before { paginator.page(1) }
 
-      it { should == 15 }
+      it { is_expected.to eq(15) }
 
       it "doesn't reload metadata" do
-        paginator.should_not_receive(:load_page)
+        expect(paginator).not_to receive(:load_page)
         paginator.count
       end
     end
 
     context "when metadata is not loaded" do
-      it { should == 15 }
+      it { is_expected.to eq(15) }
 
       it "loads metadata" do
-        paginator.should_receive(:load_page)
+        expect(paginator).to receive(:load_page)
         paginator.count
       end
     end
@@ -113,19 +113,19 @@ describe GoCardless::Paginator do
     context "when metadata is loaded" do
       before { paginator.page(1) }
 
-      it { should == 2 }
+      it { is_expected.to eq(2) }
 
       it "doesn't reload metadata" do
-        paginator.should_not_receive(:load_page)
+        expect(paginator).not_to receive(:load_page)
         paginator.page_count
       end
     end
 
     context "when metadata is not loaded" do
-      it { should == 2 }
+      it { is_expected.to eq(2) }
 
       it "loads metadata" do
-        paginator.should_receive(:load_page)
+        expect(paginator).to receive(:load_page)
         paginator.page_count
       end
     end

@@ -9,7 +9,7 @@ describe GoCardless::PreAuthorization do
   let(:preauth) { GoCardless::PreAuthorization.new(:id => '009988') }
 
   it "should be cancellable" do
-    client.should_receive(:api_put).with('/pre_authorizations/009988/cancel')
+    expect(client).to receive(:api_put).with('/pre_authorizations/009988/cancel')
     preauth.cancel!
   end
 
