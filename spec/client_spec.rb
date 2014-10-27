@@ -346,6 +346,11 @@ describe GoCardless::Client do
       params = {:signature => 'invalid'}.merge(@params)
       @client.send(:signature_valid?, params).should be_falsey
     end
+
+    it "fails with a nil signature" do
+      params = {:signature => nil}.merge(@params)
+      @client.send(:signature_valid?, params).should be_falsey
+    end
   end
 
   describe "#confirm_resource" do
