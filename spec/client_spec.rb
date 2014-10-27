@@ -235,7 +235,9 @@ describe GoCardless::Client do
       token = @client.instance_variable_get(:@access_token)
       r = double
       r.stub(:parsed)
-      token.should_receive(:get).with { |p,o| p =~ %r|/api/v1/test| }.and_return(r)
+      token.should_receive(:get) do |p, o|
+        expect(p).to satisfy { |v| v =~ %r|/api/v1/test| }
+      end.and_return(r)
       @client.api_get('/test')
     end
 
@@ -250,7 +252,9 @@ describe GoCardless::Client do
       token = @client.instance_variable_get(:@access_token)
       r = double
       r.stub(:parsed)
-      token.should_receive(:post).with { |p,opts| opts[:body] == '{"a":1}' }.and_return(r)
+      token.should_receive(:post) do |p,opts|
+        expect(opts[:body]).to eq('{"a":1}')
+      end.and_return(r)
       @client.api_post('/test', {:a => 1})
     end
 
@@ -265,7 +269,9 @@ describe GoCardless::Client do
       token = @client.instance_variable_get(:@access_token)
       r = double
       r.stub(:parsed)
-      token.should_receive(:delete).with { |p,opts| opts[:body] == '{"a":1}' }.and_return(r)
+      token.should_receive(:delete) do |p,opts|
+        expect(opts[:body]).to eq('{"a":1}')
+      end.and_return(r)
       @client.api_delete('/test', {:a => 1})
     end
 
@@ -283,7 +289,9 @@ describe GoCardless::Client do
 
       token = @client.instance_variable_get(:@access_token)
       merchant_url = '/api/v1/merchants/123'
-      token.should_receive(:get).with { |p,o| p == merchant_url }.and_return response
+      token.should_receive(:get) do |p,o|
+        expect(p).to eq(merchant_url)
+      end.and_return response
 
       GoCardless::Merchant.stub(:new_with_client)
 
@@ -331,12 +339,12 @@ describe GoCardless::Client do
 
     it "succeeds with a valid signature" do
       params = @client.send(:sign_params, @params)
-      @client.send(:signature_valid?, params).should be_true
+      @client.send(:signature_valid?, params).should be_truthy
     end
 
     it "fails with an invalid signature" do
       params = {:signature => 'invalid'}.merge(@params)
-      @client.send(:signature_valid?, params).should be_false
+      @client.send(:signature_valid?, params).should be_falsey
     end
   end
 
@@ -380,11 +388,11 @@ describe GoCardless::Client do
     it "includes valid http basic credentials" do
       GoCardless::Subscription.stub(:find_with_client)
       auth = 'Basic YWJjOnh5eg=='
-      @client.should_receive(:request).once.with do |type, path, opts|
+      @client.should_receive(:request) do |type, path, opts|
         opts.should include :headers
         opts[:headers].should include 'Authorization'
         opts[:headers]['Authorization'].should == auth
-      end
+      end.once
       @client.confirm_resource(@client.send(:sign_params, @params))
     end
 
@@ -438,12 +446,12 @@ describe GoCardless::Client do
 
     it "and_return false when the signature is invalid" do
       params = {:signature => 'xxx'}.merge(@params)
-      @client.response_params_valid?(params).should be_false
+      @client.response_params_valid?(params).should be_falsey
     end
 
     it "and_return true when the signature is valid" do
       params = @client.send(:sign_params, @params)
-      @client.response_params_valid?(params).should be_true
+      @client.response_params_valid?(params).should be_truthy
     end
   end
 
@@ -501,7 +509,7 @@ describe GoCardless::Client do
 
     it "should include a valid signature" do
       params = get_params(@client.send(:new_limit_url, :subscription, :x => 1))
-      params.key?('signature').should be_true
+      params.key?('signature').should be_truthy
       sig = params.delete('signature')
       sig.should == @client.send(:sign_params, params.clone)[:signature]
     end
@@ -542,13 +550,13 @@ describe GoCardless::Client do
   describe "#webhook_valid?" do
     it "and_return false when the webhook signature is invalid" do
       @client.webhook_valid?({:some => 'stuff', :signature => 'invalid'}).
-        should be_false
+        should be_falsey
     end
 
     it "and_return true when the webhook signature is valid" do
       valid_signature = '175e814f0f64e5e86d41fb8fe06a857cedda715a96d3dc3d885e6d97dbeb7e49'
       @client.webhook_valid?({:some => 'stuff', :signature => valid_signature}).
-        should be_true
+        should be_truthy
     end
   end
 

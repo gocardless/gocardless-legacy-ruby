@@ -94,6 +94,25 @@ module GoCardless
       OpenSSL::HMAC.hexdigest(digest, key, msg)
     end
 
+    # Given two strings, compare them in constant time (for the length of the
+    # string). This can avoid timing attacks when used to compare signed
+    # parameters.
+    # Borrowed from ActiveSupport::MessageVerifier.
+    # https://github.com/rails/rails/blob/master/activesupport/lib/active_support/message_verifier.rb
+    #
+    # @param [String] the first string to compare
+    # @param [String] this second string to compare
+    # @return [Boolean] the result of the comparison
+    def secure_compare(a, b)
+      return false unless a.bytesize == b.bytesize
+
+      l = a.unpack("C#{a.bytesize}")
+
+      res = 0
+      b.each_byte { |byte| res |= byte ^ l.shift }
+      res == 0
+    end
+
     # Format a Time object according to ISO 8601, and convert to UTC.
     #
     # @param [Time] time the time object to format

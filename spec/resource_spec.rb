@@ -170,8 +170,8 @@ describe GoCardless::Resource do
   end
 
   it "#persisted? works" do
-    GoCardless::Resource.new.persisted?.should be_false
-    GoCardless::Resource.new(:id => 1).persisted?.should be_true
+    GoCardless::Resource.new.persisted?.should be_falsey
+    GoCardless::Resource.new(:id => 1).persisted?.should be_truthy
   end
 
   describe "#save" do
@@ -288,8 +288,8 @@ describe GoCardless::Resource do
 
   describe "resource permissions" do
     it "are not given by default" do
-      GoCardless::Resource.creatable?.should be_false
-      GoCardless::Resource.updatable?.should be_false
+      GoCardless::Resource.creatable?.should be_falsey
+      GoCardless::Resource.updatable?.should be_falsey
     end
 
     it "are present when specified" do
@@ -301,14 +301,14 @@ describe GoCardless::Resource do
         updatable
       end
 
-      CreatableResource.creatable?.should be_true
-      CreatableResource.updatable?.should be_false
+      CreatableResource.creatable?.should be_truthy
+      CreatableResource.updatable?.should be_falsey
 
-      UpdatableResource.creatable?.should be_false
-      UpdatableResource.updatable?.should be_true
+      UpdatableResource.creatable?.should be_falsey
+      UpdatableResource.updatable?.should be_truthy
 
-      GoCardless::Resource.creatable?.should be_false
-      GoCardless::Resource.updatable?.should be_false
+      GoCardless::Resource.creatable?.should be_falsey
+      GoCardless::Resource.updatable?.should be_falsey
     end
   end
 
