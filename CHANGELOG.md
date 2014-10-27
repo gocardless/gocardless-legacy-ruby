@@ -1,3 +1,8 @@
+## 1.11.2 - October 27, 2014
+
+- Use a constant time string comparison to avoid timing attacks
+- Switch to Rspec3 style param checking
+
 ## 1.11.1 - August 22, 2014
 
 - Fix bug affecting paginated sub-resources
