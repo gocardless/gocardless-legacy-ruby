@@ -7,7 +7,7 @@ describe GoCardless::Resource do
     end
     props = {:id => 1, :name => 'test', :uri => 'http://test'}
     resource = test_resource.new(props)
-    props.each { |k,v| resource.send(k).should == v }
+    props.each { |k,v| expect(resource.send(k)).to eq(v) }
   end
 
   describe "#date_writer" do
@@ -16,16 +16,16 @@ describe GoCardless::Resource do
     end
 
     describe "creates date writers" do
-      specify { test_resource.instance_methods.map(&:to_sym).should include :created_at= }
-      specify { test_resource.instance_methods.map(&:to_sym).should include :modified_at= }
+      specify { expect(test_resource.instance_methods.map(&:to_sym)).to include :created_at= }
+      specify { expect(test_resource.instance_methods.map(&:to_sym)).to include :modified_at= }
     end
 
     it "date writers work properly" do
       time = '2011-12-12T12:00:00Z'
       resource = test_resource.new(:created_at => time)
       date_time = resource.instance_variable_get(:@created_at)
-      date_time.should be_instance_of DateTime
-      date_time.strftime('%Y-%m-%dT%H:%M:%SZ').should == time
+      expect(date_time).to be_instance_of DateTime
+      expect(date_time.strftime('%Y-%m-%dT%H:%M:%SZ')).to eq(time)
     end
   end
 
@@ -35,17 +35,17 @@ describe GoCardless::Resource do
     end
 
     describe "creates date readers and writers" do
-      specify { test_resource.instance_methods.map(&:to_sym).should include :created_at= }
-      specify { test_resource.instance_methods.map(&:to_sym).should include :created_at }
-      specify { test_resource.instance_methods.map(&:to_sym).should include :modified_at= }
-      specify { test_resource.instance_methods.map(&:to_sym).should include :modified_at }
+      specify { expect(test_resource.instance_methods.map(&:to_sym)).to include :created_at= }
+      specify { expect(test_resource.instance_methods.map(&:to_sym)).to include :created_at }
+      specify { expect(test_resource.instance_methods.map(&:to_sym)).to include :modified_at= }
+      specify { expect(test_resource.instance_methods.map(&:to_sym)).to include :modified_at }
     end
 
     it "date readers work properly" do
       resource = test_resource.new
       date = DateTime.now
       resource.instance_variable_set(:@created_at, date)
-      resource.created_at.should == date
+      expect(resource.created_at).to eq(date)
     end
   end
 
@@ -56,10 +56,10 @@ describe GoCardless::Resource do
 
     it "instantiates the correct object" do
       mock_client = double
-      mock_client.should_receive(:api_get).and_return({:id => 123})
+      expect(mock_client).to receive(:api_get).and_return({:id => 123})
       resource = test_resource.find_with_client(mock_client, 123)
-      resource.should be_a test_resource
-      resource.id.should == 123
+      expect(resource).to be_a test_resource
+      expect(resource.id).to eq(123)
     end
   end
 
@@ -69,8 +69,8 @@ describe GoCardless::Resource do
     end
 
     it "calls find with the default client" do
-      GoCardless.stub(:client => double)
-      test_resource.should_receive(:find_with_client).with(GoCardless.client, 1)
+      allow(GoCardless).to receive_messages(:client => double)
+      expect(test_resource).to receive(:find_with_client).with(GoCardless.client, 1)
       test_resource.find(1)
       unset_ivar GoCardless, :client
     end
@@ -86,16 +86,16 @@ describe GoCardless::Resource do
     end
 
     describe "creates reference writers" do
-      specify { test_resource.instance_methods.map(&:to_sym).should include :merchant= }
-      specify { test_resource.instance_methods.map(&:to_sym).should include :merchant_id= }
-      specify { test_resource.instance_methods.map(&:to_sym).should include :user= }
-      specify { test_resource.instance_methods.map(&:to_sym).should include :user_id= }
+      specify { expect(test_resource.instance_methods.map(&:to_sym)).to include :merchant= }
+      specify { expect(test_resource.instance_methods.map(&:to_sym)).to include :merchant_id= }
+      specify { expect(test_resource.instance_methods.map(&:to_sym)).to include :user= }
+      specify { expect(test_resource.instance_methods.map(&:to_sym)).to include :user_id= }
     end
 
     it "direct assignment methods work properly" do
       resource = test_resource.new
       resource.user = GoCardless::User.new(:id => 123)
-      resource.instance_variable_get(:@user_id).should == 123
+      expect(resource.instance_variable_get(:@user_id)).to eq(123)
     end
 
     it "requires args to end with _id" do
@@ -124,10 +124,10 @@ describe GoCardless::Resource do
     end
 
     describe "creates reference readers" do
-      specify { test_resource.instance_methods.map(&:to_sym).should include :merchant }
-      specify { test_resource.instance_methods.map(&:to_sym).should include :merchant_id }
-      specify { test_resource.instance_methods.map(&:to_sym).should include :user }
-      specify { test_resource.instance_methods.map(&:to_sym).should include :user_id }
+      specify { expect(test_resource.instance_methods.map(&:to_sym)).to include :merchant }
+      specify { expect(test_resource.instance_methods.map(&:to_sym)).to include :merchant_id }
+      specify { expect(test_resource.instance_methods.map(&:to_sym)).to include :user }
+      specify { expect(test_resource.instance_methods.map(&:to_sym)).to include :user_id }
     end
 
     it "lookup methods work properly" do
@@ -137,8 +137,8 @@ describe GoCardless::Resource do
       @client.merchant_id = '123'
       stub_get(@client, {:id => 123})
       user = resource.user
-      user.should be_a GoCardless::User
-      user.id.should == 123
+      expect(user).to be_a GoCardless::User
+      expect(user.id).to eq(123)
     end
 
     it "requires args to end with _id" do
@@ -158,20 +158,20 @@ describe GoCardless::Resource do
     end
 
     describe "creates reference readers and writers" do
-      specify { test_resource.instance_methods.map(&:to_sym).should include :merchant }
-      specify { test_resource.instance_methods.map(&:to_sym).should include :merchant_id }
-      specify { test_resource.instance_methods.map(&:to_sym).should include :user }
-      specify { test_resource.instance_methods.map(&:to_sym).should include :user_id }
-      specify { test_resource.instance_methods.map(&:to_sym).should include :merchant= }
-      specify { test_resource.instance_methods.map(&:to_sym).should include :merchant_id= }
-      specify { test_resource.instance_methods.map(&:to_sym).should include :user= }
-      specify { test_resource.instance_methods.map(&:to_sym).should include :user_id= }
+      specify { expect(test_resource.instance_methods.map(&:to_sym)).to include :merchant }
+      specify { expect(test_resource.instance_methods.map(&:to_sym)).to include :merchant_id }
+      specify { expect(test_resource.instance_methods.map(&:to_sym)).to include :user }
+      specify { expect(test_resource.instance_methods.map(&:to_sym)).to include :user_id }
+      specify { expect(test_resource.instance_methods.map(&:to_sym)).to include :merchant= }
+      specify { expect(test_resource.instance_methods.map(&:to_sym)).to include :merchant_id= }
+      specify { expect(test_resource.instance_methods.map(&:to_sym)).to include :user= }
+      specify { expect(test_resource.instance_methods.map(&:to_sym)).to include :user_id= }
     end
   end
 
   it "#persisted? works" do
-    GoCardless::Resource.new.persisted?.should be_falsey
-    GoCardless::Resource.new(:id => 1).persisted?.should be_truthy
+    expect(GoCardless::Resource.new.persisted?).to be_falsey
+    expect(GoCardless::Resource.new(:id => 1).persisted?).to be_truthy
   end
 
   describe "#save" do
@@ -193,28 +193,28 @@ describe GoCardless::Resource do
         client = double
         data = {:x => 1, :y => 2}
         resource = @test_resource.new_with_client(client, data)
-        client.should_receive(:api_post).with(anything, data)
+        expect(client).to receive(:api_post).with(anything, data)
         resource.save
       end
 
       it "sends the correct path" do
         client = double
         resource = @test_resource.new_with_client(client)
-        client.should_receive(:api_post).with('/test', anything)
+        expect(client).to receive(:api_post).with('/test', anything)
         resource.save
       end
 
       it "POSTs when not persisted" do
         client = double
         resource = @test_resource.new_with_client(client)
-        client.should_receive(:api_post)
+        expect(client).to receive(:api_post)
         resource.save
       end
 
       it "PUTs when already persisted" do
         client = double
         resource = @test_resource.new_with_client(client, :id => 1)
-        client.should_receive(:api_put)
+        expect(client).to receive(:api_put)
         resource.save
       end
     end
@@ -263,7 +263,7 @@ describe GoCardless::Resource do
 
     attrs = {:id => 1, :uri => 'http:', :x => 'y'}
     resource = test_resource.new_with_client(double, attrs)
-    resource.to_hash.should == attrs
+    expect(resource.to_hash).to eq(attrs)
   end
 
   it "#to_json converts to the correct JSON format" do
@@ -281,15 +281,15 @@ describe GoCardless::Resource do
     })
 
     result = MultiJson.decode(bill.to_json)
-    result['amount'].should == bill.amount
-    result['when'].should == time_str
-    result['person_id'].should == 15
+    expect(result['amount']).to eq(bill.amount)
+    expect(result['when']).to eq(time_str)
+    expect(result['person_id']).to eq(15)
   end
 
   describe "resource permissions" do
     it "are not given by default" do
-      GoCardless::Resource.creatable?.should be_falsey
-      GoCardless::Resource.updatable?.should be_falsey
+      expect(GoCardless::Resource.creatable?).to be_falsey
+      expect(GoCardless::Resource.updatable?).to be_falsey
     end
 
     it "are present when specified" do
@@ -301,14 +301,14 @@ describe GoCardless::Resource do
         updatable
       end
 
-      CreatableResource.creatable?.should be_truthy
-      CreatableResource.updatable?.should be_falsey
+      expect(CreatableResource.creatable?).to be_truthy
+      expect(CreatableResource.updatable?).to be_falsey
 
-      UpdatableResource.creatable?.should be_falsey
-      UpdatableResource.updatable?.should be_truthy
+      expect(UpdatableResource.creatable?).to be_falsey
+      expect(UpdatableResource.updatable?).to be_truthy
 
-      GoCardless::Resource.creatable?.should be_falsey
-      GoCardless::Resource.updatable?.should be_falsey
+      expect(GoCardless::Resource.creatable?).to be_falsey
+      expect(GoCardless::Resource.updatable?).to be_falsey
     end
   end
 
@@ -324,31 +324,31 @@ describe GoCardless::Resource do
 
     it "are defined on instances" do
       r = test_resource.new(@attrs)
-      r.should respond_to :bills
+      expect(r).to respond_to :bills
     end
 
     it "aren't defined for other instances of the class" do
       test_resource.new(@attrs)
       resource = test_resource.new
-      resource.should_not respond_to :bills
+      expect(resource).not_to respond_to :bills
     end
 
     it "use the correct resource" do
-      GoCardless::Paginator.should_receive(:new).
+      expect(GoCardless::Paginator).to receive(:new).
                             with(anything, GoCardless::Bill, anything, anything)
       r = test_resource.new_with_client(double, @attrs)
       r.bills
     end
 
     it "use the correct uri path" do
-      GoCardless::Paginator.should_receive(:new).
+      expect(GoCardless::Paginator).to receive(:new).
                             with(anything, anything, '/api/bills/', anything)
       r = test_resource.new_with_client(double, @attrs)
       r.bills
     end
 
     it "strips the api prefix from the path" do
-      GoCardless::Paginator.should_receive(:new).
+      expect(GoCardless::Paginator).to receive(:new).
                             with(anything, anything, '/bills/', anything)
       uris = {'bills' => 'https://test.com/api/v123/bills/'}
       r = test_resource.new_with_client(double, 'sub_resource_uris' => uris)
@@ -357,7 +357,7 @@ describe GoCardless::Resource do
 
     it "use the correct query string params" do
       query = { 'merchant_id' => '1' }
-      GoCardless::Paginator.should_receive(:new).
+      expect(GoCardless::Paginator).to receive(:new).
                             with(anything, anything, anything, query)
       r = test_resource.new_with_client(double, @attrs)
       r.bills
@@ -365,7 +365,7 @@ describe GoCardless::Resource do
 
     it "adds provided params to existing query string params" do
       params = { 'merchant_id' => '1', :amount => '10.00' }
-      GoCardless::Paginator.should_receive(:new).
+      expect(GoCardless::Paginator).to receive(:new).
                             with(anything, anything, anything, params)
       r = test_resource.new_with_client(double, @attrs)
       r.bills(:amount => '10.00')
@@ -373,7 +373,7 @@ describe GoCardless::Resource do
 
     it "adds provided params when there are no existing query string params" do
       params = { :source_id => 'xxx' }
-      GoCardless::Paginator.should_receive(:new).
+      expect(GoCardless::Paginator).to receive(:new).
                             with(anything, anything, anything, params)
       r = test_resource.new_with_client(double, {
         'sub_resource_uris' => {
@@ -385,7 +385,7 @@ describe GoCardless::Resource do
 
     it "return instances of the correct resource class" do
       r = test_resource.new_with_client(double, @attrs)
-      r.bills.should be_a GoCardless::Paginator
+      expect(r.bills).to be_a GoCardless::Paginator
     end
   end
 end

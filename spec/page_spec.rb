@@ -14,12 +14,12 @@ describe GoCardless::Page do
 
     context "when there is next page available" do
       let(:links) {{ "next" => 2, "last" => 2 }}
-      it { should be_truthy }
+      it { is_expected.to be_truthy }
     end
 
     context "when there is no next page" do
       let(:links) {{ "previous" => 1, "first" => 1 }}
-      it { should be_falsey }
+      it { is_expected.to be_falsey }
     end
   end
 
@@ -28,12 +28,12 @@ describe GoCardless::Page do
 
     context "when there is next page available" do
       let(:links) {{ "next" => 2, "last" => 2 }}
-      it { should == 2 }
+      it { is_expected.to eq(2) }
     end
 
     context "when there is no next page" do
       let(:links) {{ "previous" => 1, "first" => 1 }}
-      it { should be_nil }
+      it { is_expected.to be_nil }
     end
   end
 
@@ -42,12 +42,12 @@ describe GoCardless::Page do
 
     context "when there is previous page available" do
       let(:links) {{ "previous" => 1, "first" => 1 }}
-      it { should == 1 }
+      it { is_expected.to eq(1) }
     end
 
     context "when there is no previous page" do
       let(:links) {{ "next" => 2, "last" => 2 }}
-      it { should be_nil }
+      it { is_expected.to be_nil }
     end
   end
 
@@ -56,12 +56,12 @@ describe GoCardless::Page do
 
     context "when there is first page available" do
       let(:links) {{ "first" => 1, "previous" => 1 }}
-      it { should == 1 }
+      it { is_expected.to eq(1) }
     end
 
     context "when there is no first page" do
       let(:links) {{ "next" => 2, "last" => 2 }}
-      it { should be_nil }
+      it { is_expected.to be_nil }
     end
   end
 
@@ -70,12 +70,12 @@ describe GoCardless::Page do
 
     context "when there is last page available" do
       let(:links) {{ "next" => 2, "last" => 2 }}
-      it { should == 2 }
+      it { is_expected.to eq(2) }
     end
 
     context "when there is no last page" do
       let(:links) {{ "previous" => 1, "first" => 1 }}
-      it { should be_nil }
+      it { is_expected.to be_nil }
     end
   end
 
@@ -86,7 +86,7 @@ describe GoCardless::Page do
     end
 
     it "properly initialises the resources" do
-      page.map(&:id).should == ['a', 'b']
+      expect(page.map(&:id)).to eq(['a', 'b'])
     end
   end
 end

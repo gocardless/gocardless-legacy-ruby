@@ -9,7 +9,7 @@ describe GoCardless::Subscription do
   let(:subscription) { GoCardless::Subscription.new(:id => '009988') }
 
   it "should be cancellable" do
-    client.should_receive(:api_put).with('/subscriptions/009988/cancel')
+    expect(client).to receive(:api_put).with('/subscriptions/009988/cancel')
     subscription.cancel!
   end
 
