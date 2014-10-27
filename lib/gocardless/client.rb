@@ -418,7 +418,7 @@ module GoCardless
     def signature_valid?(params)
       params = params.clone
       signature = params.delete(:signature)
-      sign_params(params)[:signature] == signature
+      Utils.secure_compare(sign_params(params)[:signature], signature)
     end
 
     # Generate a random base64-encoded string

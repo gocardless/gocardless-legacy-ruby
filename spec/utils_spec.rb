@@ -26,6 +26,16 @@ describe GoCardless::Utils do
         GoCardless::Utils.singularize("cacti").should == "cactus"
       end
     end
+
+    describe '.secure_compare' do
+      it 'is true for the same strings' do
+        GoCardless::Utils.secure_compare('hello', 'hello').should be_truthy
+      end
+
+      it 'is false for different strings' do
+        GoCardless::Utils.secure_compare('hello', 'banjo').should be_falsey
+      end
+    end
   end
 
   describe "hash helpers" do
