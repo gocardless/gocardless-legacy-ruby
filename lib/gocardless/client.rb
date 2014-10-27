@@ -418,6 +418,7 @@ module GoCardless
     def signature_valid?(params)
       params = params.clone
       signature = params.delete(:signature)
+      return false unless signature
       Utils.secure_compare(sign_params(params)[:signature], signature)
     end
 
