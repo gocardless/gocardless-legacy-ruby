@@ -215,7 +215,8 @@ describe GoCardless::Utils do
   describe "date and time helpers" do
     describe ".iso_format_time" do
       it "should work with a Time object" do
-        d = GoCardless::Utils.iso_format_time(Time.parse("1st January 2012"))
+        t = "1st January 2012 00:00 UTC"
+        d = GoCardless::Utils.iso_format_time(Time.parse(t))
         expect(d).to eq("2012-01-01T00:00:00Z")
       end
 
@@ -237,17 +238,20 @@ describe GoCardless::Utils do
 
     describe ".stringify_times" do
       it "stringifies time objects" do
-        d = GoCardless::Utils.stringify_times(Time.parse("1st Jan 2012"))
+        t = "1st January 2012 00:00 UTC"
+        d = GoCardless::Utils.iso_format_time(Time.parse(t))
         expect(d).to eq("2012-01-01T00:00:00Z")
       end
 
       it "stringifies time values in hashes" do
-        d = GoCardless::Utils.stringify_times(:t => Time.parse("1st Jan 2012"))
+        t = "1st Jan 2012 00:00 UTC"
+        d = GoCardless::Utils.stringify_times(:t => Time.parse(t))
         expect(d).to eq({ :t => "2012-01-01T00:00:00Z" })
       end
 
       it "stringifies time values in arrays" do
-        d = GoCardless::Utils.stringify_times([Time.parse("1st Jan 2012")])
+        t = "1st Jan 2012 00:00 UTC"
+        d = GoCardless::Utils.stringify_times([Time.parse(t)])
         expect(d).to eq(["2012-01-01T00:00:00Z"])
       end
     end
