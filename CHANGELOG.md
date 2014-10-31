@@ -1,3 +1,13 @@
+## 1.12.0 - October 31, 2014
+
+- Update Gem Dependencies
+- Prevent setting bad GoCardless environments
+- Fix timezone-brittle specs
+- Upgrade RSpec & Convert specs to RSpec 3.1.7
+- Handle nil signatures in signature_valid? method
+- Stop testing against Ruby 1.8
+
+
 ## 1.11.2 - October 27, 2014
 
 - Use a constant time string comparison to avoid timing attacks
