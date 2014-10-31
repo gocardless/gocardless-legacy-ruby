@@ -21,6 +21,24 @@ describe GoCardless do
     end
   end
 
+  describe ".environment=" do
+    subject(:method) { -> { GoCardless.environment = gc_env } }
+
+    context "with a valid environment" do
+      let(:gc_env) { :production }
+      it { is_expected.to_not raise_error }
+      it 'sets the environment' do
+        method.call
+        expect(GoCardless.environment).to eq(gc_env)
+      end
+    end
+
+    context "with an invalid environment" do
+      let(:gc_env) { :foobar }
+      it { is_expected.to raise_error }
+    end
+  end
+
 
   describe "delegated methods" do
     %w(new_subscription_url new_pre_authorization_url new_bill_url confirm_resource webhook_valid?).each do |name|

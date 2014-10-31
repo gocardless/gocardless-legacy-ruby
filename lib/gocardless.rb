@@ -12,13 +12,22 @@ module GoCardless
   require 'gocardless/payout'
 
   class << self
-    attr_accessor :environment
-    attr_reader :account_details, :client
+    attr_reader :account_details, :environment, :client
 
     def account_details=(details)
       raise ClientError.new("You must provide a token") unless details[:token]
       @account_details = details
       @client = Client.new(details)
+    end
+
+    def environment=(gc_env)
+      valid_environments = GoCardless::Client::BASE_URLS.keys
+      if !gc_env.nil? && !valid_environments.include?(gc_env)
+        raise ClientError.new("The GoCardless environment must be one of " +
+                              valid_environments.join(", "))
+      end
+
+      @environment = gc_env
     end
 
     %w(new_subscription_url new_pre_authorization_url new_bill_url confirm_resource webhook_valid?).each do |name|
