@@ -13,6 +13,18 @@ describe GoCardless::PreAuthorization do
     preauth.cancel!
   end
 
+  it "should allow you to create a pre-authorised bill" do
+    mocked_data = {
+      :pre_authorization_id=>"009988",
+      :amount=>"15.00",
+      :name=>"150 credits",
+      :charge_customer_at=>DateTime.new(2013,8,27,0,0,0,'0')
+    }
+
+    expect(client).to receive(:api_post).with('/bills/', :bill => mocked_data)
+    preauth.create_bill(mocked_data)
+  end
+
   it_behaves_like "it has a query method for", "inactive"
   it_behaves_like "it has a query method for", "active"
   it_behaves_like "it has a query method for", "cancelled"
