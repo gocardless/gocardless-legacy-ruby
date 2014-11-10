@@ -10,6 +10,18 @@ describe GoCardless::Resource do
     props.each { |k,v| expect(resource.send(k)).to eq(v) }
   end
 
+  describe "#inspect" do
+    let(:test_resource) do
+      Class.new(GoCardless::Resource) { reference_reader :foo_id }
+    end
+
+    it "shows text" do
+      resource = test_resource.new
+      resource.instance_variable_set(:@foo_id, 123)
+      expect(resource.inspect).to match(/#<#<Class:[a-z0-9]+> foo_id=123>/)
+    end
+  end
+
   describe "#date_writer" do
     let(:test_resource) do
       Class.new(GoCardless::Resource) { date_writer :created_at, :modified_at }
