@@ -1,3 +1,11 @@
+require 'simplecov'
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+  SimpleCov::Formatter::HTMLFormatter
+]
+SimpleCov.start do
+  coverage_dir('coverage/')
+end
+
 require 'active_support/hash_with_indifferent_access'
 require 'gocardless'
 
