@@ -7,6 +7,8 @@ rvm:
   - jruby-19mode
   - rbx-2
 notifications:
+install:
+  - bundle install --retry=3
   email:
     recipients:
       - developers@gocardless.com
