@@ -6,6 +6,8 @@ rvm:
   - 1.9.2
   - jruby-19mode
   - rbx-2
+install:
+  - bundle install --retry=3
 notifications:
   email:
     recipients:
