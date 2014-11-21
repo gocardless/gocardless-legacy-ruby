@@ -8,4 +8,4 @@ API documentation, usage guides, and setup information can be found at [develope
 The full API reference is available at on
 [rubydoc.info](http://rubydoc.info/github/gocardless/gocardless-ruby/master/frames).
 
-[![Build Status](https://secure.travis-ci.org/gocardless/gocardless-ruby.png?branch=master)](http://travis-ci.org/gocardless/gocardless-ruby) [![Gem Version](https://badge.fury.io/rb/gocardless.svg)](http://badge.fury.io/rb/gocardless) [![Coverage Status](https://img.shields.io/coveralls/gocardless/gocardless-ruby.svg)](https://coveralls.io/r/gocardless/gocardless-ruby)
+[![Build Status](https://secure.travis-ci.org/gocardless/gocardless-ruby.png?branch=master)](http://travis-ci.org/gocardless/gocardless-ruby) [![Gem Version](https://badge.fury.io/rb/gocardless.svg)](http://badge.fury.io/rb/gocardless)
