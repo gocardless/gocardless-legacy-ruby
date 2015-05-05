@@ -1,3 +1,8 @@
+## 1.13.0 - May 05, 2015
+
+- Better handling of API error messages
+
+
 ## 1.12.0 - October 31, 2014
 
 - Update Gem Dependencies
