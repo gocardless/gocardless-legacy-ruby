@@ -1,11 +1,9 @@
 [![GoCardless Ruby Client Library](https://s3-eu-west-1.amazonaws.com/gocardless/images/client-lib-headers/ruby-lib-header.png)](https://gocardless.com/docs?language=ruby)
 
-The GoCardless Ruby client provides a simple Ruby interface to the GoCardless
-API.
+__This API library is only for developers who already have an integration using the [Legacy GoCardless API](https://developer.gocardless.com/legacy).__
 
-API documentation, usage guides, and setup information can be found at [developer.gocardless.com](https://developer.gocardless.com/ruby/).
+If you're starting a new integration, you should use the new [GoCardless API](https://developer.gocardless.com) with the [gocardless-pro-ruby](https://github.com/gocardless/gocardless-pro-ruby) library.
 
-The full API reference is available at on
-[rubydoc.info](http://rubydoc.info/github/gocardless/gocardless-ruby/master/frames).
+If you're not sure whether this is the right library for you, get in touch - you can reach our developer support team at <api@gocardless.com>.
 
-[![Build Status](https://secure.travis-ci.org/gocardless/gocardless-ruby.png?branch=master)](http://travis-ci.org/gocardless/gocardless-ruby) [![Gem Version](https://badge.fury.io/rb/gocardless.svg)](http://badge.fury.io/rb/gocardless)
+If you're sure this is the library you want to be using, see [DOCUMENTATION.md](https://github.com/gocardless/gocardless-ruby/blob/master/DOCUMENTATION.md) for documentation and helpful resources.
