@@ -1,5 +1,8 @@
 require 'active_support/hash_with_indifferent_access'
 require 'gocardless'
+require 'coveralls'
+
+Coveralls.wear!
 
 def stub_get(client, data)
   response = double
